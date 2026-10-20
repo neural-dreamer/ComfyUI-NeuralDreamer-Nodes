@@ -1,6 +1,6 @@
 [project]
 name = "comfyui-neuraldreamer-nodes"
-description = "Neural Dreamer Nodes — ComfyUI nodes: variant selection with one-click Upscale and live preview, a modular image loader, a character prompt builder, parameter bundles and more."
+description = "Neural Dreamer Nodes — ComfyUI nodes: variant selection with live preview and a hand-off to your own upscaler, a modular image loader, a character prompt builder, parameter bundles and more."
 version = "1.0.0"
 license = { file = "LICENSE" }
 dependencies = []

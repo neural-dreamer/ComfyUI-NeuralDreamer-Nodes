@@ -118,8 +118,9 @@ class NDVariantPreviewSelector:
 
     CATEGORY = "Neural Dreamer/Variant"
     DESCRIPTION = (
-        "Shows a batch of images with thumbnails, lets you pick a variant (click or arrow keys) "
-        "and run Upscale for it. Input: one parameters wire with the fields 'images' (the batch) "
+        "Shows a batch of images with thumbnails and lets you pick a variant (click or arrow keys). "
+        "It is not an upscaler: the optional Upscale button sends the selected variant to the "
+        "upscale branch you build after it (any upscale nodes, also third-party ones). Input: one parameters wire with the fields 'images' (the batch) "
         "and optionally 'image' (the upscaled result) - connect a Pack Parameters and it creates "
         "these inputs. Output: one parameters wire with 'multi_variant', 'selected_index' (0-based) "
         "and 'upscale' (True only for a run started by the Upscale button) - open it with Unpack "
@@ -183,7 +184,8 @@ class NDVariantSliderSelector:
 
     CATEGORY = "Neural Dreamer/Variant"
     DESCRIPTION = (
-        "Integer slider with a Multi-Variant toggle and an Upscale button. Output: one parameters "
+        "Integer slider with a Multi-Variant toggle and an Upscale button (it does not upscale "
+        "itself; the button starts the upscale branch you build). Output: one parameters "
         "wire with 'multi_variant', 'value' and 'upscale' (True only for a run started by the "
         "Upscale button) - open it with Unpack Parameters. The slider range is set with the gear "
         "button or in Properties."

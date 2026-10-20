@@ -1,6 +1,6 @@
 # Images for README
 
-Screenshots referenced from the main README. The files here now are placeholders (a red PLACEHOLDER bar and a line saying what to capture); replace each one with a real ComfyUI screenshot under the same name.
+Screenshots referenced from the main README. To update one, replace the file under the same name.
 
 | File | What to capture |
 |---|---|

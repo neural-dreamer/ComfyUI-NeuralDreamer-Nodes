@@ -11,7 +11,7 @@ Custom nodes for [ComfyUI](https://github.com/comfyanonymous/ComfyUI) by Neural 
 
 | Node | Category | Purpose |
 |---|---|---|
-| [ND Variant Preview Selector](#nd-variant-preview-selector) | `Neural Dreamer/Variant` | Pick a variant from an image batch and run Upscale for it |
+| [ND Variant Preview Selector](#nd-variant-preview-selector) | `Neural Dreamer/Variant` | Pick a variant from an image batch; an optional button sends it to your own upscaler |
 | [ND Live Preview Bridge](#nd-live-preview-bridge) | `Neural Dreamer/Variant` | Sends a live preview of the image being generated to the Variant Preview Selector |
 | [ND Variant Slider Selector](#nd-variant-slider-selector) | `Neural Dreamer/Variant` | The same control without a preview: integer slider, toggle, Upscale button |
 | [ND Show Any As Text](#nd-show-any-as-text) | `Neural Dreamer/Utils` | Shows any value as text, with note tabs |
@@ -43,9 +43,11 @@ Nodes that take or give several values have at most one input and one output, bo
 
 ## ND Variant Preview Selector
 
-<img src="docs/images/variant-preview-selector.png" alt="ND Variant Preview Selector" width="480">
+<img src="docs/images/variant-preview-selector.png" alt="ND Variant Preview Selector" width="640">
 
-Shows an image batch as thumbnails with a main preview. Select a variant with a click or the arrow keys, then press **Upscale** to run the upscale branch for it. The generation is reused from cache.
+Shows an image batch as thumbnails with a main preview. Select a variant with a click or the arrow keys.
+
+**This node is not an upscaler** and does not upscale anything itself. The **Upscale** button is optional (it can be turned off in the settings) and has another purpose: it sends the selected variant to an upscaler you build in the workflow after the selector, with any upscale nodes, including third-party ones. The generation is reused from cache, and the upscaled result can be shown back in the node.
 
 **Input fields** (through Pack Parameters)
 
@@ -88,7 +90,7 @@ Files are numbered like those of the stock Save Image node: `ND_Image_variant_00
 
 ## ND Live Preview Bridge
 
-<img src="docs/images/live-preview-bridge.png" alt="ND Live Preview Bridge" width="560">
+<img src="docs/images/live-preview-bridge.png" alt="ND Live Preview Bridge" width="760">
 
 Goes on the `MODEL` wire in front of the samplers (after the model loader and its patches, e.g. LoRAs or ModelSampling). While they run, it sends a small preview of the image being generated (the first one of a batch) to [ND Variant Preview Selector](#nd-variant-preview-selector) with *Live preview* on. The model passes through unchanged.
 
@@ -104,9 +106,9 @@ Goes on the `MODEL` wire in front of the samplers (after the model loader and it
 
 ## ND Variant Slider Selector
 
-<img src="docs/images/variant-slider-selector.png" alt="ND Variant Slider Selector" width="360">
+<img src="docs/images/variant-slider-selector.png" alt="ND Variant Slider Selector" width="560">
 
-Integer slider with a Multi-Variant toggle and an Upscale button. It has no input. The slider range (min, max, step) is set with the gear button or in the node properties.
+Integer slider with a Multi-Variant toggle and an Upscale button. Like the Preview Selector, it does not upscale anything itself: the button only starts the upscale branch you build in the workflow. It has no input. The slider range (min, max, step) is set with the gear button or in the node properties.
 
 | Output field | Type | Description |
 |---|---|---|
@@ -116,7 +118,7 @@ Integer slider with a Multi-Variant toggle and an Upscale button. It has no inpu
 
 ## ND Show Any As Text
 
-<img src="docs/images/show-any-as-text.png" alt="ND Show Any As Text" width="420">
+<img src="docs/images/show-any-as-text.png" alt="ND Show Any As Text" width="480">
 
 Accepts any type on the `value` input and shows it as text.
 
@@ -139,7 +141,7 @@ A list input (several items) is shown item by item. Output is limited to 100,000
 
 ## ND Slider
 
-<img src="docs/images/slider.png" alt="ND Slider" width="360">
+<img src="docs/images/slider.png" alt="ND Slider" width="560">
 
 A one-row slider across the whole node, always centred vertically. The gear on the left opens the settings; the output pin is on the right, level with the slider. No inputs.
 
@@ -196,7 +198,7 @@ Character Prompt Builder. On the left is a column of section buttons with icons 
 
 ## ND Load Images
 
-<img src="docs/images/load-images.png" alt="ND Load Images" width="640">
+<img src="docs/images/load-images.png" alt="ND Load Images" width="760">
 
 A modular image loader. The number of blocks (1–20) is set in the node settings (gear at the top right); there are no add/remove buttons on the node itself. Blocks are laid out in a grid that adapts to the node size.
 
@@ -235,6 +237,8 @@ A parameters wire (`ND_PARAMS`) carries several named values at once, and wires 
 - Both follow wires through reroutes and subgraph boundaries.
 
 ## How Upscale works
+
+The selectors do not upscale. The Upscale button only queues a run with `upscale = true`; what happens with the selected image is up to the upscale branch you connect (any upscale nodes, including third-party ones).
 
 - **Run** queues the workflow with `upscale = false`. The wire into the `image` field of the selector's Pack is removed from the prompt, so the upscale branch is not evaluated.
 - **Upscale** queues the workflow with `upscale = true` and the index selected at the moment of the click. Seeds set to randomize or increment on nodes upstream of the selector keep their values from the last Run, so the generation is taken from cache. The result wired to `image` is saved and shown in the node.

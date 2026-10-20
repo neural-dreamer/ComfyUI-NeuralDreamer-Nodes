@@ -11,7 +11,7 @@
 
 | Нода | Категория | Назначение |
 |---|---|---|
-| [ND Variant Preview Selector](#nd-variant-preview-selector) | `Neural Dreamer/Variant` | Выбор варианта из батча изображений и запуск апскейла для него |
+| [ND Variant Preview Selector](#nd-variant-preview-selector) | `Neural Dreamer/Variant` | Выбор варианта из батча изображений; необязательная кнопка отправляет его в ваш апскейлер |
 | [ND Live Preview Bridge](#nd-live-preview-bridge) | `Neural Dreamer/Variant` | Передаёт в Variant Preview Selector живое превью генерируемого изображения |
 | [ND Variant Slider Selector](#nd-variant-slider-selector) | `Neural Dreamer/Variant` | То же управление без превью: целочисленный слайдер, тумблер, кнопка Upscale |
 | [ND Show Any As Text](#nd-show-any-as-text) | `Neural Dreamer/Utils` | Показывает любое значение как текст, есть вкладки для заметок |
@@ -43,9 +43,11 @@ git clone https://github.com/neural-dreamer/ComfyUI-NeuralDreamer-Nodes.git
 
 ## ND Variant Preview Selector
 
-<img src="docs/images/variant-preview-selector.png" alt="ND Variant Preview Selector" width="480">
+<img src="docs/images/variant-preview-selector.png" alt="ND Variant Preview Selector" width="640">
 
-Показывает батч изображений миниатюрами и главным превью. Вариант выбирается кликом или стрелками на клавиатуре, кнопка **Upscale** запускает для него ветку апскейла. Генерация при этом берётся из кэша.
+Показывает батч изображений миниатюрами и главным превью. Вариант выбирается кликом или стрелками на клавиатуре.
+
+**Эта нода не является апскейлером** и сама ничего не увеличивает. Кнопка **Upscale** необязательная (её можно отключить в настройках) и служит другой цели: она отправляет выбранный вариант в апскейлер, который вы собираете в воркфлоу после селектора, на любых нодах апскейла, в том числе сторонних. Генерация при этом берётся из кэша, а результат апскейла можно показать обратно в ноде.
 
 **Поля входа** (через Pack Parameters)
 
@@ -88,7 +90,7 @@ git clone https://github.com/neural-dreamer/ComfyUI-NeuralDreamer-Nodes.git
 
 ## ND Live Preview Bridge
 
-<img src="docs/images/live-preview-bridge.png" alt="ND Live Preview Bridge" width="560">
+<img src="docs/images/live-preview-bridge.png" alt="ND Live Preview Bridge" width="760">
 
 Ставится на провод `MODEL` перед сэмплерами (после загрузчика модели и её патчей, например LoRA или ModelSampling). Пока сэмплеры работают, бридж отправляет маленькое превью генерируемого изображения (при батче — первого) в [ND Variant Preview Selector](#nd-variant-preview-selector) с включённым *Live preview*. Модель проходит без изменений.
 
@@ -104,9 +106,9 @@ git clone https://github.com/neural-dreamer/ComfyUI-NeuralDreamer-Nodes.git
 
 ## ND Variant Slider Selector
 
-<img src="docs/images/variant-slider-selector.png" alt="ND Variant Slider Selector" width="360">
+<img src="docs/images/variant-slider-selector.png" alt="ND Variant Slider Selector" width="560">
 
-Целочисленный слайдер с тумблером Multi-Variant и кнопкой Upscale. Входа у ноды нет. Диапазон слайдера (min, max, step) задаётся кнопкой с шестерёнкой или в свойствах ноды.
+Целочисленный слайдер с тумблером Multi-Variant и кнопкой Upscale. Как и Preview Selector, сама ничего не увеличивает: кнопка только запускает ветку апскейла, которую вы собираете в воркфлоу. Входа у ноды нет. Диапазон слайдера (min, max, step) задаётся кнопкой с шестерёнкой или в свойствах ноды.
 
 | Поле выхода | Тип | Описание |
 |---|---|---|
@@ -116,7 +118,7 @@ git clone https://github.com/neural-dreamer/ComfyUI-NeuralDreamer-Nodes.git
 
 ## ND Show Any As Text
 
-<img src="docs/images/show-any-as-text.png" alt="ND Show Any As Text" width="420">
+<img src="docs/images/show-any-as-text.png" alt="ND Show Any As Text" width="480">
 
 Принимает на вход `value` любой тип и показывает его как текст.
 
@@ -139,7 +141,7 @@ git clone https://github.com/neural-dreamer/ComfyUI-NeuralDreamer-Nodes.git
 
 ## ND Slider
 
-<img src="docs/images/slider.png" alt="ND Slider" width="360">
+<img src="docs/images/slider.png" alt="ND Slider" width="560">
 
 Слайдер в одну строку на всю ширину ноды, всегда по центру по высоте. Шестерёнка слева открывает настройки, выходной пин справа, на одном уровне со слайдером. Входов нет.
 
@@ -196,7 +198,7 @@ Character Prompt Builder. Слева колонка кнопок раздело�
 
 ## ND Load Images
 
-<img src="docs/images/load-images.png" alt="ND Load Images" width="640">
+<img src="docs/images/load-images.png" alt="ND Load Images" width="760">
 
 Модульный загрузчик изображений. Количество блоков (1–20) задаётся в настройках ноды (шестерёнка справа вверху); кнопок добавления и удаления на самой ноде нет. Блоки раскладываются сеткой, которая подстраивается под размер ноды.
 
@@ -235,6 +237,8 @@ Character Prompt Builder. Слева колонка кнопок раздело�
 - Обе ноды прослеживают провода через reroute и границы сабграфов.
 
 ## Как работает Upscale
+
+Селекторы не апскейлят. Кнопка Upscale только ставит запуск с `upscale = true`; что произойдёт с выбранным изображением, решает подключённая вами ветка апскейла (любые ноды апскейла, в том числе сторонние).
 
 - **Run** ставит workflow в очередь с `upscale = false`. Провод в поле `image` у Pack селектора убирается из промпта, поэтому ветка апскейла не вычисляется.
 - **Upscale** ставит workflow в очередь с `upscale = true` и индексом, выбранным в момент нажатия. Сиды в режиме randomize или increment у нод выше селектора сохраняют значения последнего Run, поэтому генерация берётся из кэша. Результат, подключённый к `image`, сохраняется и показывается в ноде.
