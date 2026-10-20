@@ -2,7 +2,7 @@
 
 Кастомные ноды для [ComfyUI](https://github.com/comfyanonymous/ComfyUI) от Neural Dreamer.
 
-![Version](https://img.shields.io/badge/version-1.0.0-2f7de1)
+![Version](https://img.shields.io/badge/version-1.0.1-2f7de1)
 [![License: MIT](https://img.shields.io/badge/license-MIT-2f7de1)](LICENSE)
 
 [English](README.md) · **Русский**

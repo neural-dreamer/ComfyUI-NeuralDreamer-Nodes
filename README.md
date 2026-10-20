@@ -2,7 +2,7 @@
 
 Custom nodes for [ComfyUI](https://github.com/comfyanonymous/ComfyUI) by Neural Dreamer.
 
-![Version](https://img.shields.io/badge/version-1.0.0-2f7de1)
+![Version](https://img.shields.io/badge/version-1.0.1-2f7de1)
 [![License: MIT](https://img.shields.io/badge/license-MIT-2f7de1)](LICENSE)
 
 **English** · [Русский](README_RU.md)
