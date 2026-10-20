@@ -1,0 +1,16 @@
+[project]
+name = "comfyui-neuraldreamer-nodes"
+description = "Neural Dreamer Nodes — ComfyUI nodes: variant selection with one-click Upscale and live preview, a modular image loader, a character prompt builder, parameter bundles and more."
+version = "1.0.0"
+license = { file = "LICENSE" }
+dependencies = []
+
+[project.urls]
+Repository = "https://github.com/neural-dreamer/ComfyUI-NeuralDreamer-Nodes"
+Documentation = "https://github.com/neural-dreamer/ComfyUI-NeuralDreamer-Nodes#readme"
+"Bug Tracker" = "https://github.com/neural-dreamer/ComfyUI-NeuralDreamer-Nodes/issues"
+
+[tool.comfy]
+PublisherId = "neural-dreamer"
+DisplayName = "Neural Dreamer Nodes"
+Icon = ""

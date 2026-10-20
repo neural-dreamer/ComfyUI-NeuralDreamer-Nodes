@@ -1,0 +1,851 @@
+{
+  "version": 1,
+  "_about": "Data for ND Character Builder: parts, parameters, options and the words they turn into. Read by nd_nodes/character_builder.py (text) and js/character_builder.js (UI). Option fields: label (UI), tag (tags format: Danbooru tags; {n} and {m} are replaced by the parameter's n and m, {female:...|male:...} picks by sex; an empty tag falls back to a plain tag: ptag if given, else built from the natural-language words), adj (adjective used in a natural-language group), text (a whole phrase, used when the group has one parameter), post (a phrase placed after the noun), swatch (color), only (sexes the option suits; random skips it for others), weight (how often random picks the option, 1 by default), needs (random picks the option only when another parameter has one of these values, e.g. green skin only for orcs and goblins), word / noun / trait (race: a word before the noun, a noun that replaces it, features added after it), hint (tooltip text), shape (figure only: how the option changes the silhouette), solo (this option replaces the whole group phrase, e.g. 'a flat chest'), mutes (parameters of the same part this option switches off). Parameter fields: multi (up to this many options can be picked at once, e.g. mixed races), only (the parameter is used only for these sexes; it is hidden and left out of the text for the others), hint, set (use a shared option set), n (noun for {n}). Zone fields: copy (a button that copies values between parameters), presets (quick buttons that set several values). More parameter fields: requires (the parameter is used only when another one has one of these values, e.g. penis size only with a penis), random_sets (what random picks for a multi parameter, with only/weight), combos (extra tags and a lead phrase for a combination, e.g. futanari). Option fields: exclusive (in a multi parameter it excludes the others), neg (tag for the Negative output when the option is not chosen). Output field negative: the Negative text.",
+
+  "outputs": [
+    { "key": "Description", "part": null },
+    { "key": "General", "part": "general" },
+    { "key": "Face", "part": "face" },
+    { "key": "Hair", "part": "hair" },
+    { "key": "Body", "part": "body" },
+    { "key": "Muscle", "part": "muscle" },
+    { "key": "Waist & Hips", "part": "waist_hips" },
+    { "key": "Chest", "part": "chest" },
+    { "key": "Butt & Legs", "part": "butt_legs" },
+    { "key": "Hands & Nails", "part": "hands_nails" },
+    { "key": "Feet", "part": "feet" },
+    { "key": "Genitals", "part": "genitals" },
+    { "key": "Negative", "part": null, "negative": true }
+  ],
+
+  "option_sets": {
+    "muscle": [
+      { "id": "soft", "label": "Soft", "adj": "soft", "tag": "", "hint": "No muscle tone; soft and smooth." },
+      { "id": "smooth", "label": "Smooth", "adj": "smooth, slender", "tag": "", "hint": "Slim, with no visible muscle lines." },
+      { "id": "toned", "label": "Toned", "adj": "toned", "tag": "", "hint": "Firm, with lightly visible muscle tone." },
+      { "id": "athletic", "label": "Athletic", "adj": "athletic", "tag": "", "hint": "Sporty and clearly toned, like someone who trains regularly." },
+      { "id": "defined", "label": "Defined", "adj": "well-defined", "tag": "", "hint": "Low body fat, clearly separated muscles; a fitness-model look." },
+      { "id": "muscular", "label": "Muscular", "adj": "muscular", "tag": "{m}", "hint": "Large, well-developed muscles." },
+      { "id": "bodybuilder", "label": "Bodybuilder", "adj": "huge, bulging", "tag": "{m}", "hint": "Extreme muscle mass, as in competition bodybuilding." }
+    ],
+    "nail_colors": [
+      { "id": "red", "label": "Red", "swatch": "#c0182a", "tag": "{n}, red nails", "post": "painted red" },
+      { "id": "burgundy", "label": "Burgundy", "swatch": "#6d1027", "tag": "{n}, red nails", "post": "painted burgundy" },
+      { "id": "pink", "label": "Pink", "swatch": "#f08cb3", "tag": "{n}, pink nails", "post": "painted pink" },
+      { "id": "hot_pink", "label": "Hot pink", "swatch": "#e8287c", "tag": "{n}, pink nails", "post": "painted hot pink" },
+      { "id": "nude", "label": "Nude", "swatch": "#dcb59c", "tag": "{n}", "post": "painted nude beige" },
+      { "id": "coral", "label": "Coral", "swatch": "#f2735d", "tag": "{n}, orange nails", "post": "painted coral" },
+      { "id": "black", "label": "Black", "swatch": "#141414", "tag": "{n}, black nails", "post": "painted black" },
+      { "id": "white", "label": "White", "swatch": "#f4f4f4", "tag": "{n}, white nails", "post": "painted white" },
+      { "id": "purple", "label": "Purple", "swatch": "#7a3fb0", "tag": "{n}, purple nails", "post": "painted purple" },
+      { "id": "blue", "label": "Blue", "swatch": "#2e5fc9", "tag": "{n}, blue nails", "post": "painted blue" },
+      { "id": "gold", "label": "Gold", "swatch": "#d2a83c", "tag": "{n}, gold nails", "post": "painted gold" },
+      { "id": "silver", "label": "Silver", "swatch": "#c4c8cf", "tag": "{n}, silver nails", "post": "painted silver" }
+    ],
+    "nail_finish": [
+      { "id": "bare", "label": "Bare", "tag": "", "ptag": "unpainted {n}", "post": "left unpainted", "hint": "No polish at all. The color setting is then not used.", "mutes": ["nail_color", "toenail_color"] },
+      { "id": "clear", "label": "Clear coat", "tag": "", "ptag": "clear coat {n}", "post": "with a clear coat", "hint": "Transparent polish: natural color with a light shine. The color setting is then not used.", "mutes": ["nail_color", "toenail_color"] },
+      { "id": "glossy", "label": "Glossy", "tag": "", "ptag": "glossy {n}", "post": "with a glossy finish" },
+      { "id": "matte", "label": "Matte", "tag": "", "ptag": "matte {n}", "post": "with a matte finish" },
+      { "id": "glitter", "label": "Glitter", "tag": "", "ptag": "glitter {n}", "post": "with glitter polish" },
+      { "id": "chrome", "label": "Chrome", "tag": "", "ptag": "chrome {n}", "post": "with a mirror chrome finish", "hint": "A metallic, mirror-like shine." },
+      { "id": "french", "label": "French", "tag": "", "ptag": "french tip {n}", "post": "with a French manicure", "hint": "Natural pink base with white tips. The color setting is then not used.", "mutes": ["nail_color", "toenail_color"] }
+    ]
+  },
+
+  "parts": [
+    {
+      "id": "general",
+      "label": "General",
+      "natural": "subject",
+      "params": [
+        { "id": "sex", "label": "Sex", "type": "choice", "options": [
+          { "id": "female", "label": "Woman", "tag": "1girl", "noun": "woman", "pron": "she" },
+          { "id": "male", "label": "Man", "tag": "1boy", "noun": "man", "pron": "he" }
+        ] },
+        { "id": "age", "label": "Age", "hint": "18 to 90. The stage names under the slider are only a guide.", "type": "number", "min": 18, "max": 90, "default": 25,
+          "stages": [
+            { "from": 18, "to": 25, "label": "Young" },
+            { "from": 26, "to": 40, "label": "Adult" },
+            { "from": 41, "to": 60, "label": "Mature" },
+            { "from": 61, "to": 90, "label": "Elderly" }
+          ] },
+        { "id": "race", "label": "Race", "hint": "Human or a fantasy race. Pick up to three to mix them (e.g. elf + fox-folk). Combines with Appearance (the real-world look) and Skin tone.", "type": "choice", "multi": 3, "options": [
+          { "id": "human", "label": "Human", "tag": "", "ptag": "", "weight": 20, "hint": "An ordinary human. The default when nothing is set. Random picks Human about as often as all fantasy races together." },
+          { "id": "elf", "label": "Elf", "tag": "elf, pointy ears", "word": "elf", "trait": "long pointed ears", "hint": "Tall, slender and graceful, with long pointed ears." },
+          { "id": "dark_elf", "label": "Dark elf", "tag": "dark elf, pointy ears", "word": "dark elf", "trait": "long pointed ears", "hint": "An elf of the underground or night realms, often with dark grey, blue or purple skin (set it in Skin tone)." },
+          { "id": "half_elf", "label": "Half-elf", "tag": "pointy ears", "word": "half-elf", "trait": "slightly pointed ears", "hint": "Half human, half elf: human build with subtly pointed ears." },
+          { "id": "dwarf", "label": "Dwarf", "tag": "dwarf, {female:|male:beard}", "word": "dwarf", "trait": "{female:a short sturdy build|male:a short sturdy build and a thick braided beard}", "hint": "Short, broad and sturdy; men usually with a thick beard." },
+          { "id": "gnome", "label": "Gnome", "tag": "gnome", "word": "gnome", "trait": "a tiny stature and a large nose", "hint": "Very small, with big expressive features." },
+          { "id": "halfling", "label": "Halfling", "tag": "halfling", "word": "halfling", "trait": "a small stature", "hint": "Small and cheerful, about half the height of a human." },
+          { "id": "goblin", "label": "Goblin", "tag": "goblin, pointy ears, colored skin", "word": "goblin", "trait": "long pointed ears and a small wiry build", "hint": "Small and wiry, with big pointed ears; usually green or grey skin (set it in Skin tone)." },
+          { "id": "orc", "label": "Orc", "tag": "orc, tusks, colored skin", "word": "orc", "trait": "small tusks and a heavy brow", "hint": "Big and powerful, with tusks; usually green or grey skin (set it in Skin tone)." },
+          { "id": "half_orc", "label": "Half-orc", "tag": "tusks", "word": "half-orc", "trait": "small tusks", "hint": "Half human, half orc: a strong build with small tusks." },
+          { "id": "tiefling", "label": "Tiefling", "tag": "tiefling, horns, demon tail", "word": "tiefling", "trait": "curved horns and a long thin tail", "hint": "Of fiendish blood: horns and a tail; the skin may be red, purple or blue (set it in Skin tone)." },
+          { "id": "demon", "label": "Demon", "tag": "{female:demon girl|male:demon boy}, demon horns, demon wings, demon tail", "word": "demon", "trait": "horns, bat-like wings and a slender tail", "hint": "A demon with horns, leathery wings and a tail." },
+          { "id": "succubus", "label": "Succubus", "mix": "succubus", "tag": "demon girl, demon horns, demon wings, demon tail", "noun": "succubus", "trait": "small horns, bat-like wings and a slender heart-tipped tail", "only": ["female"], "hint": "A seductive female demon with horns, wings and a heart-tipped tail." },
+          { "id": "incubus", "label": "Incubus", "tag": "demon boy, demon horns, demon wings, demon tail", "noun": "incubus", "trait": "small horns, bat-like wings and a slender tail", "only": ["male"], "hint": "A seductive male demon with horns, wings and a tail." },
+          { "id": "angel", "label": "Angel", "tag": "angel, angel wings, halo", "word": "angel", "trait": "white feathered wings and a glowing halo", "hint": "A heavenly being with feathered wings and a halo." },
+          { "id": "vampire", "label": "Vampire", "tag": "vampire, fangs", "word": "vampire", "trait": "sharp fangs", "hint": "Undead, ageless, with sharp fangs; often very pale skin (set it in Skin tone)." },
+          { "id": "oni", "label": "Oni", "tag": "oni, horns", "word": "oni", "trait": "small horns on the forehead", "hint": "A Japanese demon with horns on the forehead." },
+          { "id": "fairy", "label": "Fairy", "tag": "fairy, fairy wings, pointy ears", "word": "fairy", "trait": "delicate translucent wings and pointed ears", "hint": "Tiny and magical, with translucent insect-like wings." },
+          { "id": "cat", "label": "Cat-folk", "tag": "{female:cat girl|male:cat boy}, cat ears, cat tail", "noun": "{female:cat girl|male:cat boy}", "trait": "cat ears and a cat tail", "hint": "Human with cat ears and a cat tail (kemonomimi)." },
+          { "id": "fox", "label": "Fox-folk", "tag": "{female:fox girl|male:fox boy}, fox ears, fox tail", "noun": "{female:fox girl|male:fox boy}", "trait": "fox ears and a fluffy fox tail", "hint": "Human with fox ears and a fluffy fox tail, like a kitsune." },
+          { "id": "wolf", "label": "Wolf-folk", "tag": "{female:wolf girl|male:wolf boy}, wolf ears, wolf tail", "noun": "{female:wolf girl|male:wolf boy}", "trait": "wolf ears and a bushy wolf tail", "hint": "Human with wolf ears and a wolf tail." },
+          { "id": "rabbit", "label": "Bunny-folk", "tag": "{female:rabbit girl|male:rabbit boy}, rabbit ears, rabbit tail", "noun": "{female:bunny girl|male:bunny boy}", "trait": "long rabbit ears and a little fluffy tail", "hint": "Human with long rabbit ears and a small round tail." },
+          { "id": "dragon", "label": "Dragon-kin", "tag": "{female:dragon girl|male:dragon boy}, dragon horns, dragon tail, scales", "noun": "{female:dragon girl|male:dragon boy}", "trait": "dragon horns, a scaled tail and patches of scales", "hint": "Human with dragon horns, a scaled tail and patches of scales." }
+        ] },
+        { "id": "appearance", "label": "Appearance", "hint": "The real-world ethnic look of the face and body (also for fantasy races, e.g. a Nordic elf). Leave it unset to let the model decide.", "type": "choice", "options": [
+          { "id": "european", "label": "European", "tag": "", "ptag": "european appearance", "adj": "European" },
+          { "id": "slavic", "label": "Slavic", "tag": "", "ptag": "slavic appearance", "adj": "Slavic" },
+          { "id": "nordic", "label": "Nordic", "tag": "", "ptag": "nordic appearance", "adj": "Nordic" },
+          { "id": "mediterranean", "label": "Mediterranean", "tag": "", "ptag": "mediterranean appearance", "adj": "Mediterranean" },
+          { "id": "east_asian", "label": "East Asian", "tag": "asian", "adj": "East Asian" },
+          { "id": "southeast_asian", "label": "Southeast Asian", "tag": "asian", "adj": "Southeast Asian" },
+          { "id": "south_asian", "label": "South Asian", "tag": "indian", "adj": "South Asian" },
+          { "id": "middle_eastern", "label": "Middle Eastern", "tag": "", "ptag": "middle eastern appearance", "adj": "Middle Eastern" },
+          { "id": "african", "label": "African", "tag": "", "ptag": "african appearance", "adj": "African" },
+          { "id": "latin", "label": "Latin American", "tag": "", "ptag": "latin american appearance", "adj": "Latin American" },
+          { "id": "mixed", "label": "Mixed", "tag": "", "ptag": "mixed-race appearance", "adj": "mixed-race" }
+        ] },
+        { "id": "skin_tone", "label": "Skin tone", "type": "color", "options": [
+          { "id": "porcelain", "label": "Porcelain", "swatch": "#f6e1d3", "tag": "pale skin", "adj": "porcelain" },
+          { "id": "fair", "label": "Fair", "swatch": "#efcfb6", "tag": "pale skin", "adj": "fair" },
+          { "id": "light", "label": "Light", "swatch": "#e3b897", "tag": "", "ptag": "light skin", "adj": "light" },
+          { "id": "olive", "label": "Olive", "swatch": "#c49a6c", "tag": "", "ptag": "olive skin", "adj": "olive" },
+          { "id": "tan", "label": "Tan", "swatch": "#b8835a", "tag": "tan", "adj": "tanned" },
+          { "id": "brown", "label": "Brown", "swatch": "#8a5a3a", "tag": "dark skin, {female:dark-skinned female|male:dark-skinned male}", "adj": "brown" },
+          { "id": "dark_brown", "label": "Dark brown", "swatch": "#5e3a24", "tag": "dark skin, {female:dark-skinned female|male:dark-skinned male}", "adj": "dark brown" },
+          { "id": "deep", "label": "Deep", "swatch": "#3b2417", "tag": "very dark skin, {female:dark-skinned female|male:dark-skinned male}", "adj": "deep dark" },
+          { "id": "green", "label": "Green", "swatch": "#6f9a5a", "tag": "colored skin, green skin", "adj": "green", "needs": { "p": "general.race", "in": ["goblin", "orc", "half_orc"] }, "hint": "A fantasy skin color, for races such as orcs, goblins, dark elves or tieflings. Random picks it only for those." },
+          { "id": "dark_green", "label": "Dark green", "swatch": "#3f5e33", "tag": "colored skin, green skin", "adj": "dark green", "needs": { "p": "general.race", "in": ["goblin", "orc", "half_orc"] }, "hint": "A fantasy skin color, for races such as orcs, goblins, dark elves or tieflings. Random picks it only for those." },
+          { "id": "grey", "label": "Grey", "swatch": "#8d939c", "tag": "colored skin, grey skin", "adj": "ash-grey", "needs": { "p": "general.race", "in": ["dark_elf", "goblin", "orc", "half_orc", "vampire"] }, "hint": "A fantasy skin color, for races such as orcs, goblins, dark elves or tieflings. Random picks it only for those." },
+          { "id": "dark_grey", "label": "Charcoal", "swatch": "#4a4e55", "tag": "colored skin, grey skin", "adj": "charcoal-grey", "needs": { "p": "general.race", "in": ["dark_elf", "goblin", "orc", "half_orc", "vampire"] }, "hint": "A fantasy skin color, for races such as orcs, goblins, dark elves or tieflings. Random picks it only for those." },
+          { "id": "blue", "label": "Blue", "swatch": "#5a7fb8", "tag": "colored skin, blue skin", "adj": "blue", "needs": { "p": "general.race", "in": ["dark_elf", "tiefling", "demon", "succubus", "incubus"] }, "hint": "A fantasy skin color, for races such as orcs, goblins, dark elves or tieflings. Random picks it only for those." },
+          { "id": "dark_blue", "label": "Dark blue", "swatch": "#2f4a78", "tag": "colored skin, blue skin", "adj": "deep blue", "needs": { "p": "general.race", "in": ["dark_elf", "tiefling", "demon", "succubus", "incubus"] }, "hint": "A fantasy skin color, for races such as orcs, goblins, dark elves or tieflings. Random picks it only for those." },
+          { "id": "red", "label": "Red", "swatch": "#b5473a", "tag": "colored skin, red skin", "adj": "crimson", "needs": { "p": "general.race", "in": ["tiefling", "demon", "succubus", "incubus", "oni"] }, "hint": "A fantasy skin color, for races such as orcs, goblins, dark elves or tieflings. Random picks it only for those." },
+          { "id": "dark_red", "label": "Dark red", "swatch": "#7a2a22", "tag": "colored skin, red skin", "adj": "dark crimson", "needs": { "p": "general.race", "in": ["tiefling", "demon", "succubus", "incubus", "oni"] }, "hint": "A fantasy skin color, for races such as orcs, goblins, dark elves or tieflings. Random picks it only for those." },
+          { "id": "purple", "label": "Purple", "swatch": "#7d5aa6", "tag": "colored skin, purple skin", "adj": "violet", "needs": { "p": "general.race", "in": ["dark_elf", "tiefling", "demon", "succubus", "incubus"] }, "hint": "A fantasy skin color, for races such as orcs, goblins, dark elves or tieflings. Random picks it only for those." },
+          { "id": "dark_purple", "label": "Dark purple", "swatch": "#4b3366", "tag": "colored skin, purple skin", "adj": "deep violet", "needs": { "p": "general.race", "in": ["dark_elf", "tiefling", "demon", "succubus", "incubus"] }, "hint": "A fantasy skin color, for races such as orcs, goblins, dark elves or tieflings. Random picks it only for those." }
+        ] },
+        { "id": "skin_texture", "label": "Skin texture", "hint": "How the skin looks up close.", "type": "choice", "options": [
+          { "id": "flawless", "label": "Flawless", "tag": "", "ptag": "flawless skin", "adj": "smooth, flawless", "hint": "Smooth, even skin with no visible pores or marks; a retouched, glossy look." },
+          { "id": "natural", "label": "Natural", "tag": "", "ptag": "natural skin texture", "adj": "natural, lightly textured", "hint": "Realistic skin with visible pores and fine texture. Helps against the plastic AI look." },
+          { "id": "freckled", "label": "Freckled", "tag": "freckles", "adj": "freckled", "hint": "Freckles on the face, often also on the nose, cheeks and shoulders." },
+          { "id": "sun_kissed", "label": "Sun-kissed", "tag": "tan", "adj": "sun-kissed", "hint": "A warm, slightly tanned glow, as after time in the sun." },
+          { "id": "fine_lines", "label": "Fine lines", "tag": "", "ptag": "fine lines", "adj": "mature, finely lined", "hint": "Mature skin with fine lines around the eyes and mouth. Random skips it under 36." },
+          { "id": "wrinkled", "label": "Wrinkled", "tag": "wrinkled skin", "adj": "deeply wrinkled", "hint": "Deep wrinkles of old age. Random skips it under 56." }
+        ] }
+      ]
+    },
+    {
+      "id": "face",
+      "label": "Face",
+      "params": [
+        { "id": "face_shape", "label": "Face shape", "type": "choice", "options": [
+          { "id": "oval", "label": "Oval", "tag": "", "adj": "oval", "hint": "A little longer than wide, balanced and soft. The most neutral shape." },
+          { "id": "round", "label": "Round", "tag": "", "adj": "round", "hint": "About as wide as long, with full soft cheeks and a rounded chin." },
+          { "id": "heart", "label": "Heart", "tag": "", "adj": "heart-shaped", "hint": "Wide forehead and cheekbones narrowing to a small pointed chin." },
+          { "id": "square", "label": "Square", "tag": "", "adj": "square", "hint": "Wide straight jaw; forehead, cheekbones and jaw about the same width." },
+          { "id": "diamond", "label": "Diamond", "tag": "", "adj": "diamond-shaped", "hint": "Narrow forehead and jaw, widest at the cheekbones." },
+          { "id": "long", "label": "Long", "tag": "", "adj": "long", "hint": "Clearly longer than wide, often with a high forehead." }
+        ] },
+        { "id": "eye_size", "label": "Eye size", "type": "scale", "options": [
+          { "id": "very_small", "label": "Very small", "tag": "", "adj": "very small" },
+          { "id": "small", "label": "Small", "tag": "", "adj": "small" },
+          { "id": "medium", "label": "Medium", "tag": "", "adj": "medium-sized" },
+          { "id": "large", "label": "Large", "tag": "", "adj": "large" },
+          { "id": "very_large", "label": "Very large", "tag": "", "adj": "very large" }
+        ] },
+        { "id": "eye_shape", "label": "Eye shape", "type": "choice", "options": [
+          { "id": "almond", "label": "Almond", "tag": "", "adj": "almond-shaped", "hint": "Oval eyes with slightly pointed outer corners. The most common shape." },
+          { "id": "round", "label": "Round", "tag": "", "adj": "round", "hint": "Large circular eyes that show more white around the iris." },
+          { "id": "hooded", "label": "Hooded", "tag": "", "adj": "hooded", "hint": "A fold of skin over the eyelid hides most of the crease." },
+          { "id": "upturned", "label": "Upturned", "tag": "tsurime", "adj": "upturned", "hint": "The outer corners tilt upward." },
+          { "id": "downturned", "label": "Downturned", "tag": "tareme", "adj": "downturned", "hint": "The outer corners tilt downward; a soft, slightly sad look." },
+          { "id": "monolid", "label": "Monolid", "tag": "", "adj": "monolid", "hint": "No visible eyelid crease; common in East Asian faces." },
+          { "id": "cat", "label": "Cat-like", "tag": "tsurime", "adj": "cat-like", "hint": "Elongated eyes with lifted outer corners; a sultry look." }
+        ] },
+        { "id": "eye_color", "label": "Eye color", "type": "color", "options": [
+          { "id": "dark_brown", "label": "Dark brown", "swatch": "#3d2414", "tag": "brown eyes", "adj": "dark brown" },
+          { "id": "brown", "label": "Brown", "swatch": "#6b4022", "tag": "brown eyes", "adj": "brown" },
+          { "id": "hazel", "label": "Hazel", "swatch": "#8e6b32", "tag": "yellow eyes", "adj": "hazel" },
+          { "id": "amber", "label": "Amber", "swatch": "#c58b24", "tag": "yellow eyes", "adj": "amber" },
+          { "id": "green", "label": "Green", "swatch": "#4d8a4a", "tag": "green eyes", "adj": "green" },
+          { "id": "blue", "label": "Blue", "swatch": "#3f74c4", "tag": "blue eyes", "adj": "blue" },
+          { "id": "light_blue", "label": "Light blue", "swatch": "#8bb8e6", "tag": "blue eyes", "adj": "pale blue" },
+          { "id": "gray", "label": "Gray", "swatch": "#8a949c", "tag": "grey eyes", "adj": "gray" },
+          { "id": "violet", "label": "Violet", "swatch": "#7d58b5", "tag": "purple eyes", "adj": "violet" },
+          { "id": "red", "label": "Red", "swatch": "#b3262a", "tag": "red eyes", "adj": "red" }
+        ] },
+        { "id": "brow_thickness", "label": "Eyebrow thickness", "type": "scale", "options": [
+          { "id": "thin", "label": "Thin", "tag": "", "adj": "thin" },
+          { "id": "medium", "label": "Medium", "tag": "", "adj": "medium" },
+          { "id": "thick", "label": "Thick", "tag": "thick eyebrows", "adj": "thick" },
+          { "id": "bushy", "label": "Bushy", "tag": "thick eyebrows", "adj": "bushy", "hint": "Very thick, full and natural brows." }
+        ] },
+        { "id": "brow_shape", "label": "Eyebrow shape", "type": "choice", "options": [
+          { "id": "straight", "label": "Straight", "tag": "", "adj": "straight", "hint": "Flat brows with almost no arch." },
+          { "id": "soft_arch", "label": "Soft arch", "tag": "", "adj": "softly arched", "hint": "A gentle curve; a natural look." },
+          { "id": "high_arch", "label": "High arch", "tag": "", "adj": "high-arched", "hint": "A pronounced peak; an expressive, glamorous look." },
+          { "id": "angled", "label": "Angled", "tag": "", "adj": "sharply angled", "hint": "A sharp angle at the peak; a fierce look." }
+        ] },
+        { "id": "nose_size", "label": "Nose size", "type": "scale", "options": [
+          { "id": "very_small", "label": "Very small", "tag": "", "adj": "very small" },
+          { "id": "small", "label": "Small", "tag": "", "adj": "small" },
+          { "id": "medium", "label": "Medium", "tag": "", "adj": "medium-sized" },
+          { "id": "large", "label": "Large", "tag": "big nose", "adj": "large" },
+          { "id": "very_large", "label": "Very large", "tag": "big nose", "adj": "very large" }
+        ] },
+        { "id": "nose_shape", "label": "Nose shape", "type": "choice", "options": [
+          { "id": "straight", "label": "Straight", "tag": "", "adj": "straight", "hint": "A straight bridge from the forehead to the tip." },
+          { "id": "button", "label": "Button", "tag": "", "adj": "button", "hint": "Small and round with a soft, slightly upturned tip." },
+          { "id": "upturned", "label": "Upturned", "tag": "", "adj": "upturned", "hint": "The tip points slightly up (a ski-slope nose)." },
+          { "id": "thin", "label": "Slender", "tag": "", "adj": "slender", "hint": "A narrow bridge and small nostrils." },
+          { "id": "wide", "label": "Wide", "tag": "", "adj": "wide", "hint": "A broad bridge and wide nostrils." },
+          { "id": "aquiline", "label": "Aquiline", "tag": "aquiline nose", "adj": "aquiline", "hint": "A curved, hooked bridge, like an eagle's beak." },
+          { "id": "roman", "label": "Roman", "tag": "", "adj": "Roman", "hint": "A strong, high bridge with a noticeable bump." }
+        ] },
+        { "id": "lips", "label": "Lips", "type": "scale", "options": [
+          { "id": "very_thin", "label": "Very thin", "tag": "", "adj": "very thin" },
+          { "id": "thin", "label": "Thin", "tag": "", "adj": "thin" },
+          { "id": "medium", "label": "Medium", "tag": "", "adj": "medium" },
+          { "id": "full", "label": "Full", "tag": "thick lips", "adj": "full" },
+          { "id": "plump", "label": "Plump", "tag": "thick lips", "adj": "plump, very full", "hint": "Very full, pouty lips, as if with filler." }
+        ] },
+        { "id": "mouth", "label": "Mouth size", "type": "scale", "options": [
+          { "id": "small", "label": "Small", "tag": "", "adj": "small" },
+          { "id": "medium", "label": "Medium", "tag": "", "adj": "medium-sized" },
+          { "id": "wide", "label": "Wide", "tag": "", "adj": "wide" }
+        ] },
+        { "id": "jaw", "label": "Jaw", "type": "choice", "options": [
+          { "id": "soft", "label": "Soft", "tag": "", "adj": "soft, rounded", "hint": "A rounded jawline without visible angles." },
+          { "id": "defined", "label": "Defined", "tag": "", "adj": "defined", "hint": "A clear line from the ear to the chin." },
+          { "id": "sharp", "label": "Sharp", "tag": "", "adj": "sharp, angular", "hint": "An angular jaw with crisp corners." },
+          { "id": "square", "label": "Strong square", "tag": "", "adj": "strong, square", "hint": "A wide, strong, right-angled jaw; a masculine look." },
+          { "id": "v_line", "label": "V-line", "tag": "", "adj": "narrow V-shaped", "hint": "A narrow jaw tapering to a small chin; the K-beauty V-line." }
+        ] },
+        { "id": "chin", "label": "Chin", "type": "choice", "options": [
+          { "id": "small", "label": "Small", "tag": "", "adj": "small" },
+          { "id": "pointed", "label": "Pointed", "tag": "", "adj": "pointed", "hint": "A narrow chin ending in a point." },
+          { "id": "rounded", "label": "Rounded", "tag": "", "adj": "rounded" },
+          { "id": "square", "label": "Square", "tag": "", "adj": "square" },
+          { "id": "cleft", "label": "Cleft", "tag": "cleft chin", "adj": "cleft", "hint": "A vertical dimple in the middle of the chin." }
+        ] },
+        { "id": "cheekbones", "label": "Cheekbones", "type": "scale", "options": [
+          { "id": "soft", "label": "Soft", "tag": "", "adj": "soft", "hint": "Barely visible cheekbones and full cheeks." },
+          { "id": "medium", "label": "Medium", "tag": "", "adj": "defined", "hint": "Noticeable but not striking cheekbones." },
+          { "id": "high", "label": "High", "tag": "cheekbones", "adj": "high", "hint": "Cheekbones set high on the face; a sculpted look." },
+          { "id": "prominent", "label": "Prominent", "tag": "cheekbones", "adj": "very high, prominent", "hint": "Very high, sharp cheekbones with hollow cheeks below." }
+        ] }
+      ],
+      "natural": [
+        { "kind": "has", "noun": "face", "article": true, "pre": ["face_shape"] },
+        { "kind": "has", "noun": "eyes", "pre": ["eye_size", "eye_shape", "eye_color"] },
+        { "kind": "has", "noun": "eyebrows", "pre": ["brow_thickness", "brow_shape"] },
+        { "kind": "has", "noun": "nose", "article": true, "pre": ["nose_size", "nose_shape"] },
+        { "kind": "has", "noun": "lips", "pre": ["lips"] },
+        { "kind": "has", "noun": "mouth", "article": true, "pre": ["mouth"] },
+        { "kind": "has", "noun": "jawline", "article": true, "pre": ["jaw"] },
+        { "kind": "has", "noun": "chin", "article": true, "pre": ["chin"] },
+        { "kind": "has", "noun": "cheekbones", "pre": ["cheekbones"] }
+      ]
+    },
+    {
+      "id": "hair",
+      "label": "Hair",
+      "params": [
+        { "id": "hair_color", "label": "Hair color", "type": "color", "options": [
+          { "id": "black", "label": "Black", "swatch": "#141414", "tag": "black hair", "adj": "black" },
+          { "id": "dark_brown", "label": "Dark brown", "swatch": "#3b2417", "tag": "brown hair", "adj": "dark brown" },
+          { "id": "brown", "label": "Brown", "swatch": "#6a4229", "tag": "brown hair", "adj": "brown" },
+          { "id": "light_brown", "label": "Light brown", "swatch": "#9a6b44", "tag": "brown hair", "adj": "light brown" },
+          { "id": "auburn", "label": "Auburn", "swatch": "#8d3a1e", "tag": "red hair", "adj": "auburn" },
+          { "id": "ginger", "label": "Ginger", "swatch": "#c4592a", "tag": "orange hair", "adj": "ginger" },
+          { "id": "red", "label": "Red", "swatch": "#a3201c", "tag": "red hair", "adj": "vivid red" },
+          { "id": "strawberry", "label": "Strawberry blonde", "swatch": "#d79a6b", "tag": "orange hair", "adj": "strawberry blonde" },
+          { "id": "golden", "label": "Golden blonde", "swatch": "#d9b25a", "tag": "blonde hair", "adj": "golden blonde" },
+          { "id": "ash", "label": "Ash blonde", "swatch": "#bfb39a", "tag": "blonde hair", "adj": "ash blonde" },
+          { "id": "platinum", "label": "Platinum blonde", "swatch": "#ece3c8", "tag": "blonde hair", "adj": "platinum blonde" },
+          { "id": "silver", "label": "Silver", "swatch": "#b9bcc2", "tag": "grey hair", "adj": "silver" },
+          { "id": "white", "label": "White", "swatch": "#f2f2f2", "tag": "white hair", "adj": "white" },
+          { "id": "pink", "label": "Pink", "swatch": "#e98bb5", "tag": "pink hair", "adj": "pink" },
+          { "id": "blue", "label": "Blue", "swatch": "#4f7fd9", "tag": "blue hair", "adj": "blue" },
+          { "id": "purple", "label": "Purple", "swatch": "#8a5cc9", "tag": "purple hair", "adj": "purple" },
+          { "id": "green", "label": "Green", "swatch": "#4fa36a", "tag": "green hair", "adj": "green" }
+        ] },
+        { "id": "hair_length", "label": "Hair length", "type": "scale", "options": [
+          { "id": "very_short", "label": "Very short", "tag": "very short hair", "adj": "very short", "hint": "Cropped close to the head." },
+          { "id": "short", "label": "Short", "tag": "short hair", "adj": "short", "hint": "Above the ears or just covering them." },
+          { "id": "chin", "label": "Chin", "tag": "short hair", "adj": "chin-length", "hint": "Ends at the chin." },
+          { "id": "shoulder", "label": "Shoulder", "tag": "medium hair", "adj": "shoulder-length", "hint": "Ends at the shoulders." },
+          { "id": "long", "label": "Long", "tag": "long hair", "adj": "long", "hint": "Ends below the shoulder blades." },
+          { "id": "very_long", "label": "Waist", "tag": "very long hair", "adj": "very long, waist-length", "hint": "Down to the waist." },
+          { "id": "extreme", "label": "Hip", "tag": "very long hair", "adj": "extremely long, hip-length", "hint": "Down to the hips or longer." }
+        ] },
+        { "id": "hair_texture", "label": "Hair texture", "type": "choice", "options": [
+          { "id": "straight", "label": "Straight", "tag": "straight hair", "adj": "straight", "hint": "No wave at all." },
+          { "id": "slightly_wavy", "label": "Slightly wavy", "tag": "wavy hair", "adj": "slightly wavy", "hint": "Loose bends; mostly straight." },
+          { "id": "wavy", "label": "Wavy", "tag": "wavy hair", "adj": "wavy", "hint": "Clear S-shaped waves." },
+          { "id": "curly", "label": "Curly", "tag": "curly hair", "adj": "curly", "hint": "Defined spiral curls." },
+          { "id": "ringlets", "label": "Ringlets", "tag": "ringlets", "adj": "ringlet-curled", "hint": "Long, springy, separate spiral curls; a doll-like look." },
+          { "id": "coily", "label": "Coily", "tag": "curly hair", "adj": "tightly coiled", "hint": "Very tight small coils with lots of volume (afro-textured)." }
+        ] },
+        { "id": "hair_style", "label": "Hairstyle", "hint": "Some styles need enough length; with Avoid conflicts, random skips the ones that do not fit.", "type": "choice", "options": [
+          { "id": "loose", "label": "Loose", "tag": "hair down", "post": "worn loose", "hint": "Hair worn down, not tied." },
+          { "id": "ponytail", "label": "High ponytail", "tag": "high ponytail", "post": "tied in a high ponytail", "hint": "Gathered high on the back of the head." },
+          { "id": "low_ponytail", "label": "Low ponytail", "tag": "low ponytail", "post": "tied in a low ponytail", "hint": "Gathered at the nape of the neck." },
+          { "id": "twintails", "label": "Twin tails", "tag": "twintails", "post": "styled in twin tails", "hint": "Two pigtails on the sides of the head." },
+          { "id": "braid", "label": "Braid", "tag": "single braid", "post": "in a single braid" },
+          { "id": "twin_braids", "label": "Twin braids", "tag": "twin braids", "post": "in two braids" },
+          { "id": "bun", "label": "Bun", "tag": "hair bun", "post": "pulled into a neat bun" },
+          { "id": "messy_bun", "label": "Messy bun", "tag": "hair bun, messy hair", "post": "in a messy bun", "hint": "A loosely gathered bun with strands falling out." },
+          { "id": "half_up", "label": "Half-up", "tag": "half updo", "post": "styled half-up", "hint": "The top half tied back, the rest left down." },
+          { "id": "bob", "label": "Bob", "tag": "bob cut", "post": "cut in a sleek bob", "hint": "An even cut around the head at about chin level." },
+          { "id": "pixie", "label": "Pixie", "tag": "pixie cut", "post": "cut in a pixie cut", "hint": "A very short cropped cut." },
+          { "id": "undercut", "label": "Undercut", "tag": "undercut", "post": "with a shaved undercut", "hint": "Sides or back shaved short, longer on top." }
+        ] },
+        { "id": "bangs", "label": "Bangs", "hint": "The fringe over the forehead.", "type": "choice", "options": [
+          { "id": "none", "label": "No bangs", "tag": "forehead", "post": "with the forehead uncovered", "hint": "No fringe; the hair is off the face and the forehead shows." },
+          { "id": "blunt", "label": "Blunt", "tag": "blunt bangs", "post": "with blunt bangs", "hint": "A straight, even fringe cut across the forehead." },
+          { "id": "side", "label": "Side-swept", "tag": "swept bangs", "post": "with side-swept bangs", "hint": "A fringe swept to one side." },
+          { "id": "curtain", "label": "Curtain", "tag": "parted bangs", "post": "with curtain bangs", "hint": "A longer fringe parted in the middle, framing the face." },
+          { "id": "wispy", "label": "Wispy", "tag": "wispy bangs", "post": "with wispy bangs", "hint": "A thin, light, see-through fringe." }
+        ] }
+      ],
+      "natural": [
+        { "kind": "has", "noun": "hair", "pre": ["hair_length", "hair_texture", "hair_color"], "post": ["hair_style", "bangs"] }
+      ]
+    },
+    {
+      "id": "body",
+      "label": "Body",
+      "params": [
+        { "id": "height", "label": "Height", "hint": "Height relative to an average person.", "type": "scale", "options": [
+          { "id": "very_short", "label": "Very short", "tag": "petite", "adj": "very short and petite" },
+          { "id": "short", "label": "Short", "tag": "", "ptag": "short height", "adj": "short" },
+          { "id": "average", "label": "Average", "tag": "", "ptag": "average height", "adj": "of average height" },
+          { "id": "tall", "label": "Tall", "tag": "{female:tall female|male:tall male}", "adj": "tall" },
+          { "id": "very_tall", "label": "Very tall", "tag": "{female:tall female|male:tall male}", "adj": "very tall" }
+        ] },
+        { "id": "figure", "label": "Figure", "hint": "The overall body shape. It also changes the silhouette.", "type": "choice", "options": [
+          { "id": "slender", "label": "Slender", "tag": "skinny", "adj": "slender", "shape": {"sh": -2, "ch": -2, "wa": -2.5, "hi": -3, "th": -2, "nk": -0.6}, "hint": "Thin with long lines and few curves." },
+          { "id": "petite", "label": "Petite", "tag": "petite", "adj": "petite", "only": ["female"], "shape": {"sh": -2.5, "ch": -1.5, "wa": -1.5, "hi": -2, "th": -1.5, "H": -0.04}, "hint": "A small, delicate frame, usually short." },
+          { "id": "hourglass", "label": "Hourglass", "tag": "narrow waist, wide hips", "adj": "hourglass", "only": ["female"], "shape": {"ch": 2.5, "wa": -4, "hi": 4.5, "th": 1.5}, "hint": "Bust and hips about the same width with a clearly narrow waist." },
+          { "id": "pear", "label": "Pear", "tag": "wide hips", "adj": "pear-shaped", "only": ["female"], "shape": {"sh": -3, "ch": -2, "wa": -0.5, "hi": 6.5, "th": 3.5}, "hint": "Hips clearly wider than the shoulders and bust." },
+          { "id": "curvy", "label": "Curvy", "tag": "curvy", "adj": "curvy", "only": ["female"], "shape": {"ch": 2.5, "wa": -1, "hi": 4.5, "th": 3, "calf": 1}, "hint": "Pronounced bust, hips and thighs; softer than an hourglass." },
+          { "id": "voluptuous", "label": "Voluptuous", "tag": "curvy", "adj": "voluptuous", "only": ["female"], "shape": {"sh": 1, "ch": 4, "wa": 0.5, "hi": 6, "th": 4, "calf": 1.5}, "hint": "A very full bust and hips; a lush figure." },
+          { "id": "athletic", "label": "Athletic", "tag": "toned", "adj": "athletic", "shape": {"sh": 3, "ch": 1.5, "hi": -1, "th": 1, "calf": 1, "arm": 1}, "hint": "A fit, sporty body with visible tone." },
+          { "id": "rectangle", "label": "Straight", "tag": "", "adj": "straight, rectangular", "shape": {"ch": -0.5, "wa": 4, "hi": -3}, "hint": "Shoulders, waist and hips about the same width; little waist definition." },
+          { "id": "v_shape", "label": "V-shape", "tag": "v-taper, broad shoulders", "adj": "V-shaped", "shape": {"sh": 7, "ch": 4, "wa": -1, "hi": -4, "th": -1, "arm": 1.5}, "hint": "Shoulders much wider than the hips (inverted triangle)." },
+          { "id": "stocky", "label": "Stocky", "tag": "", "adj": "stocky", "shape": {"sh": 3, "ch": 4, "wa": 6, "hi": 3, "th": 3, "nk": 1.5, "calf": 2, "arm": 2, "leg": -0.5}, "hint": "A broad, solid, compact build." }
+        ] },
+        { "id": "body_fat", "label": "Body fat", "hint": "How soft or lean the body is. Separate from muscle.", "type": "scale", "options": [
+          { "id": "very_lean", "label": "Very lean", "tag": "skinny", "adj": "very lean", "hint": "Very little body fat; bones and muscles show through." },
+          { "id": "lean", "label": "Lean", "tag": "", "adj": "lean", "hint": "Slim with low body fat." },
+          { "id": "average", "label": "Average", "tag": "", "adj": "average", "hint": "Neither lean nor soft." },
+          { "id": "soft", "label": "Soft", "tag": "", "adj": "soft", "hint": "A little softness, no visible muscle lines." },
+          { "id": "chubby", "label": "Chubby", "tag": "plump", "adj": "chubby", "hint": "A noticeably rounded body." },
+          { "id": "plump", "label": "Plump", "tag": "fat", "adj": "plump, heavy-set", "hint": "A heavy, full-bodied build." }
+        ] },
+        { "id": "neck", "label": "Neck", "type": "scale", "options": [
+          { "id": "very_slender", "label": "Very slender", "tag": "", "adj": "very slender" },
+          { "id": "slender", "label": "Slender", "tag": "", "adj": "slender" },
+          { "id": "medium", "label": "Medium", "tag": "", "adj": "medium" },
+          { "id": "thick", "label": "Thick", "tag": "", "adj": "thick" },
+          { "id": "very_thick", "label": "Very thick", "tag": "", "adj": "very thick, strong" }
+        ] },
+        { "id": "shoulders", "label": "Shoulder width", "type": "scale", "options": [
+          { "id": "very_narrow", "label": "Very narrow", "tag": "", "adj": "very narrow" },
+          { "id": "narrow", "label": "Narrow", "tag": "", "adj": "narrow" },
+          { "id": "medium", "label": "Medium", "tag": "", "adj": "medium-width" },
+          { "id": "broad", "label": "Broad", "tag": "broad shoulders", "adj": "broad" },
+          { "id": "very_broad", "label": "Very broad", "tag": "broad shoulders", "adj": "very broad" }
+        ] },
+        { "id": "arm_length", "label": "Arm length", "type": "scale", "options": [
+          { "id": "short", "label": "Short", "tag": "", "adj": "short" },
+          { "id": "medium", "label": "Medium", "tag": "", "adj": "well-proportioned" },
+          { "id": "long", "label": "Long", "tag": "", "adj": "long" }
+        ] },
+        { "id": "leg_length", "label": "Leg length", "type": "scale", "options": [
+          { "id": "short", "label": "Short", "tag": "", "adj": "short" },
+          { "id": "medium", "label": "Medium", "tag": "", "adj": "well-proportioned" },
+          { "id": "long", "label": "Long", "tag": "long legs", "adj": "long" },
+          { "id": "very_long", "label": "Very long", "tag": "long legs", "adj": "very long" }
+        ] }
+      ],
+      "natural": [
+        { "kind": "is", "pre": ["height"] },
+        { "kind": "has", "noun": "figure", "article": true, "pre": ["figure"] },
+        { "kind": "has", "noun": "build", "article": true, "pre": ["body_fat"] },
+        { "kind": "has", "noun": "neck", "article": true, "pre": ["neck"] },
+        { "kind": "has", "noun": "shoulders", "pre": ["shoulders"] },
+        { "kind": "has", "noun": "arms", "pre": ["arm_length"] },
+        { "kind": "has", "noun": "legs", "pre": ["leg_length"] }
+      ]
+    },
+    {
+      "id": "muscle",
+      "label": "Muscle",
+      "params": [
+        { "id": "overall", "label": "Overall muscle", "hint": "Muscle of the whole body. The arm, back, abs, glute and leg values override it for their zone.", "type": "scale", "options": [
+          { "id": "soft", "label": "Soft", "tag": "", "text": "a soft physique with no visible muscle", "hint": "No muscle tone; soft and smooth." },
+          { "id": "smooth", "label": "Smooth", "tag": "", "text": "a smooth, slender physique", "hint": "Slim, with no visible muscle lines." },
+          { "id": "toned", "label": "Toned", "tag": "toned, {female:toned female|male:toned male}", "text": "a toned physique", "hint": "Firm, with lightly visible muscle tone." },
+          { "id": "athletic", "label": "Athletic", "tag": "toned, {female:toned female|male:toned male}", "text": "an athletic physique", "hint": "Sporty and clearly toned, like someone who trains regularly." },
+          { "id": "defined", "label": "Defined", "tag": "toned, muscular", "text": "a lean, well-defined physique", "hint": "Low body fat, clearly separated muscles; a fitness-model look." },
+          { "id": "muscular", "label": "Muscular", "tag": "muscular, {female:muscular female|male:muscular male}", "text": "a muscular physique", "hint": "Large, well-developed muscles." },
+          { "id": "bodybuilder", "label": "Bodybuilder", "tag": "muscular, {female:muscular female|male:muscular male}, veins", "text": "a massive bodybuilder physique", "hint": "Extreme muscle mass, as in competition bodybuilding." }
+        ] },
+        { "id": "arms", "label": "Arm muscles", "hint": "Overrides Overall muscle for this zone. Not set: the zone follows Overall muscle.", "type": "scale", "m": "biceps", "set": "muscle", "n": "arms" },
+        { "id": "back", "label": "Back & shoulder muscles", "hint": "Overrides Overall muscle for this zone. Not set: the zone follows Overall muscle.", "type": "scale", "m": "back muscles", "set": "muscle", "n": "back and shoulders" },
+        { "id": "abdomen", "label": "Abs", "hint": "The visible abdominal muscles. Belly size is set separately (Waist & Hips > Belly).", "type": "scale", "options": [
+          { "id": "soft", "label": "Soft", "tag": "", "text": "a soft stomach", "hint": "A soft stomach without muscle." },
+          { "id": "smooth", "label": "Smooth", "tag": "", "text": "a smooth, flat stomach", "hint": "Flat and smooth, no lines." },
+          { "id": "toned", "label": "Toned", "tag": "toned", "text": "a toned stomach", "hint": "A firm stomach with a faint centre line." },
+          { "id": "athletic", "label": "Faint abs", "tag": "abs", "text": "faintly visible abs", "hint": "Abs faintly visible in good light." },
+          { "id": "defined", "label": "Defined", "tag": "abs", "text": "defined abs", "hint": "A clear outline of the abs." },
+          { "id": "muscular", "label": "Six-pack", "tag": "abs", "text": "a chiselled six-pack", "hint": "A clearly separated six-pack." },
+          { "id": "bodybuilder", "label": "Shredded", "tag": "abs, obliques", "text": "shredded eight-pack abs", "hint": "A very deep, shredded eight-pack." }
+        ] },
+        { "id": "glutes", "label": "Glute muscles", "hint": "Overrides Overall muscle for this zone. Not set: the zone follows Overall muscle.", "type": "scale", "m": "", "set": "muscle", "n": "glutes" },
+        { "id": "legs", "label": "Leg muscles", "hint": "Overrides Overall muscle for this zone. Not set: the zone follows Overall muscle.", "type": "scale", "m": "", "set": "muscle", "n": "legs" }
+      ],
+      "natural": [
+        { "kind": "has", "pre": ["overall"] },
+        { "kind": "has", "noun": "arms", "pre": ["arms"] },
+        { "kind": "has", "noun": "back and shoulders", "article": true, "pre": ["back"] },
+        { "kind": "has", "pre": ["abdomen"] },
+        { "kind": "has", "noun": "glutes", "pre": ["glutes"] },
+        { "kind": "has", "noun": "legs", "pre": ["legs"] }
+      ]
+    },
+    {
+      "id": "waist_hips",
+      "label": "Waist & Hips",
+      "params": [
+        { "id": "waist", "label": "Waist", "type": "scale", "options": [
+          { "id": "very_narrow", "label": "Very narrow", "tag": "narrow waist", "adj": "very narrow", "hint": "A very narrow, wasp waist." },
+          { "id": "narrow", "label": "Narrow", "tag": "narrow waist", "adj": "narrow" },
+          { "id": "medium", "label": "Medium", "tag": "", "adj": "medium" },
+          { "id": "wide", "label": "Wide", "tag": "", "adj": "wide" },
+          { "id": "very_wide", "label": "Very wide", "tag": "", "adj": "very wide" }
+        ] },
+        { "id": "belly", "label": "Belly", "hint": "Belly size, separate from the abs (Muscle > Abs).", "type": "scale", "options": [
+          { "id": "flat", "label": "Flat", "tag": "", "text": "a flat stomach", "hint": "A flat stomach." },
+          { "id": "slightly_soft", "label": "Slightly soft", "tag": "", "text": "a slightly soft belly", "hint": "A little softness below the navel." },
+          { "id": "soft", "label": "Soft", "tag": "", "text": "a soft, rounded belly", "hint": "A soft, rounded lower belly." },
+          { "id": "round", "label": "Round", "tag": "belly", "text": "a round belly", "hint": "A clearly round belly." },
+          { "id": "big", "label": "Big", "tag": "big belly", "text": "a big belly", "hint": "A large, protruding belly." }
+        ] },
+        { "id": "hips", "label": "Hip width", "type": "scale", "options": [
+          { "id": "very_narrow", "label": "Very narrow", "tag": "", "adj": "very narrow" },
+          { "id": "narrow", "label": "Narrow", "tag": "", "adj": "narrow" },
+          { "id": "medium", "label": "Medium", "tag": "", "adj": "medium" },
+          { "id": "wide", "label": "Wide", "tag": "wide hips", "adj": "wide" },
+          { "id": "very_wide", "label": "Very wide", "tag": "wide hips", "adj": "very wide" }
+        ] }
+      ],
+      "natural": [
+        { "kind": "has", "noun": "waist", "article": true, "pre": ["waist"] },
+        { "kind": "has", "pre": ["belly"] },
+        { "kind": "has", "noun": "hips", "pre": ["hips"] }
+      ]
+    },
+    {
+      "id": "chest",
+      "label": "Chest",
+      "params": [
+        { "id": "ribcage", "label": "Ribcage", "hint": "Width and volume of the rib cage. It also widens the upper body in the silhouette.", "type": "scale", "options": [
+          { "id": "narrow", "label": "Narrow", "tag": "", "adj": "narrow" },
+          { "id": "medium", "label": "Medium", "tag": "", "adj": "medium" },
+          { "id": "wide", "label": "Wide", "tag": "", "adj": "wide" },
+          { "id": "barrel", "label": "Barrel", "tag": "", "adj": "deep, barrel-shaped", "hint": "A deep, rounded rib cage, as wide front to back as side to side." }
+        ] },
+        { "id": "breast_size", "label": "Breast size", "only": ["female"], "type": "scale", "options": [
+          { "id": "flat", "label": "Flat", "tag": "flat chest", "text": "a flat chest", "solo": true, "mutes": ["breast_shape", "breast_firmness"], "hint": "Almost no breast volume. The shape and firmness settings are then left out." },
+          { "id": "small", "label": "Small", "tag": "small breasts", "adj": "small" },
+          { "id": "medium", "label": "Medium", "tag": "medium breasts", "adj": "medium-sized" },
+          { "id": "large", "label": "Large", "tag": "large breasts", "adj": "large" },
+          { "id": "very_large", "label": "Very large", "tag": "huge breasts", "adj": "very large" },
+          { "id": "huge", "label": "Huge", "tag": "gigantic breasts", "adj": "huge" }
+        ] },
+        { "id": "breast_shape", "label": "Breast shape", "only": ["female"], "type": "choice", "options": [
+          { "id": "round", "label": "Round", "tag": "", "adj": "round", "hint": "Equally full above and below the nipple." },
+          { "id": "teardrop", "label": "Teardrop", "tag": "", "adj": "teardrop-shaped", "hint": "Slimmer at the top and fuller at the bottom; the most natural shape." },
+          { "id": "bell", "label": "Bell", "tag": "", "adj": "bell-shaped", "hint": "Narrow at the top and much fuller and heavier at the bottom." },
+          { "id": "perky_up", "label": "Upturned", "tag": "perky breasts", "adj": "upturned", "hint": "The nipples point slightly upward." },
+          { "id": "wide_set", "label": "Wide-set", "tag": "breasts apart", "adj": "wide-set", "hint": "A wide gap between the breasts; they point slightly outward." },
+          { "id": "close_set", "label": "Close-set", "tag": "cleavage", "adj": "close-set", "hint": "Little space between the breasts; natural cleavage." }
+        ] },
+        { "id": "breast_firmness", "label": "Breast firmness", "only": ["female"], "hint": "How high and firm the breasts sit, from perky to saggy.", "type": "scale", "options": [
+          { "id": "very_perky", "label": "Very perky", "tag": "perky breasts", "adj": "very perky", "hint": "High and very firm, defying gravity." },
+          { "id": "perky", "label": "Perky", "tag": "perky breasts", "adj": "perky", "hint": "High and firm." },
+          { "id": "natural", "label": "Natural", "tag": "", "adj": "natural", "hint": "A natural resting position, slightly soft." },
+          { "id": "slightly_saggy", "label": "Slightly saggy", "tag": "sagging breasts", "adj": "slightly saggy", "hint": "Soft and resting a little lower." },
+          { "id": "saggy", "label": "Saggy", "tag": "sagging breasts", "adj": "saggy, heavy", "hint": "Heavy and hanging low." }
+        ] },
+        { "id": "pecs", "label": "Pecs", "only": ["male"], "hint": "The chest muscles. With Overall muscle not set, they also shape the chest lines in the silhouette.", "type": "scale", "options": [
+          { "id": "flat", "label": "Flat", "tag": "", "text": "a flat chest" },
+          { "id": "slight", "label": "Slight", "tag": "", "text": "slightly defined pecs" },
+          { "id": "toned", "label": "Toned", "tag": "pectorals", "text": "toned pecs" },
+          { "id": "defined", "label": "Defined", "tag": "pectorals", "text": "well-defined pecs" },
+          { "id": "muscular", "label": "Muscular", "tag": "large pectorals", "text": "broad, muscular pecs" },
+          { "id": "massive", "label": "Massive", "tag": "large pectorals", "text": "massive, bulging pecs" }
+        ] },
+        { "id": "chest_hair", "label": "Chest hair", "only": ["male"], "type": "scale", "options": [
+          { "id": "none", "label": "None", "tag": "", "text": "a smooth, hairless chest" },
+          { "id": "light", "label": "Light", "tag": "chest hair", "text": "light chest hair" },
+          { "id": "moderate", "label": "Moderate", "tag": "chest hair", "text": "noticeable chest hair" },
+          { "id": "hairy", "label": "Hairy", "tag": "chest hair", "text": "a hairy chest" },
+          { "id": "very_hairy", "label": "Very hairy", "tag": "chest hair, navel hair", "text": "a very hairy chest and stomach" }
+        ] },
+        { "id": "areola_size", "label": "Areola size", "type": "scale", "options": [
+          { "id": "small", "label": "Small", "tag": "", "adj": "small" },
+          { "id": "medium", "label": "Medium", "tag": "", "adj": "medium-sized" },
+          { "id": "large", "label": "Large", "tag": "large areolae", "adj": "large" },
+          { "id": "very_large", "label": "Very large", "tag": "large areolae", "adj": "very large" }
+        ] },
+        { "id": "areola_color", "label": "Areola color", "type": "color", "options": [
+          { "id": "light_pink", "label": "Light pink", "swatch": "#f2c4c0", "tag": "", "adj": "light pink" },
+          { "id": "pink", "label": "Pink", "swatch": "#e39a96", "tag": "", "adj": "pink" },
+          { "id": "peach", "label": "Peach", "swatch": "#e2a98a", "tag": "", "adj": "peach-colored" },
+          { "id": "rosy_brown", "label": "Rosy brown", "swatch": "#b77a6c", "tag": "", "adj": "rosy brown" },
+          { "id": "light_brown", "label": "Light brown", "swatch": "#a06e50", "tag": "", "adj": "light brown" },
+          { "id": "brown", "label": "Brown", "swatch": "#6e4430", "tag": "dark areolae", "adj": "brown" },
+          { "id": "dark_brown", "label": "Dark brown", "swatch": "#43281c", "tag": "dark areolae", "adj": "dark brown" }
+        ] },
+        { "id": "nipple_size", "label": "Nipple size", "type": "scale", "options": [
+          { "id": "small", "label": "Small", "tag": "small nipples", "adj": "small" },
+          { "id": "medium", "label": "Medium", "tag": "", "adj": "medium" },
+          { "id": "large", "label": "Large", "tag": "huge nipples", "adj": "large" }
+        ] },
+        { "id": "nipple_shape", "label": "Nipple shape", "type": "choice", "options": [
+          { "id": "flat", "label": "Flat", "tag": "nipples", "adj": "flat", "hint": "Level with the areola." },
+          { "id": "protruding", "label": "Protruding", "tag": "nipples", "adj": "protruding", "hint": "Clearly raised above the areola." },
+          { "id": "erect", "label": "Erect", "tag": "nipples", "adj": "erect, hard", "hint": "Hard and pointed, as from cold or arousal." },
+          { "id": "puffy", "label": "Puffy", "tag": "puffy nipples", "adj": "puffy", "hint": "The whole areola is raised and domed." },
+          { "id": "inverted", "label": "Inverted", "tag": "inverted nipples", "adj": "inverted", "hint": "The nipple points inward instead of out." }
+        ] }
+      ],
+      "natural": [
+        { "kind": "has", "noun": "ribcage", "article": true, "pre": ["ribcage"] },
+        { "kind": "has", "noun": "breasts", "pre": ["breast_firmness", "breast_size", "breast_shape"] },
+        { "kind": "has", "pre": ["pecs"] },
+        { "kind": "has", "pre": ["chest_hair"] },
+        { "kind": "has", "noun": "areolae", "pre": ["areola_size", "areola_color"] },
+        { "kind": "has", "noun": "nipples", "pre": ["nipple_size", "nipple_shape"] }
+      ]
+    },
+    {
+      "id": "butt_legs",
+      "label": "Butt & Legs",
+      "params": [
+        { "id": "butt_size", "label": "Butt size", "type": "scale", "options": [
+          { "id": "flat", "label": "Flat", "tag": "flat ass", "adj": "flat" },
+          { "id": "small", "label": "Small", "tag": "", "adj": "small" },
+          { "id": "medium", "label": "Medium", "tag": "", "adj": "medium-sized" },
+          { "id": "large", "label": "Large", "tag": "", "adj": "large" },
+          { "id": "very_large", "label": "Very large", "tag": "huge ass", "adj": "very large" },
+          { "id": "huge", "label": "Huge", "tag": "huge ass", "adj": "huge" }
+        ] },
+        { "id": "butt_shape", "label": "Butt shape", "type": "choice", "options": [
+          { "id": "round", "label": "Round", "tag": "", "adj": "round", "hint": "Full and evenly curved, like a circle seen from behind." },
+          { "id": "bubble", "label": "Bubble", "tag": "", "adj": "bubble", "hint": "Very round and high, sticking out clearly from the back." },
+          { "id": "heart", "label": "Heart", "tag": "", "adj": "heart-shaped", "hint": "Narrow at the waist and fuller at the bottom (an upside-down heart)." },
+          { "id": "square", "label": "Square", "tag": "", "adj": "square", "hint": "Straight sides from the hips down; the hips and butt are the same width." },
+          { "id": "v_shape", "label": "V-shape", "tag": "", "adj": "V-shaped", "hint": "Wider at the top and narrowing toward the bottom." }
+        ] },
+        { "id": "butt_firmness", "label": "Butt firmness", "hint": "How firm and lifted the butt is.", "type": "scale", "options": [
+          { "id": "very_firm", "label": "Very firm", "tag": "", "adj": "very firm, perky", "hint": "High, tight and lifted." },
+          { "id": "firm", "label": "Firm", "tag": "", "adj": "firm" },
+          { "id": "natural", "label": "Natural", "tag": "", "adj": "natural" },
+          { "id": "soft", "label": "Soft", "tag": "", "adj": "soft", "hint": "Soft and jiggly, not tight." },
+          { "id": "saggy", "label": "Saggy", "tag": "", "adj": "saggy", "hint": "Resting low, with a deep fold under the buttocks." }
+        ] },
+        { "id": "thighs", "label": "Thigh size", "type": "scale", "options": [
+          { "id": "very_slim", "label": "Very slim", "tag": "", "adj": "very slim" },
+          { "id": "slim", "label": "Slim", "tag": "", "adj": "slim" },
+          { "id": "medium", "label": "Medium", "tag": "", "adj": "medium" },
+          { "id": "thick", "label": "Thick", "tag": "thick thighs", "adj": "thick" },
+          { "id": "very_thick", "label": "Very thick", "tag": "thick thighs", "adj": "very thick" }
+        ] },
+        { "id": "thigh_shape", "label": "Thigh shape", "type": "choice", "options": [
+          { "id": "slender", "label": "Slender", "tag": "", "adj": "slender", "hint": "Straight and long, little curve." },
+          { "id": "curvy", "label": "Curvy", "tag": "", "adj": "curvy", "hint": "A clear outer curve from the hip to the knee." },
+          { "id": "soft", "label": "Soft", "tag": "", "adj": "soft, plush", "hint": "Full and soft, without muscle lines." },
+          { "id": "toned", "label": "Toned", "tag": "", "adj": "toned" },
+          { "id": "muscular", "label": "Muscular", "tag": "", "adj": "muscular", "hint": "Visible quadriceps; overlaps with Muscle > Leg muscles." }
+        ] },
+        { "id": "thigh_gap", "label": "Thigh gap", "hint": "The space between the inner thighs when standing with the feet together.", "type": "scale", "options": [
+          { "id": "none", "label": "None", "tag": "", "text": "thighs that touch" },
+          { "id": "slight", "label": "Slight", "tag": "thigh gap", "text": "a slight thigh gap" },
+          { "id": "visible", "label": "Visible", "tag": "thigh gap", "text": "a clear thigh gap" }
+        ] },
+        { "id": "calves", "label": "Calves", "type": "scale", "options": [
+          { "id": "slim", "label": "Slim", "tag": "", "adj": "slim" },
+          { "id": "medium", "label": "Medium", "tag": "", "adj": "medium" },
+          { "id": "shapely", "label": "Shapely", "tag": "", "adj": "shapely", "hint": "Rounded, well-formed calves." },
+          { "id": "muscular", "label": "Muscular", "tag": "", "adj": "muscular" }
+        ] }
+      ],
+      "natural": [
+        { "kind": "has", "noun": "butt", "article": true, "pre": ["butt_firmness", "butt_size", "butt_shape"] },
+        { "kind": "has", "noun": "thighs", "pre": ["thighs", "thigh_shape"] },
+        { "kind": "has", "pre": ["thigh_gap"] },
+        { "kind": "has", "noun": "calves", "pre": ["calves"] }
+      ]
+    },
+    {
+      "id": "hands_nails",
+      "label": "Hands & Nails",
+      "params": [
+        { "id": "hand_size", "label": "Hand size", "type": "scale", "options": [
+          { "id": "small", "label": "Small", "tag": "", "adj": "small, delicate" },
+          { "id": "medium", "label": "Medium", "tag": "", "adj": "medium-sized" },
+          { "id": "large", "label": "Large", "tag": "large hands", "adj": "large" }
+        ] },
+        { "id": "finger_length", "label": "Finger length", "type": "scale", "options": [
+          { "id": "short", "label": "Short", "tag": "", "adj": "short" },
+          { "id": "medium", "label": "Medium", "tag": "", "adj": "medium-length" },
+          { "id": "long", "label": "Long", "tag": "long fingers", "adj": "long" }
+        ] },
+        { "id": "finger_thickness", "label": "Finger thickness", "type": "scale", "options": [
+          { "id": "slender", "label": "Slender", "tag": "", "adj": "slender" },
+          { "id": "medium", "label": "Medium", "tag": "", "adj": "medium" },
+          { "id": "thick", "label": "Thick", "tag": "", "adj": "thick" }
+        ] },
+        { "id": "nail_type", "label": "Nail type", "type": "choice", "options": [
+          { "id": "natural", "label": "Natural", "tag": "", "adj": "natural", "hint": "Your own nails, no extensions." },
+          { "id": "acrylic", "label": "Acrylic", "tag": "fake nails", "adj": "acrylic", "hint": "Artificial extensions: longer, thicker and perfectly shaped." },
+          { "id": "gel", "label": "Gel", "tag": "", "adj": "gel", "hint": "Gel-coated nails with a thick, very glossy surface." }
+        ] },
+        { "id": "nail_length", "label": "Nail length", "type": "scale", "options": [
+          { "id": "very_short", "label": "Very short", "tag": "", "adj": "very short", "hint": "Cut down to the fingertip." },
+          { "id": "short", "label": "Short", "tag": "", "adj": "short" },
+          { "id": "medium", "label": "Medium", "tag": "", "adj": "medium-length" },
+          { "id": "long", "label": "Long", "tag": "long fingernails", "adj": "long" },
+          { "id": "very_long", "label": "Very long", "tag": "long fingernails", "adj": "very long", "hint": "Far beyond the fingertip; usually extensions." }
+        ] },
+        { "id": "nail_shape", "label": "Nail shape", "type": "choice", "options": [
+          { "id": "square", "label": "Square", "tag": "", "adj": "square", "hint": "A straight tip with sharp corners." },
+          { "id": "squoval", "label": "Squoval", "tag": "", "adj": "squoval", "hint": "Square with softly rounded corners." },
+          { "id": "round", "label": "Round", "tag": "", "adj": "rounded", "hint": "Following the curve of the fingertip." },
+          { "id": "oval", "label": "Oval", "tag": "", "adj": "oval" },
+          { "id": "almond", "label": "Almond", "tag": "", "adj": "almond-shaped", "hint": "Tapered sides with a soft, rounded point." },
+          { "id": "coffin", "label": "Coffin", "tag": "", "adj": "coffin-shaped", "hint": "Tapered with a flat, squared-off tip (ballerina)." },
+          { "id": "stiletto", "label": "Stiletto", "tag": "sharp fingernails", "adj": "stiletto", "hint": "Long and sharply pointed." }
+        ] },
+        { "id": "nail_color", "label": "Nail color", "type": "color", "set": "nail_colors", "n": "nail polish" },
+        { "id": "nail_finish", "label": "Nail finish", "type": "choice", "set": "nail_finish", "n": "nails" }
+      ],
+      "natural": [
+        { "kind": "has", "noun": "hands", "pre": ["hand_size"] },
+        { "kind": "has", "noun": "fingers", "pre": ["finger_length", "finger_thickness"] },
+        { "kind": "has", "noun": "nails", "pre": ["nail_length", "nail_shape", "nail_type"], "post": ["nail_color", "nail_finish"] }
+      ]
+    },
+    {
+      "id": "feet",
+      "label": "Feet",
+      "params": [
+        { "id": "foot_size", "label": "Foot size", "type": "scale", "options": [
+          { "id": "tiny", "label": "Tiny", "tag": "", "adj": "tiny" },
+          { "id": "small", "label": "Small", "tag": "", "adj": "small" },
+          { "id": "medium", "label": "Medium", "tag": "", "adj": "medium-sized" },
+          { "id": "large", "label": "Large", "tag": "", "adj": "large" },
+          { "id": "very_large", "label": "Very large", "tag": "", "adj": "very large" }
+        ] },
+        { "id": "foot_width", "label": "Foot width", "type": "scale", "options": [
+          { "id": "narrow", "label": "Narrow", "tag": "", "adj": "narrow" },
+          { "id": "medium", "label": "Medium", "tag": "", "adj": "medium-width" },
+          { "id": "wide", "label": "Wide", "tag": "", "adj": "wide" }
+        ] },
+        { "id": "arch", "label": "Arch", "hint": "The inner curve of the sole.", "type": "scale", "options": [
+          { "id": "flat", "label": "Flat", "tag": "", "text": "flat feet with low arches", "hint": "The whole sole touches the ground." },
+          { "id": "normal", "label": "Normal", "tag": "", "text": "naturally arched feet" },
+          { "id": "high", "label": "High", "tag": "", "text": "high, elegant arches", "hint": "A pronounced curve; the middle of the sole stays off the ground." }
+        ] },
+        { "id": "toe_length", "label": "Toe length", "type": "scale", "options": [
+          { "id": "short", "label": "Short", "tag": "", "adj": "short, neat" },
+          { "id": "medium", "label": "Medium", "tag": "", "adj": "medium-length" },
+          { "id": "long", "label": "Long", "tag": "", "adj": "long, slender" }
+        ] },
+        { "id": "toenail_color", "label": "Pedicure color", "type": "color", "set": "nail_colors", "n": "toenail polish" },
+        { "id": "toenail_finish", "label": "Pedicure finish", "type": "choice", "set": "nail_finish", "n": "toenails" }
+      ],
+      "natural": [
+        { "kind": "has", "noun": "feet", "pre": ["foot_size", "foot_width"] },
+        { "kind": "has", "pre": ["arch"] },
+        { "kind": "has", "noun": "toes", "pre": ["toe_length"] },
+        { "kind": "has", "noun": "toenails", "post": ["toenail_color", "toenail_finish"] }
+      ]
+    },
+    {
+      "id": "genitals",
+      "label": "Genitals",
+      "list": "semicolon",
+      "params": [
+        { "id": "parts", "label": "Parts", "hint": "What the character has between the legs. Pick several (e.g. vulva + penis for a futanari) or use the quick buttons above. Smooth means nothing at all, like a doll.", "type": "choice", "multi": 5, "options": [
+          { "id": "vulva", "label": "Vulva", "tag": "pussy", "neg": "pussy", "hint": "Female genitals." },
+          { "id": "penis", "label": "Penis", "tag": "penis", "neg": "penis" },
+          { "id": "testicles", "label": "Testicles", "tag": "testicles", "neg": "testicles" },
+          { "id": "anus", "label": "Anus", "tag": "anus" },
+          { "id": "smooth", "label": "Smooth", "tag": "", "ptag": "smooth featureless crotch", "exclusive": true, "hint": "A smooth crotch with no genitals, like a doll. Excludes the other parts." }
+        ], "random_sets": [ { "v": ["vulva", "anus"], "only": ["female"], "weight": 10 }, { "v": ["penis", "testicles", "anus"], "only": ["male"], "weight": 10 }, { "v": ["vulva", "penis", "testicles", "anus"], "only": ["female"], "weight": 2 }, { "v": ["penis", "testicles", "anus"], "only": ["female"], "weight": 2 }, { "v": ["vulva", "anus"], "weight": 1 }, { "v": ["penis", "testicles", "anus"], "weight": 1 } ], "combos": [
+          { "has": ["penis"], "lacks": ["vulva"], "only": ["female"], "tag": "futanari, no pussy", "lead": "a dick girl" },
+          { "has": ["penis", "vulva"], "only": ["female"], "tag": "futanari", "lead": "a futanari" },
+          { "has": ["penis", "vulva", "testicles"], "only": ["female"], "tag": "full-package futanari" },
+          { "has": ["penis"], "lacks": ["testicles"], "tag": "no testicles" },
+          { "has": ["vulva"], "only": ["male"], "tag": "", "lead": "an intersex man" }
+        ] },
+        { "id": "penis_size", "label": "Penis size", "type": "scale", "options": [
+          { "id": "tiny", "label": "Tiny", "tag": "small penis", "adj": "tiny", "hint": "Very small, well below average." },
+          { "id": "small", "label": "Small", "tag": "small penis", "adj": "small", "hint": "Smaller than average." },
+          { "id": "average", "label": "Average", "tag": "", "ptag": "average penis", "adj": "average-sized", "hint": "An ordinary, realistic size." },
+          { "id": "large", "label": "Large", "tag": "large penis", "adj": "large", "hint": "Noticeably bigger than average." },
+          { "id": "huge", "label": "Huge", "tag": "huge penis", "adj": "huge", "hint": "Very large, an adult-content proportion." },
+          { "id": "gigantic", "label": "Gigantic", "tag": "gigantic penis", "adj": "gigantic, monstrous", "hint": "Absurdly large, a fantasy proportion." }
+        ], "requires": { "p": "genitals.parts", "in": ["penis"]} },
+        { "id": "penis_curve", "label": "Penis curve", "hint": "Which way the shaft bends when erect.", "type": "choice", "options": [
+          { "id": "straight", "label": "Straight", "tag": "", "ptag": "straight penis", "adj": "straight", "hint": "The shaft runs straight out from the body." },
+          { "id": "curved_up", "label": "Curved up", "tag": "curved penis", "adj": "upward-curving", "hint": "The shaft bends up toward the belly." },
+          { "id": "curved_down", "label": "Curved down", "tag": "curved penis", "adj": "downward-curving", "hint": "The shaft bends down, the tip points lower than the base." }
+        ], "requires": { "p": "genitals.parts", "in": ["penis"] } },
+        { "id": "penis_girth", "label": "Penis girth", "hint": "How thick the shaft is along its length.", "type": "choice", "options": [
+          { "id": "tapered", "label": "Tapered", "tag": "", "ptag": "tapered penis", "adj": "tapered", "hint": "Thick at the base and narrower toward the tip." },
+          { "id": "thick", "label": "Thick", "tag": "", "ptag": "thick penis", "adj": "thick", "hint": "Wide all along the shaft; girth stands out more than length." }
+        ], "requires": { "p": "genitals.parts", "in": ["penis"] } },
+        { "id": "penis_veins", "label": "Veins", "hint": "How much the veins stand out on the shaft. Click the chosen one again to clear.", "type": "scale", "options": [
+          { "id": "veiny", "label": "Visible", "tag": "veiny penis", "adj": "veiny", "hint": "Ordinary veins, moderately visible along the shaft." },
+          { "id": "bulging", "label": "Thick", "tag": "veiny penis, thick veins", "adj": "thick-veined", "hint": "Pronounced, thick veins standing out clearly on the shaft." },
+          { "id": "massive", "label": "Very thick", "tag": "veiny penis, thick veins, bulging veins", "adj": "massively veined", "hint": "Powerful, very thick bulging veins winding around the whole shaft." }
+        ], "requires": { "p": "genitals.parts", "in": ["penis"] } },
+        { "id": "penis_state", "label": "Penis state", "type": "scale", "options": [
+          { "id": "flaccid", "label": "Flaccid", "tag": "flaccid", "post": ", soft and flaccid" },
+          { "id": "semi", "label": "Half-erect", "tag": "half-erect", "post": ", half-erect" },
+          { "id": "erect", "label": "Erect", "tag": "erection", "post": ", fully erect" }
+        ], "requires": { "p": "genitals.parts", "in": ["penis"]} },
+        { "id": "foreskin", "label": "Foreskin", "type": "choice", "options": [
+          { "id": "circumcised", "label": "Circumcised", "tag": "", "ptag": "circumcised penis", "post": ", circumcised", "hint": "No foreskin: the glans is always exposed." },
+          { "id": "uncircumcised", "label": "Uncircumcised", "tag": "foreskin", "post": ", uncircumcised", "hint": "Natural foreskin that covers the glans when soft and pulls back when erect." },
+          { "id": "phimosis", "label": "Long foreskin", "tag": "foreskin, phimosis", "post": ", with a long foreskin covering the tip", "hint": "A long, tight foreskin that keeps covering the tip, even when erect." }
+        ], "requires": { "p": "genitals.parts", "in": ["penis"]} },
+        { "id": "testicle_size", "label": "Testicle size", "type": "scale", "options": [
+          { "id": "small", "label": "Small", "tag": "small testicles", "adj": "small" },
+          { "id": "medium", "label": "Medium", "tag": "", "ptag": "medium testicles", "adj": "medium-sized" },
+          { "id": "large", "label": "Large", "tag": "large testicles", "adj": "large, heavy" },
+          { "id": "huge", "label": "Huge", "tag": "huge testicles", "adj": "huge, swollen" }
+        ], "requires": { "p": "genitals.parts", "in": ["testicles"]} },
+        { "id": "testicle_hang", "label": "Testicle hang", "type": "scale", "options": [
+          { "id": "tight", "label": "Tight", "tag": "", "ptag": "tight testicles", "adj": "tight", "hint": "Drawn up close to the body." },
+          { "id": "natural", "label": "Natural", "tag": "", "ptag": "", "adj": "", "hint": "An ordinary, relaxed position." },
+          { "id": "low", "label": "Low-hanging", "tag": "", "ptag": "low-hanging testicles", "adj": "low-hanging", "hint": "Hanging low and loose, swinging below the shaft." }
+        ], "requires": { "p": "genitals.parts", "in": ["testicles"]} },
+        { "id": "vulva_shape", "label": "Vulva shape", "hint": "How the outer and inner lips look.", "type": "choice", "options": [
+          { "id": "innie", "label": "Innie", "tag": "cleft of venus", "adj": "neat, closed", "hint": "Outer lips closed; the inner lips stay hidden. A tidy slit." },
+          { "id": "outie", "label": "Outie", "tag": "", "ptag": "prominent inner labia", "adj": "outie", "hint": "The inner lips show past the outer lips." },
+          { "id": "puffy", "label": "Puffy", "tag": "fat mons", "adj": "puffy, plump", "hint": "Full, rounded outer lips and a plump mound." },
+          { "id": "spread", "label": "Spread", "tag": "spread pussy", "adj": "spread, open", "hint": "Lips parted, the inside visible." }
+        ], "requires": { "p": "genitals.parts", "in": ["vulva"]} },
+        { "id": "clitoris", "label": "Clitoris", "type": "scale", "options": [
+          { "id": "small", "label": "Small", "tag": "", "ptag": "small clitoris", "post": "with a small clitoris" },
+          { "id": "visible", "label": "Visible", "tag": "clitoris", "post": "with a visible clitoris" },
+          { "id": "large", "label": "Large", "tag": "clitoris, large clitoris", "post": "with a large, protruding clitoris" }
+        ], "requires": { "p": "genitals.parts", "in": ["vulva"]} },
+        { "id": "anus_look", "label": "Anus", "type": "choice", "options": [
+          { "id": "tight", "label": "Tight", "tag": "", "ptag": "tight anus", "adj": "tight", "hint": "Small and tightly closed." },
+          { "id": "puffy", "label": "Puffy", "tag": "", "ptag": "puffy anus", "adj": "puffy", "hint": "Swollen, raised rim." },
+          { "id": "dark", "label": "Dark", "tag": "dark anus", "adj": "dark", "hint": "Skin around it darker than the surrounding skin." }
+        ], "requires": { "p": "genitals.parts", "in": ["anus"]} },
+        { "id": "pubic_hair", "label": "Pubic hair", "type": "choice", "options": [
+          { "id": "none", "label": "Shaved", "tag": "", "ptag": "hairless crotch", "text": "a smoothly shaved crotch", "hint": "Fully shaved or waxed, smooth skin." },
+          { "id": "stubble", "label": "Stubble", "tag": "pubic stubble", "text": "light pubic stubble", "hint": "Short regrowth, a light shadow of hair." },
+          { "id": "landing_strip", "label": "Landing strip", "tag": "pubic hair, {female:female pubic hair|male:male pubic hair}", "ptag": "", "text": "a narrow landing strip of pubic hair", "hint": "A narrow vertical strip above the genitals, the rest shaved." },
+          { "id": "trimmed", "label": "Trimmed", "tag": "pubic hair, {female:female pubic hair|male:male pubic hair}", "text": "neatly trimmed pubic hair", "hint": "Kept short and tidy, natural shape." },
+          { "id": "heart", "label": "Heart", "tag": "pubic hair, heart-shaped pubic hair", "text": "heart-shaped pubic hair", "hint": "Trimmed into a heart shape, the rest shaved." },
+          { "id": "natural", "label": "Natural", "tag": "pubic hair, {female:female pubic hair|male:male pubic hair}", "text": "natural, untrimmed pubic hair", "hint": "Grown naturally, not trimmed." },
+          { "id": "bushy", "label": "Bushy", "tag": "pubic hair, excessive pubic hair", "text": "thick, bushy pubic hair", "hint": "Thick, full and untrimmed, spreading wide." }
+        ], "requires": { "p": "genitals.parts", "in": ["vulva", "penis", "testicles"]} }
+      ],
+      "natural": [
+        { "kind": "has", "when": { "p": "genitals.parts", "in": ["smooth"]}, "text": "a smooth, featureless crotch with no genitals" },
+        { "kind": "has", "when": { "p": "genitals.parts", "in": ["vulva"]}, "noun": "pussy", "article": true, "pre": ["vulva_shape"], "post": ["clitoris"]},
+        { "kind": "has", "when": { "p": "genitals.parts", "in": ["penis"]}, "noun": "penis", "article": true, "pre": ["penis_size", "penis_girth", "penis_veins", "penis_curve"], "post": ["foreskin", "penis_state"]},
+        { "kind": "has", "when": { "p": "genitals.parts", "in": ["testicles"]}, "noun": "testicles", "pre": ["testicle_size", "testicle_hang"]},
+        { "kind": "has", "when": { "p": "genitals.parts", "in": ["anus"]}, "noun": "anus", "article": true, "pre": ["anus_look"]},
+        { "kind": "has", "pre": ["pubic_hair"]}
+      ]
+    }
+  ],
+
+  "zones": [
+    { "id": "general", "label": "General", "params": ["general.sex", "general.age", "general.race", "general.appearance", "general.skin_tone", "general.skin_texture"] },
+    { "id": "build", "label": "Whole body", "params": ["body.height", "body.figure", "body.body_fat", "muscle.overall"] },
+    { "id": "hair", "label": "Hair", "params": ["hair.hair_color", "hair.hair_length", "hair.hair_texture", "hair.hair_style", "hair.bangs"] },
+    { "id": "face", "label": "Face", "params": ["face.face_shape", "face.eye_size", "face.eye_shape", "face.eye_color", "face.brow_thickness", "face.brow_shape", "face.nose_size", "face.nose_shape", "face.lips", "face.mouth", "face.jaw", "face.chin", "face.cheekbones"] },
+    { "id": "neck", "label": "Neck", "params": ["body.neck"] },
+    { "id": "shoulders", "label": "Shoulders & Back", "params": ["body.shoulders", "muscle.back"] },
+    { "id": "chest", "label": "Chest", "params": ["chest.ribcage", "chest.breast_size", "chest.breast_shape", "chest.breast_firmness", "chest.pecs", "chest.chest_hair", "chest.areola_size", "chest.areola_color", "chest.nipple_size", "chest.nipple_shape"] },
+    { "id": "arms", "label": "Arms", "params": ["body.arm_length", "muscle.arms"] },
+    { "id": "hands", "label": "Hands & Nails", "params": ["hands_nails.hand_size", "hands_nails.finger_length", "hands_nails.finger_thickness", "hands_nails.nail_type", "hands_nails.nail_length", "hands_nails.nail_shape", "hands_nails.nail_color", "hands_nails.nail_finish"] },
+    { "id": "waist", "label": "Waist", "params": ["waist_hips.waist", "waist_hips.belly", "muscle.abdomen"] },
+    { "id": "hips", "label": "Hips & Butt", "params": ["waist_hips.hips", "butt_legs.butt_size", "butt_legs.butt_shape", "butt_legs.butt_firmness", "muscle.glutes"] },
+    { "id": "legs", "label": "Legs", "params": ["body.leg_length", "butt_legs.thighs", "butt_legs.thigh_shape", "butt_legs.thigh_gap", "butt_legs.calves", "muscle.legs"] },
+    { "id": "feet", "label": "Feet", "params": ["feet.foot_size", "feet.foot_width", "feet.arch", "feet.toe_length", "feet.toenail_color", "feet.toenail_finish"],
+      "copy": { "label": "Same as hands", "hint": "Copy the nail color and finish from Hands & Nails to the pedicure.", "map": { "hands_nails.nail_color": "feet.toenail_color", "hands_nails.nail_finish": "feet.toenail_finish" } } }
+,
+    { "id": "genitals", "label": "Genitals", "params": ["genitals.parts", "genitals.penis_size", "genitals.penis_curve", "genitals.penis_girth", "genitals.penis_veins", "genitals.penis_state", "genitals.foreskin", "genitals.testicle_size", "genitals.testicle_hang", "genitals.vulva_shape", "genitals.clitoris", "genitals.anus_look", "genitals.pubic_hair"],
+      "presets": [
+        { "label": "Female", "hint": "Vulva and anus.", "set": { "genitals.parts": ["vulva", "anus"] } },
+        { "label": "Male", "hint": "Penis, testicles and anus.", "set": { "genitals.parts": ["penis", "testicles", "anus"] } },
+        { "label": "Futanari", "hint": "Vulva, penis, testicles and anus.", "set": { "genitals.parts": ["vulva", "penis", "testicles", "anus"] } },
+        { "label": "Dick girl", "hint": "Penis, testicles and anus, no vulva. Set Sex to Woman.", "set": { "genitals.parts": ["penis", "testicles", "anus"], "general.sex": "female" } },
+        { "label": "Smooth", "hint": "Nothing at all, like a doll.", "set": { "genitals.parts": ["smooth"] } }
+      ] }
+  ],
+
+  "conflicts": [
+    { "a": { "p": "general.skin_tone", "in": ["green", "dark_green"] }, "b": { "p": "general.race", "in": ["human", "elf", "dark_elf", "half_elf", "dwarf", "gnome", "halfling", "tiefling", "demon", "succubus", "incubus", "angel", "vampire", "oni", "fairy", "cat", "fox", "wolf", "rabbit", "dragon"] } },
+    { "a": { "p": "general.skin_tone", "in": ["grey", "dark_grey"] }, "b": { "p": "general.race", "in": ["human", "elf", "half_elf", "dwarf", "gnome", "halfling", "tiefling", "demon", "succubus", "incubus", "angel", "oni", "fairy", "cat", "fox", "wolf", "rabbit", "dragon"] } },
+    { "a": { "p": "general.skin_tone", "in": ["blue", "dark_blue"] }, "b": { "p": "general.race", "in": ["human", "elf", "half_elf", "dwarf", "gnome", "halfling", "goblin", "orc", "half_orc", "angel", "vampire", "oni", "fairy", "cat", "fox", "wolf", "rabbit", "dragon"] } },
+    { "a": { "p": "general.skin_tone", "in": ["red", "dark_red"] }, "b": { "p": "general.race", "in": ["human", "elf", "dark_elf", "half_elf", "dwarf", "gnome", "halfling", "goblin", "orc", "half_orc", "angel", "vampire", "fairy", "cat", "fox", "wolf", "rabbit", "dragon"] } },
+    { "a": { "p": "general.skin_tone", "in": ["purple", "dark_purple"] }, "b": { "p": "general.race", "in": ["human", "elf", "half_elf", "dwarf", "gnome", "halfling", "goblin", "orc", "half_orc", "angel", "vampire", "oni", "fairy", "cat", "fox", "wolf", "rabbit", "dragon"] } },
+    { "a": { "p": "general.race", "in": ["goblin", "orc"] }, "b": { "p": "general.skin_tone", "in": ["porcelain", "fair", "light", "olive", "tan", "brown", "dark_brown", "deep", "blue", "dark_blue", "red", "dark_red", "purple", "dark_purple"] } },
+    { "a": { "p": "general.race", "in": ["dwarf", "gnome", "halfling", "goblin", "fairy"] }, "b": { "p": "body.height", "in": ["tall", "very_tall"] } },
+    { "a": { "p": "muscle.overall", "in": ["muscular", "bodybuilder", "defined"] }, "b": { "p": "body.body_fat", "in": ["chubby", "plump"] } },
+    { "a": { "p": "muscle.overall", "in": ["soft"] }, "b": { "p": "muscle.abdomen", "in": ["defined", "muscular", "bodybuilder"] } },
+    { "a": { "p": "waist_hips.belly", "in": ["round", "big"] }, "b": { "p": "muscle.abdomen", "in": ["athletic", "defined", "muscular", "bodybuilder"] } },
+    { "a": { "p": "waist_hips.belly", "in": ["round", "big"] }, "b": { "p": "body.body_fat", "in": ["very_lean", "lean"] } },
+    { "a": { "p": "body.body_fat", "in": ["chubby", "plump"] }, "b": { "p": "muscle.abdomen", "in": ["defined", "muscular", "bodybuilder"] } },
+    { "a": { "p": "body.body_fat", "in": ["chubby", "plump"] }, "b": { "p": "waist_hips.waist", "in": ["very_narrow"] } },
+    { "a": { "p": "body.figure", "in": ["hourglass"] }, "b": { "p": "waist_hips.waist", "in": ["wide", "very_wide"] } },
+    { "a": { "p": "body.figure", "in": ["pear"] }, "b": { "p": "waist_hips.hips", "in": ["very_narrow", "narrow"] } },
+    { "a": { "p": "body.figure", "in": ["v_shape"] }, "b": { "p": "body.shoulders", "in": ["very_narrow", "narrow"] } },
+    { "a": { "p": "body.figure", "in": ["petite"] }, "b": { "p": "body.height", "in": ["tall", "very_tall"] } },
+    { "a": { "p": "hair.hair_length", "in": ["very_short"] }, "b": { "p": "hair.hair_style", "in": ["ponytail", "low_ponytail", "twintails", "braid", "twin_braids", "bun", "messy_bun", "half_up", "bob"] } },
+    { "a": { "p": "hair.hair_length", "in": ["short"] }, "b": { "p": "hair.hair_style", "in": ["twintails", "braid", "twin_braids", "bun", "low_ponytail"] } },
+    { "a": { "p": "hair.hair_length", "in": ["long", "very_long", "extreme"] }, "b": { "p": "hair.hair_style", "in": ["pixie", "bob"] } },
+    { "a": { "p": "general.age", "max": 35 }, "b": { "p": "general.skin_texture", "in": ["fine_lines", "wrinkled"] } },
+    { "a": { "p": "general.age", "max": 55 }, "b": { "p": "general.skin_texture", "in": ["wrinkled"] } },
+    { "a": { "p": "general.age", "min": 56 }, "b": { "p": "general.skin_texture", "in": ["flawless"] } },
+    { "a": { "p": "general.age", "min": 66 }, "b": { "p": "muscle.overall", "in": ["bodybuilder"] } },
+    { "a": { "p": "chest.breast_size", "in": ["flat"] }, "b": { "p": "chest.breast_shape", "in": ["round", "teardrop", "bell", "perky_up", "wide_set", "close_set"] } },
+    { "a": { "p": "chest.breast_size", "in": ["flat", "small"] }, "b": { "p": "chest.breast_firmness", "in": ["saggy"] } },
+    { "a": { "p": "chest.breast_size", "in": ["flat", "small"] }, "b": { "p": "chest.breast_shape", "in": ["bell"] } },
+    { "a": { "p": "body.figure", "in": ["pear", "curvy", "voluptuous"] }, "b": { "p": "butt_legs.butt_size", "in": ["flat", "small"] } },
+    { "a": { "p": "body.figure", "in": ["pear", "curvy", "voluptuous"] }, "b": { "p": "butt_legs.thighs", "in": ["very_slim"] } },
+    { "a": { "p": "body.figure", "in": ["voluptuous", "curvy"] }, "b": { "p": "chest.breast_size", "in": ["flat", "small"] } },
+    { "a": { "p": "body.figure", "in": ["slender", "petite"] }, "b": { "p": "butt_legs.butt_size", "in": ["very_large", "huge"] } },
+    { "a": { "p": "butt_legs.thighs", "in": ["thick", "very_thick"] }, "b": { "p": "butt_legs.thigh_gap", "in": ["visible"] } },
+    { "a": { "p": "body.body_fat", "in": ["soft", "chubby", "plump"] }, "b": { "p": "butt_legs.thigh_gap", "in": ["visible", "slight"] } },
+    { "a": { "p": "body.body_fat", "in": ["very_lean", "lean"] }, "b": { "p": "butt_legs.thighs", "in": ["very_thick"] } },
+    { "a": { "p": "butt_legs.butt_size", "in": ["flat"] }, "b": { "p": "butt_legs.butt_shape", "in": ["bubble", "round", "heart"] } },
+    { "a": { "p": "hands_nails.nail_type", "in": ["natural"] }, "b": { "p": "hands_nails.nail_length", "in": ["very_long"] } },
+    { "a": { "p": "hands_nails.nail_length", "in": ["very_short", "short"] }, "b": { "p": "hands_nails.nail_shape", "in": ["stiletto", "coffin", "almond"] } },
+    { "a": { "p": "hands_nails.nail_finish", "in": ["bare", "french", "clear"] }, "b": { "p": "hands_nails.nail_color", "in": ["red", "burgundy", "pink", "hot_pink", "nude", "coral", "black", "white", "purple", "blue", "gold", "silver"] } },
+    { "a": { "p": "feet.toenail_finish", "in": ["bare", "french", "clear"] }, "b": { "p": "feet.toenail_color", "in": ["red", "burgundy", "pink", "hot_pink", "nude", "coral", "black", "white", "purple", "blue", "gold", "silver"] } },
+    { "a": { "p": "general.age", "max": 25 }, "b": { "p": "chest.breast_firmness", "in": ["saggy"] } },
+    { "a": { "p": "general.age", "max": 25 }, "b": { "p": "butt_legs.butt_firmness", "in": ["saggy"] } }
+  ]
+}
