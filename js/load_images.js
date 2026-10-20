@@ -106,8 +106,11 @@ REG.consumers.set(NODE, () => SIZE_FIELDS);
 // Unpack Parameters asks this what the output wire contains.
 REG.providers.set(NODE, (node, slot) => {
     if (slot !== 0) return null;
+    const titles = node.properties?.nd_titles || {};
     return stateOf(node).blocks.map((b, i) => ({
         name: `Image ${i + 1} Parameters`,
+        // a block named in its settings shows that name on the Unpack output
+        label: String(titles[b.id] ?? "").trim() ? `${String(titles[b.id]).trim()} Parameters` : undefined,
         type: "ND_PARAMS",
         sub: () => blockFields(b),
     }));
@@ -366,13 +369,18 @@ function openNodeSettings(st, onApply) {
     });
 }
 
-function openBlockSettings(block, index, onApply) {
+function openBlockSettings(block, index, onApply, customTitle = "") {
     const s = block.settings;
     const ui = {};
     openModal({
-        title: `Image ${index + 1} — block settings`,
+        title: `${customTitle || `Image ${index + 1}`} — block settings`,
         width: 540,
         body: (c) => {
+            ui.title = el("input");
+            ui.title.type = "text";
+            ui.title.maxLength = 40;
+            ui.title.placeholder = `Image ${index + 1}`;
+            ui.title.value = customTitle;
             ui.mask = checkbox("Mask button", s.maskButton);
             ui.keep = checkbox("Keep Proportion selector", s.keepEnabled);
             ui.apply = checkbox("Keep Proportion changes the image (resize to the input width and height, or to the first enabled image without them)", s.keepApply);
@@ -402,7 +410,9 @@ function openBlockSettings(block, index, onApply) {
             };
             ui.keep.input.onchange = ui.apply.input.onchange = ui.slider.input.onchange = sync;
             sync();
-            c.append(ui.mask.row, ui.keep.row, sub, ui.slider.row, sub2,
+            c.append(field("Block name", ui.title, "Only the title shown in this node. Leave it empty for the default name."),
+                el("div", "nd-li-sep"),
+                ui.mask.row, ui.keep.row, sub, ui.slider.row, sub2,
                 el("small", "nd-li-note", "Disabled options are hidden in the block and removed from its outputs (the mask output is always there)."),
                 el("div", "nd-li-sep"), ui.lock.row,
                 el("small", "nd-li-note", "The block stays at its current position: it cannot be dragged, and other blocks are reordered around it."));
@@ -414,6 +424,7 @@ function openBlockSettings(block, index, onApply) {
             if (max < min) [min, max] = [max, min];
             if (!(step > 0)) step = 0.1;
             onApply({
+                blockTitle: ui.title.value.trim(),
                 maskButton: ui.mask.input.checked,
                 keepEnabled: ui.keep.input.checked,
                 keepApply: ui.apply.input.checked,
@@ -565,6 +576,11 @@ function setupLoadImages(node) {
 
     node.ndLI = { get state() { return st; } };
 
+    // Block names are a UI-only label: kept in the node's properties (saved with the workflow,
+    // never sent to the server, so renaming a block does not re-run anything), keyed by block id.
+    const titles = () => ((node.properties ||= {}).nd_titles ||= {});
+    const blockTitle = (b, i) => String(titles()[b.id] ?? "").trim() || `Image ${i + 1}`;
+
     function commit(structural = false) {
         if (wState) wState.value = JSON.stringify(st);
         if (structural) REG.refresh?.();
@@ -576,6 +592,8 @@ function setupLoadImages(node) {
         while (st.blocks.length < n) st.blocks.push(defaultBlock());
         st.blocks.length = n;
         st.hideBlockSettings = hideBlockSettings;
+        const ids = new Set(st.blocks.map((x) => x.id));
+        for (const id of Object.keys(titles())) if (!ids.has(id)) delete titles()[id];
         commit(true);
         growNodeFor(n);
         renderAll();
@@ -676,13 +694,15 @@ function setupLoadImages(node) {
         };
 
         on.onclick = () => { block.enabled = !block.enabled; commit(); updateBlock(v); };
-        bgear.onclick = () => openBlockSettings(block, st.blocks.indexOf(block), (s) => {
+        bgear.onclick = () => openBlockSettings(block, st.blocks.indexOf(block), ({ blockTitle: name, ...s }) => {
+            if (name) titles()[block.id] = name;
+            else delete titles()[block.id];
             block.settings = { ...block.settings, ...s };
             block.slider = snap(block.slider, block.settings);
             commit(true);
             updateBlock(v);
             layout();
-        });
+        }, String(titles()[block.id] ?? "").trim());
         upload.onclick = () => file.click();
         file.onchange = () => { setImage(file.files?.[0]); file.value = ""; };
         for (const t of ["dragenter", "dragover"]) {
@@ -791,7 +811,8 @@ function setupLoadImages(node) {
         const i = st.blocks.indexOf(b);
         v.el.classList.toggle("off", !b.enabled);
         v.on.classList.toggle("active", !!b.enabled);
-        v.title.textContent = `Image ${i + 1}`;
+        v.title.textContent = blockTitle(b, i);
+        v.title.title = v.title.textContent;
         v.bgear.style.display = st.hideBlockSettings ? "none" : "";
         v.grip.style.display = s.lockOrder ? "none" : "";
         v.lock.style.display = s.lockOrder ? "" : "none";

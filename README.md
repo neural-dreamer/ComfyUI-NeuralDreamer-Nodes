@@ -2,7 +2,7 @@
 
 Custom nodes for [ComfyUI](https://github.com/comfyanonymous/ComfyUI) by Neural Dreamer.
 
-![Version](https://img.shields.io/badge/version-1.0.1-2f7de1)
+![Version](https://img.shields.io/badge/version-1.1.0-2f7de1)
 [![License: MIT](https://img.shields.io/badge/license-MIT-2f7de1)](LICENSE)
 
 **English** · [Русский](README_RU.md)
@@ -20,6 +20,9 @@ Custom nodes for [ComfyUI](https://github.com/comfyanonymous/ComfyUI) by Neural 
 | [ND Load Images](#nd-load-images) | `Neural Dreamer/Images` | 1–20 image blocks with upload, mask, crop/rotate/flip, Keep Proportion and a slider |
 | [ND Pack Parameters](#nd-pack-parameters--nd-unpack-parameters) | `Neural Dreamer/Parameters` | Packs any values into one wire |
 | [ND Unpack Parameters](#nd-pack-parameters--nd-unpack-parameters) | `Neural Dreamer/Parameters` | Opens a parameters wire into separate outputs |
+| [ND Multi Switch](#nd-multi-switch) | `Neural Dreamer/Logic` | Switches whole groups of values at once: true / false pairs, one output per pair |
+| [ND Any Switch](#nd-any-switch) | `Neural Dreamer/Logic` | Passes on one of many inputs of any type, picked by an index; only that one runs |
+| [ND ON / OFF](#nd-on--off) | `Neural Dreamer/Logic` | Passes a value through or drops it, as if the wire did not exist |
 
 ## Installation
 
@@ -212,7 +215,7 @@ A modular image loader. The number of blocks (1–20) is set in the node setting
 - The circle at the top left enables or disables the block; a disabled block is shown faded.
 - Drag the grip at the top right to change the order of the blocks. A block with *Lock Order Position* shows a lock instead and keeps its place.
 
-**Block settings** (gear in the block header): show or hide the Mask button, the Keep Proportion selector and the slider; whether Keep Proportion changes the image or is only passed to the output; the scaling method for that resize (`nearest-exact`, `bilinear`, `area`, `bicubic`, `lanczos`; default `lanczos`); slider name, range and step; *Lock Order Position*: the block cannot be dragged, and when other blocks are reordered they move around it. A disabled option is also removed from the block's outputs (the mask output is always present).
+**Block settings** (gear in the block header): *Block name*, a title for the block (empty means `Image N`; it is only a label for the interface, stored in the workflow, and a block keeps its name when blocks are reordered; the matching Unpack output shows it as `<name> Parameters`); show or hide the Mask button, the Keep Proportion selector and the slider; whether Keep Proportion changes the image or is only passed to the output; the scaling method for that resize (`nearest-exact`, `bilinear`, `area`, `bicubic`, `lanczos`; default `lanczos`); slider name, range and step; *Lock Order Position*: the block cannot be dragged, and when other blocks are reordered they move around it. A disabled option is also removed from the block's outputs (the mask output is always present).
 
 **Node settings**: number of blocks; *Hide block settings* hides the block gears so a finished setup is not changed by accident.
 
@@ -224,6 +227,32 @@ A modular image loader. The number of blocks (1–20) is set in the node setting
 | Output | `Image N Parameters` | One field per block. Unpack a block's field into `image`, `mask`, `keep_proportion`, the slider value and `enabled` |
 
 All settings, files, masks and edits are stored in the workflow.
+
+## ND Multi Switch
+
+Switches whole groups of values at once. The inputs come in pairs, `true N` and `false N`, with one output per pair. The `condition` toggle picks the side the outputs are taken from: `out N` is `true N` when it is on and `false N` when it is off.
+
+- A new pair appears as soon as the last one is connected (up to 32). Thin lines separate the pairs.
+- Every pair has its own data type, set by the first wire connected to it on either side: to a `true` or `false` input, or to the output. The three pins of the pair then share that type and are named after the pin at the other end of the wire (`image (true)`, `image (false)`, `image (out)`). A pair with no wires left is free again (`true +`, `false +`, `out`). An empty pair between used ones stays, so the output numbers never move. A name typed with Rename Slot is kept.
+- Only the selected side is evaluated: nodes that feed the other side are not run for the switch.
+- If the selected side of a pair has nothing connected while the other side has, that output blocks the nodes after it: they are skipped, without an error.
+
+## ND Any Switch
+
+Passes on one of its inputs. The integer `index` picks which one (1 is the first pin); the pin it points at is highlighted.
+
+- Starts with two pins: the first, and a free one marked `+`. A new `+` pin appears as soon as the last one is connected (up to 64). Every pin accepts any type, independently of the others; a connected pin is named `N: <source name>`.
+- The single output has a free type and can be connected to any pin.
+- Only the picked input is evaluated, the others are ignored as if their wires led nowhere. With several model loaders connected, only the picked one runs.
+- If the picked pin is empty, the output is empty too, without an error.
+
+## ND ON / OFF
+
+Passes one value through. With the `condition` toggle on (true) the value goes to the output; with it off (false) nothing comes out, as if the wire after the node did not exist: an optional input fed by it counts as not connected, not as missing data. The input is not evaluated while it is off.
+
+- One input and one output. The first wire connected, to the input or to the output, gives both pins its type and name.
+
+**How the two Logic switches empty a wire.** When the `index` or `condition` is set in the node (or comes from a Primitive Int / Primitive Boolean node), the browser removes the switch from the prompt it sends: the nodes after it are wired straight to the picked source, or lose that wire altogether. When it comes from any other computed value, the node stays in the prompt and outputs `None` for "nothing". A required input after an empty output is reported by ComfyUI as missing, as for any unconnected wire. Export (API) gives the same resolved prompt.
 
 ## ND Pack Parameters / ND Unpack Parameters
 
@@ -257,6 +286,8 @@ ComfyUI-NeuralDreamer-Nodes/
 │   ├── __init__.py
 │   ├── variant_selector.py
 │   ├── live_preview.py
+│   ├── multi_switch.py
+│   ├── switches.py          # Any Switch, ON / OFF
 │   ├── show_any_text.py
 │   ├── load_images.py
 │   ├── slider.py
@@ -268,6 +299,9 @@ ComfyUI-NeuralDreamer-Nodes/
 │   ├── show_any_text.js
 │   ├── load_images.js
 │   ├── slider.js
+│   ├── multi_switch.js
+│   ├── switches.js
+│   ├── nd_wires.js         # helpers for pins that follow the type and name of their wires
 │   ├── character_builder.js
 │   ├── character_builder.json  # parts, options and wording of the Character Builder
 │   ├── character_icons.js  # Character Builder icons (generated by tools/make_character_icons.py)

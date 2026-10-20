@@ -278,8 +278,10 @@ function syncUnpack(node) {
     list.forEach((f, i) => {
         if (i >= node.outputs.length) node.addOutput(`out_${i + 1}`, f.type || "*");
         const o = node.outputs[i];
-        o.label = f.name;
-        o.localized_name = f.name;
+        // f.label is what the pin shows (e.g. a block name set by the user); f.name is the
+        // key the server looks the value up by and must stay as it is
+        o.label = f.label || f.name;
+        o.localized_name = f.label || f.name;
         o.type = f.type || "*";
     });
     for (let i = node.outputs.length - 1; i >= list.length; i--) {

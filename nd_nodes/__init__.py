@@ -20,6 +20,8 @@ MODULES = [
     "slider",
     "character_builder",
     "live_preview",
+    "multi_switch",
+    "switches",
 ]
 
 NODE_CLASS_MAPPINGS = {}
