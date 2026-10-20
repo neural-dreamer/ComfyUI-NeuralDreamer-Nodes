@@ -14,3 +14,4 @@ Documentation = "https://github.com/neural-dreamer/ComfyUI-NeuralDreamer-Nodes#r
 [tool.comfy]
 PublisherId = "neural-dreamer"
 DisplayName = "Neural Dreamer Nodes"
+Icon = "https://raw.githubusercontent.com/neural-dreamer/ComfyUI-NeuralDreamer-Nodes/main/icon.png"
