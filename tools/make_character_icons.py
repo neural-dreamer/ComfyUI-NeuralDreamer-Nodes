@@ -160,6 +160,25 @@ def face_icon():
     return svg("-26 22 52 52", f'<path d="{smooth(head)}" {SKIN}/>' + feats)
 
 
+def facial_hair_icon():
+    head = run_of(ff, "h")
+    beard = (
+        f'<path d="M-13.5 52Q-14 70 0 74.5Q14 70 13.5 52Q9.5 59 5 58.6Q0 57 -5 58.6Q-9.5 59 -13.5 52Z" class="nd-ico-hair" {LINE}/>'
+        f'<path d="M-7 58Q-3.5 55.4 0 57.6Q3.5 55.4 7 58" {LINE}/>'
+        f'<path d="M-10.5 46.5Q-7.5 44.6-4.5 46.5M10.5 46.5Q7.5 44.6 4.5 46.5" {LINE}/>'
+    )
+    return svg("-26 24 52 54", f'<path d="{smooth(head)}" {SKIN}/>' + beard)
+
+
+def tattoo_icon():
+    marks = (
+        f'<path d="M0 176C-10 168 -8 158 0 163C8 158 10 168 0 176Z" {DETAIL}/>'
+        f'<path d="M-20 150L-14 154M-20 157L-14 161M-20 164L-14 168" {DETAIL}/>'
+        f'<path d="M0 118L2 123L7 123.5L3.200 127L4.500 132L0 129L-4.500 132L-3.200 127L-7 123.5L-2 123Z" {DETAIL}/>'
+    )
+    return crop(ff, (-58, 96, 58, 204), marks)
+
+
 def two_figures():
     # woman and man side by side: sex, age, look
     def place(tpl, dx, k):
@@ -370,6 +389,29 @@ def penis_icon(length=22, width=7, bend=0.0, taper=1.0, veins=False, balls=True)
     return svg("0 0 40 40", out)
 
 
+def penis_front_icon(lean=0.0, width=7.4):
+    """Front view of an erect penis, used to show a lean to the left or right (lean -1..1, as
+    seen in the picture: -1 bends to the left of the image)."""
+    base, top = (20.0, 27.0), (20.0 + lean * 7.5, 7.5)
+    center = []
+    for i in range(9):
+        t = i / 8
+        # a bend that grows toward the tip
+        x = base[0] + (top[0] - base[0]) * t * t
+        y = base[1] + (top[1] - base[1]) * t
+        center.append((x, y))
+    out = f'<path d="M2.5 9Q8 18 11.5 27M37.5 9Q32 18 28.5 27" {LINE}/>'
+    for cx in (16.2, 23.8):
+        out += f'<ellipse cx="{f(cx)}" cy="31.6" rx="5.2" ry="5" {SKIN}/>'
+    out += f'<path d="{tube(center, width, width)}" {SKIN}/>'
+    a, b = center[-2], center[-1]
+    ang = math.degrees(math.atan2(b[1] - a[1], b[0] - a[0])) + 90
+    gx, gy = b[0] + (b[0] - a[0]) * 0.2, b[1] + (b[1] - a[1]) * 0.2
+    out += f'<ellipse cx="{f(gx)}" cy="{f(gy)}" rx="{f(width * 0.6)}" ry="{f(width * 0.52)}" transform="rotate({f(ang)} {f(gx)} {f(gy)})" {SKIN}/>'
+    out += f'<path d="M{f(gx)} {f(gy - 1.6)}L{f(gx)} {f(gy - 0.2)}" transform="rotate({f(ang)} {f(gx)} {f(gy)})" {DETAIL}/>'
+    return svg("0 0 40 40", out)
+
+
 def penis_size_icons():
     sizes = {"tiny": (9, 4.2), "small": (13, 5), "average": (17, 6), "large": (21, 7), "huge": (25.5, 8.2), "gigantic": (30, 9.6)}
     return {k: penis_icon(l, w) for k, (l, w) in sizes.items()}
@@ -382,6 +424,9 @@ def penis_shape_icons():
         "curved_down": penis_icon(22, 7, bend=-0.28),
         "tapered": penis_icon(22, 8, taper=0.62),
         "thick": penis_icon(19, 10.5),
+        "very_thick": penis_icon(18, 13.5),
+        "bent_left": penis_front_icon(-1.0),
+        "bent_right": penis_front_icon(1.0),
         "veiny": penis_icon(22, 7.5, veins=1),
         "bulging": penis_icon(22, 7.5, veins=2),
         "massive": penis_icon(22, 7.5, veins=3),
@@ -395,6 +440,7 @@ zones = {
     "build": crop(ff, (-110, 22, 110, 422)),
     "hair": hair_icon("loose"),
     "face": face_icon(),
+    "facial_hair": facial_hair_icon(),
     "neck": crop(ff, (-34, 52, 34, 112)),
     "shoulders": crop(fb, (-48, 88, 48, 150)),
     "chest": crop(ff, (-40, 96, 40, 148), areolae(ff)),
@@ -404,7 +450,8 @@ zones = {
     "hips": crop(fb, (-50, 178, 50, 246)),
     "legs": crop(ff, (-48, 206, 48, 400)),
     "feet": crop(fs, (-30, 382, 36, 424)),
-    "genitals": crop(ff, (-40, 168, 40, 244), genitals=True),
+    "tattoos": tattoo_icon(),
+    "genitals": crop(ff, (-58, 160, 58, 252), genitals=True),
 }
 hair_styles = ["loose", "ponytail", "low_ponytail", "twintails", "braid", "twin_braids", "bun", "messy_bun", "half_up", "bob", "pixie", "undercut"]
 options = {
@@ -412,8 +459,8 @@ options = {
     "hair.bangs": {b: bangs_icon(b) for b in ["none", "blunt", "side", "curtain", "wispy"]},
     "hands_nails.nail_shape": {s: nail_icon(s) for s in ["square", "squoval", "round", "oval", "almond", "coffin", "stiletto"]},
     "genitals.penis_size": penis_size_icons(),
-    "genitals.penis_curve": {k: v for k, v in penis_shape_icons().items() if k in ("straight", "curved_up", "curved_down")},
-    "genitals.penis_girth": {k: v for k, v in penis_shape_icons().items() if k in ("tapered", "thick")},
+    "genitals.penis_curve": {k: v for k, v in penis_shape_icons().items() if k in ("straight", "curved_up", "curved_down", "bent_left", "bent_right")},
+    "genitals.penis_girth": {k: v for k, v in penis_shape_icons().items() if k in ("tapered", "thick", "very_thick")},
     "genitals.penis_veins": {k: v for k, v in penis_shape_icons().items() if k in ("veiny", "bulging", "massive")},
 }
 

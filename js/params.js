@@ -117,9 +117,48 @@ function consumerFields(pack) {
     for (const t of targetsOf(pack, 0)) {
         const fn = REG.consumers.get(classOf(t.node));
         const fields = fn?.(t.node, t.slot);
-        if (fields?.length) return fields;
+        if (fields?.length) return expandGrow(pack, fields);
     }
     return null;
+}
+
+// A field with grow {max}: "pose", "pose_2" ... one pin per connected input and exactly one empty pin after the last connected one
+// (at most max). The server reads the same names. Labels: "Pose Builder", "Pose Builder 2" ...
+function expandGrow(pack, fields) {
+    const map = pack.properties?.nd_schema || {};
+    const out = [];
+    for (const f of fields) {
+        if (!f.grow) { out.push(f); continue; }
+        const nameOf = (n) => (n === 1 ? f.name : `${f.name}_${n}`);
+        let highest = 0;
+        for (let n = 1; n <= f.grow.max; n++) {
+            const slot = Object.keys(map).find((k) => map[k] === nameOf(n));
+            const i = slot ? pack.inputs?.findIndex((x) => x.name === slot) : -1;
+            if (i >= 0 && pack.inputs[i].link != null) highest = n;
+        }
+        const show = Math.min(f.grow.max, highest + 1);
+        for (let n = 1; n <= show; n++) out.push({ ...f, name: nameOf(n), label: n === 1 ? f.label : `${f.label} ${n}`, grow: undefined });
+    }
+    return out;
+}
+
+// Where the value on the input pin `name` of a node comes from, as {node, slot}.
+export function inputSource(node, name) {
+    return sourceOf(node, inputIndex(node, name));
+}
+
+// Where the value of the field `name` of a Pack Parameters node (schema mode) comes from, as {node, slot}.
+export function packFieldSource(pack, name) {
+    const map = pack?.properties?.nd_schema || {};
+    const slot = Object.keys(map).find((k) => map[k] === name);
+    const i = slot ? pack.inputs?.findIndex((x) => x.name === slot) : -1;
+    return i >= 0 ? sourceOf(pack, i) : null;
+}
+
+// The Pack Parameters node (or nothing) that feeds the input pin `name` of a node
+export function packOf(node, name = "params") {
+    const src = inputSource(node, name);
+    return src && classOf(src.node) === PACK ? src.node : null;
 }
 
 /* ------------------------------------------------------------ descriptions */
@@ -210,16 +249,16 @@ function syncPack(node) {
         for (const f of schema) {
             let slot = Object.keys(map).find((k) => map[k] === f.name);
             if (!slot) {
-                const reuse = node.inputs.find((i) => FIELD.test(i.name) && !map[i.name] && (i.label === f.name || i.link == null));
+                const reuse = node.inputs.find((i) => FIELD.test(i.name) && !map[i.name] && (i.label === (f.label || f.name) || i.link == null));
                 slot = reuse ? reuse.name : freeFieldName(node);
                 if (!slot) continue;
                 if (!reuse) node.addInput(slot, f.type || "*");
                 map[slot] = f.name;
             }
             const inp = node.inputs.find((i) => i.name === slot);
-            inp.label = f.name;
+            inp.label = f.label || f.name; // f.name is the key the server reads; f.label is what the pin shows
             inp.type = f.type || "*";
-            autos[slot] = f.name;
+            autos[slot] = f.label || f.name;
         }
         for (let i = node.inputs.length - 1; i >= 0; i--) {
             const inp = node.inputs[i];
@@ -342,7 +381,7 @@ app.registerExtension({
     name: "NeuralDreamer.Nodes.Params",
 
     setup() {
-        const colors = { ND_PARAMS: "#d6a64f" };
+        const colors = { ND_PARAMS: "#d6a64f", OUTFIT_PARAMS: "#e0709a", CHARACTER_PARAMS: "#7c9be0", POSE_PARAMS: "#8fd18f", COMPOSITION_PARAMS: "#e0a46a" };
         try { Object.assign(app.canvas?.constructor?.link_type_colors ?? {}, colors); } catch {}
         try { Object.assign((app.canvas.default_connection_color_byType ||= {}), colors); } catch {}
         preferPackUnpack();

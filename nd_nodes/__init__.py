@@ -19,9 +19,14 @@ MODULES = [
     "load_images",
     "slider",
     "character_builder",
+    "outfit_builder",
+    "pose_builder",
+    "composition_settings",
     "live_preview",
     "multi_switch",
     "switches",
+    "resolution",
+    "batch_images",
 ]
 
 NODE_CLASS_MAPPINGS = {}

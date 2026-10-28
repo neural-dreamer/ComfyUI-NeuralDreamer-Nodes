@@ -1,0 +1,8992 @@
+{
+"_about": "ND Character / Outfit / Pose Builder 界面的简体中文翻译。界面字符串以代码中的英文原文为键；数据按 id 建键（见 tools/i18n_tool.py）。提示词始终保持英文。",
+"ui": {
+"({n} of {total})": "（{n}/{total}）",
+"+ Add tattoo": "+ 添加纹身",
+"+ Panel": "+ 面板",
+"+ Random tattoo": "+ 随机纹身",
+"1 large + 4 small": "1 大 + 4 小",
+"2 × 2 grid": "2 × 2 网格",
+"3 in a row: front, side, back": "三连:正面、侧面、背面",
+"5 turnaround views": "5 个环绕视图",
+"A ready-made pose of the Pose Builder suggests a camera (height, view, framing). It fills what you left unset; what you set stays. Turn it off to use only your own settings.": "Pose Builder 的现成姿势会建议相机(高度、视角、取景)。它只填你没设置的部分,你设置的保持不变。关闭后只使用你自己的设置。",
+"Accent": "强调色",
+"Add": "添加",
+"Add a panel (up to 8) in a free place.": "在空位添加一个面板(最多 8 个)。",
+"Add a tattoo where everything is picked by the seed": "添加一个纹身，所有内容由种子随机决定",
+"Add a tattoo: choose its place and design": "添加纹身：选择位置和图案",
+"Add it to the picture.": "把它加到画面中。",
+"Add presets from a .json file (an export of this node)": "从 .json 文件添加预设（本节点的导出文件）",
+"Add, Replace or Remove per slot: \"Dress her in…\", \"Remove her shoes\".": "按槽位添加、替换或移除：“Dress her in…”、“Remove her shoes”。",
+"Added after the description…": "添加在描述之后…",
+"Adds a closing line: keep her face and everything you did not touch exactly as it is.": "在末尾加一句：保持她的脸以及你没有改动的一切完全不变。",
+"Adds the position in percent to every panel (x 0-50 %, y 0-100 %). Strong models follow it; weak ones ignore it.": "给每个面板加上百分比位置(x 0–50 %,y 0–100 %)。强模型会遵循,弱模型会忽略。",
+"Advanced": "高级",
+"All": "全部",
+"All nodes": "所有节点",
+"All random": "全部随机",
+"All random is on (toolbar). Click the values to choose what random may pick.": "“全部随机”已开启（顶部工具栏）。点击各个值可选择随机可以从中挑选的范围。",
+"All random: about a third of the characters get 1–3 tattoos.": "全部随机：大约三分之一的角色会有 1–3 个纹身。",
+"Any text you want after the description (style, scene, quality words). It is added as a new paragraph, after the outfit when there is one. Random never changes it.": "可在描述之后添加任意文字（风格、场景、画质词）。它会作为新的一段，有服装时放在服装之后。随机不会改动它。",
+"Aspect ratio": "宽高比",
+"Avoid conflicts": "避免冲突",
+"Back": "下移",
+"Back to 100%": "恢复到 100%",
+"Body": "身体",
+"Both": "双侧",
+"Bring the selected panel in front of the others (for panels that overlap).": "把选中的面板放到其他面板之上(用于重叠的面板)。",
+"Butt & Legs": "臀部与腿",
+"Camera": "相机",
+"Camera Description": "相机描述",
+"Camera from pose": "相机取自姿势",
+"Cancel": "取消",
+"Caption": "标题",
+"Captions": "标题文字",
+"Character Builder": "Character Builder",
+"Character Builder Out": "Character Builder 输出",
+"Chest": "胸部",
+"Chosen values and the dot of a section with set values.": "已选的值，以及有已设置值的分区上的圆点。",
+"Classic": "经典",
+"Clear": "清除",
+"Clear every parameter": "清除所有参数",
+"Clear every parameter of this zone": "清除此分区的所有参数",
+"Click to confirm": "再点一次确认",
+"Click to select, drag to move, drag the corners to resize. Double-click the name to type your own caption.": "点击选择,拖动移动,拖动角点调整大小。双击名称可输入自己的标题。",
+"Close": "关闭",
+"Collage": "拼贴",
+"Color": "颜色",
+"Colours": "配色",
+"Comma-separated tags. At least one format stays on.": "以逗号分隔的标签。至少保留一种格式。",
+"Composition Settings": "Composition Settings",
+"Composition Settings Out": "Composition Settings 输出",
+"Connect an ND Resolution to the Resolution input.": "请把 ND Resolution 连接到“分辨率”输入。",
+"Content": "内容",
+"Copy": "复制",
+"Copy the selected panel with its camera.": "复制选中的面板及其相机。",
+"Could not delete: {error}": "无法删除：{error}",
+"Could not export: {error}": "无法导出：{error}",
+"Could not import: {error}": "无法导入：{error}",
+"Could not save: {error}": "无法保存：{error}",
+"Create": "生成",
+"Custom": "自定义",
+"Custom color in words, e.g. neon teal": "用文字描述自定义颜色，例如 neon teal（霓虹青）",
+"Custom text…": "自定义文字…",
+"Delete": "删除",
+"Delete this preset": "删除此预设",
+"Delete?": "删除？",
+"Deleted \"{name}\".": "已删除“{name}”。",
+"Describe a character (prompt for image models).": "描述一个角色（用于图像模型的提示词）。",
+"Describe it in a few words": "用几个词描述",
+"Description": "描述",
+"Design": "图案",
+"Design, in words (e.g. a coiled dragon)": "用文字描述图案（例如：盘绕的龙）",
+"Done": "完成",
+"Duplicate": "复制",
+"Edit": "编辑",
+"Edit gives instructions for an image-editing model: only the camera you set is changed (height, view, framing...). With a Pose Builder in Edit mode connected, its pose instruction joins the text and one 'keep the rest' sentence closes it.": "Edit 为图像编辑模型提供指令:只改变你设置的相机(高度、视角、取景……)。如果连接了 Edit 模式的 Pose Builder,它的姿势指令会并入文本,并以一句“其余保持不变”结尾。",
+"Edit is for a single shot only.": "Edit 仅适用于单张画面。",
+"Edit mode": "编辑模式",
+"Edit text": "编辑文字",
+"Emerald": "翡翠",
+"Every panel in the picture carries a small caption that names its view (FRONT VIEW, SIDE VIEW...). Models draw text best on short captions.": "图片中每个面板都带一个小标题,写出它的视角(FRONT VIEW、SIDE VIEW……)。模型画短标题的效果最好。",
+"Every parameter, part of the body by part. What a pose sets stays in use, even when it is hidden in Simple.": "所有参数，按身体部位逐一设置。姿势设定的内容即使在简单模式中被隐藏，也依然生效。",
+"Everything the race has is on by default. Untick a feature to leave it out of the description (no horns, no tail…).": "该种族拥有的一切特征默认全部开启。取消勾选某个特征，即可从描述中去掉它（没有角、没有尾巴…）。",
+"Explicit": "露骨内容",
+"Export all": "全部导出",
+"Export this preset to a .json file": "将此预设导出为 .json 文件",
+"Exported {n} presets.": "已导出 {n} 个预设。",
+"Extra prompt": "附加提示词",
+"Face": "面部",
+"Facial hair": "面部毛发",
+"Feet": "脚",
+"Fill the subject only when the picture has several people: the text then says whom to edit and keeps the others unchanged. Leave it empty for a single character. In Edit mode Sex only picks her / his.": "只有画面中有多个人时才需要填写：文字会指明要编辑谁，并保持其他人不变。单个角色请留空。在编辑模式中，“性别”只决定用 her / his。",
+"Fix random": "固定随机结果",
+"Forward": "上移",
+"Front and back": "正面和背面",
+"Full": "完整",
+"Full Description": "完整描述",
+"Full body + face close-up": "全身 + 脸部特写",
+"Full: one instruction per parameter you set, or one sentence for a ready-made pose. Simple: one sentence that changes the whole pose. With a Character Builder connected, its Full Description joins the instructions and ends with one 'keep the rest' sentence.": "完整：每个已设置的参数一条指令，现成姿势则用一句话。简单：用一句话改变整个姿势。连接 Character Builder 时，它的完整描述会并入指令，并在末尾加一句“其余保持不变”。",
+"Full: one instruction per slot (Add, Replace, Remove). Simple: one sentence that changes the whole outfit. The Character Builder takes these when it is in Edit mode too.": "完整：每个槽位一条指令（添加、替换、移除）。简单：用一句话改变整套服装。Character Builder 处于编辑模式时也会采用这些内容。",
+"General": "基本",
+"Genitals": "生殖器",
+"Grid": "网格",
+"Hair": "头发",
+"Hands & Nails": "手与指甲",
+"Hover and focus borders, sliders, the selected section.": "悬停和聚焦时的边框、滑块、当前选中的分区。",
+"Hue": "色相",
+"Imported: {list}.": "已导入：{list}。",
+"Import…": "导入…",
+"Inferno": "烈焰",
+"Ink color, in words (e.g. neon pink)": "用文字描述墨色（例如：霓虹粉）",
+"Instructions for image-editing models (Qwen Image Edit, Flux 2 Klein, Krea 2 Edit…): only what you set is changed.": "面向图像编辑模型（Qwen Image Edit、Flux 2 Klein、Krea 2 Edit…）的指令：只会改动你设置的内容。",
+"Just a tattoo": "仅纹身",
+"Keep both": "两者都保留",
+"Keep one panel only.": "只保留一个面板。",
+"Keep the rest unchanged": "其余保持不变",
+"Language": "语言",
+"Large + inset": "大图 + 插图",
+"Left": "左",
+"Lightness": "明度",
+"Load this preset: it replaces every setting of the node": "加载此预设：会替换节点的所有设置",
+"Loaded \"{name}\".": "已加载“{name}”。",
+"Loading…": "加载中…",
+"Make this parameter random": "让此参数随机",
+"Mono": "单色",
+"Muscle": "肌肉",
+"Natural": "自然语言",
+"Natural-language sentences (best for Flux 2, Krea 2). At least one format stays on.": "自然语言句子（最适合 Flux 2、Krea 2）。至少保留一种格式。",
+"Natural: sentences, best for Flux 2, Krea 2, Qwen Image. Tags: comma-separated tags. At least one stays on.": "自然语言：完整句子，最适合 Flux 2、Krea 2、Qwen Image。标签：以逗号分隔的标签。至少保留一种。",
+"Needs {what}; this character has none. Random skips it.": "需要{what}；此角色没有。随机会跳过它。",
+"Negative": "负面",
+"No Pose Builder is connected: the panels describe the camera only.": "没有连接 Pose Builder:面板只描述相机。",
+"No place": "不指定位置",
+"No presets yet.": "还没有预设。",
+"Not available in Edit mode: it would rewrite the whole character.": "编辑模式下不可用：它会重写整个角色。",
+"Not connected.": "未连接。",
+"Not set": "未设置",
+"Not typical for the chosen posture; random skips it.": "与所选姿态不太搭配；随机会跳过它。",
+"Not typical for the chosen styles; random skips it.": "与所选风格不太搭配；随机会跳过它。",
+"Not used while the Genitals option is off.": "“生殖器”选项关闭时不会使用。",
+"Ocean": "海洋",
+"Off": "关",
+"Off: adds nothing to the prompt": "已关闭：不向提示词添加任何内容",
+"On": "开",
+"One picture with one camera. Edit mode works here.": "一张图,一个相机。这里可使用 Edit 模式。",
+"One sentence: \"Change her outfit to…\".": "一句话：“Change her outfit to…”。",
+"Only the interface language changes. The prompt text stays in English: image models understand English best. The names of the pins stay in English too.": "只更改界面语言。提示词文本始终保持英文：图像模型最擅长理解英文。引脚名称也保持英文。",
+"Only the new names are added": "只添加新的名称",
+"Open the system colour picker": "打开系统取色器",
+"Outfit": "服装",
+"Outfit Builder": "Outfit Builder",
+"Outfit Builder Out": "Outfit Builder 输出",
+"Outfit Description": "服装描述",
+"Overwrite": "覆盖",
+"Panel": "面板",
+"Panel 1 is the main panel: the way its pose faces the camera limits its views.": "面板 1 是主面板:它的姿势朝向相机的方式会限制它的视角。",
+"Panels snap to the grid.": "面板吸附到网格。",
+"Percent": "百分比",
+"Pick a colour from the screen": "从屏幕上取色",
+"Picked: {list}": "已选：{list}",
+"Place": "位置",
+"Place, in words (e.g. left hip bone)": "用文字描述位置（例如：左侧髋骨）",
+"Pose": "姿势",
+"Pose Builder": "Pose Builder",
+"Pose Builder Out": "Pose Builder 输出",
+"Pose Description": "姿势描述",
+"Pose from": "姿势来自",
+"Presets": "预设",
+"Presets are not available: {error}": "预设不可用：{error}",
+"Prompt format": "提示词格式",
+"Quick set": "快速设置",
+"Race features": "种族特征",
+"Random": "随机",
+"Random from": "随机范围：从",
+"Random never picks a custom value. Turn random off to type one.": "随机永远不会选择自定义值。关闭随机后才能输入。",
+"Random picks skip values that clash with the others (e.g. a pixie cut with waist-length hair).": "随机会跳过与其他值冲突的取值（例如精灵短发配及腰长发）。",
+"Random to": "到",
+"Random values, the dice and the dot of a section with random values.": "随机的值、骰子，以及有随机值的分区上的圆点。",
+"Random: on (click to turn off). Click the values to choose what random may pick.": "随机：已开启（点击关闭）。点击各个值可选择随机可以从中挑选的范围。",
+"Random: the seed gives 1–3 tattoos, each with a random place, design, style, size and color.": "随机：由种子生成 1–3 个纹身，每个纹身的位置、图案、风格、大小和颜色都随机。",
+"Random: {list}": "随机：{list}",
+"Ready-made poses by category, with a few quick settings.": "按类别排列的现成姿势，附带少量快速设置。",
+"Remove": "移除",
+"Remove the selected panel.": "删除选中的面板。",
+"Remove this tattoo": "移除此纹身",
+"Remove what is there now and put this instead.": "去掉现有的内容，换成这个。",
+"Replace": "替换",
+"Reset": "重置",
+"Resolution": "分辨率",
+"Right": "右",
+"Run the workflow once: the resolution arrives by itself.": "运行一次工作流:分辨率会自动传来。",
+"Sakura": "樱花",
+"Same as all nodes ({lang})": "与所有节点相同（{lang}）",
+"Saturation": "饱和度",
+"Save": "保存",
+"Save every preset to a .json file": "将所有预设保存为 .json 文件",
+"Save every setting of this node under this name": "将此节点的所有设置以此名称保存",
+"Save the settings of this node as a preset, load, delete, export or import presets": "将此节点的设置保存为预设，或加载、删除、导出、导入预设",
+"Saved \"{name}\".": "已保存“{name}”。",
+"Saved: every parameter, random choices and formats.": "会保存：所有参数、随机选择和格式。",
+"Send the selected panel behind the others.": "把选中的面板放到其他面板之下。",
+"Set every parameter of this zone to random": "将此分区的所有参数设为随机",
+"Set values": "已设置的值",
+"Settings: language, prompt format, random, content, colours, UI scale": "设置：语言、提示词格式、随机、内容、配色、界面缩放",
+"Several panels on one picture, each with its own camera and pose (a character sheet, a collage).": "一张图上有多个面板,每个面板有自己的相机和姿势(角色设定图、拼贴)。",
+"Show the Genitals section. While it is off, the section is hidden and none of its values are used.": "显示“生殖器”分区。关闭时该分区隐藏，其中的值都不会被使用。",
+"Shows the Explicit and Masturbation poses, the Pleasure and Toys sections and the explicit fluids; while it is off none of them are used. For fictional adult (18+) characters only, one character alone. Do not use it to depict real people.": "显示露骨姿势和自慰姿势、“愉悦”与“玩具”分区以及露骨的体液；关闭时这些都不会被使用。仅限虚构的成年（18+）角色，且只有一个角色。请勿用于描绘真实人物。",
+"Shows the Genitals section; while it is off, none of its values are used. For fictional adult characters (18+) only. Do not use it to depict real people.": "显示“生殖器”分区；关闭时其中的值都不会被使用。仅限虚构的成年（18+）角色。请勿用于描绘真实人物。",
+"Shows the explicit framings (breasts, crotch) and viewpoints. While it is off they are hidden and not used, and random never picks them.": "显示露骨的取景(乳房、下身)和视点。关闭时它们被隐藏且不使用,随机也不会选到。",
+"Shows the explicit framings and viewpoints; while it is off none of them are used. For fictional adult (18+) characters only. Do not use it to depict real people.": "显示露骨的取景和视点;关闭时都不会使用。仅适用于虚构的成年(18+)角色。请勿用于描绘真实人物。",
+"Shows the explicit items (lingerie, fetish wear), the see-through / pulled aside states and Exposure; while it is off none of them are used. For fictional adult (18+) characters only. Do not use it to depict real people.": "显示露骨的单品（内衣、恋物服饰）、透视/拉到一旁的状态以及“暴露度”；关闭时这些都不会被使用。仅限虚构的成年（18+）角色。请勿用于描绘真实人物。",
+"Shows the explicit items, states and the Exposure parameter. While it is off they are hidden and not used, and random never picks them.": "显示露骨的单品、状态和“暴露度”参数。关闭时它们会被隐藏且不会被使用，随机也不会选到它们。",
+"Shows the explicit poses, acts, toys and fluids. While it is off they are hidden and not used, and random never picks them.": "显示露骨的姿势、动作、玩具和体液。关闭时它们会被隐藏且不会被使用，随机也不会选到它们。",
+"Side": "侧",
+"Simple": "简单",
+"Single shot": "单张",
+"Size": "大小",
+"Skip": "跳过",
+"Snap": "吸附",
+"Start from a ready-made layout. It replaces the panels (their cameras too).": "从现成的布局开始。它会替换面板(包括它们的相机)。",
+"Style": "风格",
+"Subject (optional)": "对象（可选）",
+"Switch the node off to keep its settings but add nothing to the prompt. What other nodes give it still passes through.": "关闭节点后会保留其设置，但不向提示词添加任何内容。其他节点传入的内容仍会继续传递。",
+"Tags": "标签",
+"Take it off the picture.": "把它从画面中去掉。",
+"Takes the size of the picture from the Resolution input: the width and height of the ND Resolution node. If it is not known yet, run the workflow once.": "从“分辨率”输入获取图片尺寸:即 ND Resolution 节点的宽和高。如果还不知道,请运行一次工作流。",
+"Tattoos": "纹身",
+"Templates": "模板",
+"The grid the panels snap to when you move or resize them. Hold Alt to move without snapping.": "移动或缩放面板时吸附的网格。按住 Alt 可不吸附地移动。",
+"The imported ones get a number: Name (2)": "导入的会加上编号：名称 (2)",
+"The imported ones replace yours": "导入的会替换你已有的",
+"The pose faces away from the camera: only back views fit.": "姿势背对相机:只适合背面视角。",
+"The pose faces the camera: only the front view fits.": "姿势正对相机:只适合正面视角。",
+"The pose is in profile: only side views fit.": "姿势是侧身:只适合侧面视角。",
+"The pose is turned three-quarters to the camera: only 3/4 views fit.": "姿势转向相机四分之三:只适合 3/4 视角。",
+"The shape of the picture. Used when no Resolution is wired in.": "图片的形状。没有连接分辨率时使用。",
+"The size of everything in the node. The node grows when its content no longer fits.": "节点中所有内容的大小。内容放不下时，节点会自动变大。",
+"The text in the picture under this panel. Empty: it names the view (FRONT VIEW, SIDE VIEW...).": "图片中这个面板下方的文字。留空:使用视角名称(FRONT VIEW、SIDE VIEW……)。",
+"There are no presets to export.": "没有可导出的预设。",
+"This node": "此节点",
+"Turn on every option of this list": "启用此列表的所有选项",
+"Turn the last random picks into fixed values": "把最近一次的随机结果变成固定值",
+"Type a color of your own, e.g. neon teal.": "输入你自己的颜色，例如 neon teal（霓虹青）。",
+"Type your own, in words.": "用文字输入你自己的内容。",
+"UI scale": "界面缩放",
+"Update resolution": "更新分辨率",
+"Use this layout.": "使用这个布局。",
+"Usually for {who}; random skips it.": "通常用于{who}；随机会跳过它。",
+"Waist & Hips": "腰与臀",
+"a penis": "阴茎",
+"a vulva": "外阴",
+"add": "添加",
+"an anus": "肛门",
+"and": "和",
+"auto": "自动",
+"breasts": "胸部",
+"main": "主面板",
+"men": "男性",
+"modified": "已修改",
+"needs Genitals": "需要“生殖器”",
+"none": "无",
+"not set": "未设置",
+"not used with {label}": "与“{label}”不兼容",
+"off": "关",
+"or": "或",
+"random": "随机",
+"random design": "随机图案",
+"random place": "随机位置",
+"remove": "移除",
+"remove: pick what": "移除：请选择内容",
+"replace": "替换",
+"tattoo": "纹身",
+"tattoo on {place}": "{place}的纹身",
+"testicles": "睾丸",
+"the other sex": "另一性别",
+"to": "到",
+"women": "女性",
+"{design} on {place}": "{place}的{design}",
+"{file} could not be loaded. Reinstall the node pack.": "无法加载 {file}。请重新安装节点包。",
+"{file} has no presets of this node.": "{file} 中没有此节点的预设。",
+"{file} is not a presets file.": "{file} 不是预设文件。",
+"{label}: remove": "{label}：移除",
+"{name} settings": "{name} 设置",
+"{n} added": "新增 {n} 个",
+"{n} more parameters appear for what you choose in {list}.": "根据你在“{list}”中的选择，还会出现 {n} 个参数。",
+"{n} more parameters appear once a run picks {list}.": "运行并选出“{list}”后，还会出现 {n} 个参数。",
+"{n} of {max}": "{n}/{max}",
+"{n} of {total} set": "已设置 {n}/{total}",
+"{n} overwritten": "覆盖 {n} 个",
+"{n} parameters for {who} hidden ({sex}).": "已隐藏 {n} 个{who}专用参数（{sex}）。",
+"{n} parameters, none set": "共 {n} 个参数，均未设置",
+"{n} presets in the file; {clash} already exist: {names}": "文件中有 {n} 个预设；其中 {clash} 个已存在：{names}",
+"{n} random · run to pick": "{n} 项随机 · 运行后选出",
+"{n} random · seed {seed}": "{n} 项随机 · 种子 {seed}",
+"{n} skipped": "跳过 {n} 个"
+},
+"character": {
+"at:general.race:angel:halo": {
+"l": "光环"
+},
+"at:general.race:angel:wings": {
+"l": "翅膀"
+},
+"at:general.race:aquarian:fins": {
+"l": "鳍状耳朵"
+},
+"at:general.race:aquarian:gills": {
+"l": "鳃"
+},
+"at:general.race:aquarian:scales": {
+"l": "闪彩的鳞片"
+},
+"at:general.race:aquarian:webbed": {
+"l": "蹼指"
+},
+"at:general.race:cat:ears": {
+"l": "耳朵"
+},
+"at:general.race:cat:tail": {
+"l": "尾巴"
+},
+"at:general.race:centaur:body": {
+"l": "马的身体"
+},
+"at:general.race:centaur:hooves": {
+"l": "蹄子"
+},
+"at:general.race:centaur:tail": {
+"l": "马尾巴"
+},
+"at:general.race:dark_elf:ears": {
+"l": "尖耳朵"
+},
+"at:general.race:demon:horns": {
+"l": "角"
+},
+"at:general.race:demon:tail": {
+"l": "尾巴"
+},
+"at:general.race:demon:wings": {
+"l": "翅膀"
+},
+"at:general.race:dragon:horns": {
+"l": "角"
+},
+"at:general.race:dragon:scales": {
+"l": "鳞片"
+},
+"at:general.race:dragon:tail": {
+"l": "尾巴"
+},
+"at:general.race:dwarf:beard": {
+"l": "编辫的胡须"
+},
+"at:general.race:dwarf:build": {
+"l": "结实的体格"
+},
+"at:general.race:elf:ears": {
+"l": "尖耳朵"
+},
+"at:general.race:fairy:ears": {
+"l": "尖耳朵"
+},
+"at:general.race:fairy:wings": {
+"l": "翅膀"
+},
+"at:general.race:fox:ears": {
+"l": "耳朵"
+},
+"at:general.race:fox:tail": {
+"l": "尾巴"
+},
+"at:general.race:gnome:nose": {
+"l": "大鼻子"
+},
+"at:general.race:gnome:stature": {
+"l": "极小的身材"
+},
+"at:general.race:goblin:build": {
+"l": "精瘦的体格"
+},
+"at:general.race:goblin:ears": {
+"l": "尖耳朵"
+},
+"at:general.race:grey_alien:eyes": {
+"l": "黑色的眼睛"
+},
+"at:general.race:grey_alien:face": {
+"l": "小脸"
+},
+"at:general.race:half_elf:ears": {
+"l": "尖耳朵"
+},
+"at:general.race:half_orc:tusks": {
+"l": "獠牙"
+},
+"at:general.race:halfling:stature": {
+"l": "矮小的身材"
+},
+"at:general.race:incubus:horns": {
+"l": "角"
+},
+"at:general.race:incubus:tail": {
+"l": "尾巴"
+},
+"at:general.race:incubus:wings": {
+"l": "翅膀"
+},
+"at:general.race:insectoid:antennae": {
+"l": "触角"
+},
+"at:general.race:insectoid:chitin": {
+"l": "几丁质甲片"
+},
+"at:general.race:insectoid:wings": {
+"l": "昆虫翅膀"
+},
+"at:general.race:oni:horns": {
+"l": "角"
+},
+"at:general.race:orc:brow": {
+"l": "沉重的眉骨"
+},
+"at:general.race:orc:tusks": {
+"l": "獠牙"
+},
+"at:general.race:rabbit:ears": {
+"l": "耳朵"
+},
+"at:general.race:rabbit:tail": {
+"l": "尾巴"
+},
+"at:general.race:reptilian:pupils": {
+"l": "竖瞳"
+},
+"at:general.race:reptilian:scales": {
+"l": "鳞片"
+},
+"at:general.race:reptilian:tail": {
+"l": "带鳞片的尾巴"
+},
+"at:general.race:starborn:eyes": {
+"l": "发亮的眼睛"
+},
+"at:general.race:starborn:marks": {
+"l": "发光的纹路"
+},
+"at:general.race:succubus:horns": {
+"l": "角"
+},
+"at:general.race:succubus:tail": {
+"l": "心形尖端的尾巴"
+},
+"at:general.race:succubus:wings": {
+"l": "翅膀"
+},
+"at:general.race:tiefling:horns": {
+"l": "角"
+},
+"at:general.race:tiefling:tail": {
+"l": "尾巴"
+},
+"at:general.race:vampire:fangs": {
+"l": "尖牙"
+},
+"at:general.race:wolf:ears": {
+"l": "耳朵"
+},
+"at:general.race:wolf:tail": {
+"l": "尾巴"
+},
+"g:Adult": {
+"l": "成人"
+},
+"g:Animals": {
+"l": "动物"
+},
+"g:Arms & hands": {
+"l": "手臂与手"
+},
+"g:Back": {
+"l": "背部"
+},
+"g:Chest & belly": {
+"l": "胸与腹"
+},
+"g:Face & head": {
+"l": "脸与头部"
+},
+"g:Fantasy & myth": {
+"l": "奇幻与神话"
+},
+"g:Hips & butt": {
+"l": "臀与髋"
+},
+"g:Legs & feet": {
+"l": "腿与脚"
+},
+"g:Nature": {
+"l": "自然"
+},
+"g:Neck & shoulders": {
+"l": "颈与肩"
+},
+"g:Patterns & script": {
+"l": "图案与文字"
+},
+"g:Symbols": {
+"l": "符号"
+},
+"lp:tattoos.items:colors:black": {
+"l": "黑色"
+},
+"lp:tattoos.items:colors:blue": {
+"l": "蓝色墨水"
+},
+"lp:tattoos.items:colors:color": {
+"l": "全彩"
+},
+"lp:tattoos.items:colors:gold": {
+"l": "金色"
+},
+"lp:tattoos.items:colors:grey": {
+"l": "灰色渐变"
+},
+"lp:tattoos.items:colors:neon": {
+"l": "霓虹 / 紫外线荧光"
+},
+"lp:tattoos.items:colors:red": {
+"l": "红色墨水"
+},
+"lp:tattoos.items:colors:white": {
+"l": "白色墨水"
+},
+"lp:tattoos.items:designs:anchor": {
+"l": "船锚"
+},
+"lp:tattoos.items:designs:angel_wings": {
+"l": "翅膀"
+},
+"lp:tattoos.items:designs:arrow": {
+"l": "箭头"
+},
+"lp:tattoos.items:designs:arrow_down": {
+"l": "向下的箭头"
+},
+"lp:tattoos.items:designs:barcode": {
+"l": "条形码"
+},
+"lp:tattoos.items:designs:bee": {
+"l": "蜜蜂"
+},
+"lp:tattoos.items:designs:bunny": {
+"l": "兔女郎标记"
+},
+"lp:tattoos.items:designs:butterfly": {
+"l": "蝴蝶"
+},
+"lp:tattoos.items:designs:cards": {
+"l": "扑克牌"
+},
+"lp:tattoos.items:designs:cat": {
+"l": "猫"
+},
+"lp:tattoos.items:designs:celtic": {
+"l": "凯尔特结"
+},
+"lp:tattoos.items:designs:chain": {
+"l": "锁链"
+},
+"lp:tattoos.items:designs:cherry": {
+"l": "樱桃"
+},
+"lp:tattoos.items:designs:compass": {
+"l": "指南针"
+},
+"lp:tattoos.items:designs:cross": {
+"l": "十字架"
+},
+"lp:tattoos.items:designs:crown": {
+"l": "皇冠"
+},
+"lp:tattoos.items:designs:demon_sigil": {
+"l": "恶魔印记"
+},
+"lp:tattoos.items:designs:dragon": {
+"l": "龙"
+},
+"lp:tattoos.items:designs:eye": {
+"l": "全视之眼"
+},
+"lp:tattoos.items:designs:feather": {
+"l": "羽毛"
+},
+"lp:tattoos.items:designs:flames": {
+"l": "火焰"
+},
+"lp:tattoos.items:designs:garter": {
+"l": "吊袜带线条"
+},
+"lp:tattoos.items:designs:heart": {
+"l": "心形"
+},
+"lp:tattoos.items:designs:hearts": {
+"l": "爱心"
+},
+"lp:tattoos.items:designs:infinity": {
+"l": "无限符号"
+},
+"lp:tattoos.items:designs:kanji": {
+"l": "汉字"
+},
+"lp:tattoos.items:designs:key_lock": {
+"l": "钥匙与锁"
+},
+"lp:tattoos.items:designs:koi": {
+"l": "锦鲤"
+},
+"lp:tattoos.items:designs:lace": {
+"l": "蕾丝花纹"
+},
+"lp:tattoos.items:designs:lace_belt": {
+"l": "蕾丝腰带纹"
+},
+"lp:tattoos.items:designs:lightning": {
+"l": "闪电"
+},
+"lp:tattoos.items:designs:lips_kiss": {
+"l": "唇印"
+},
+"lp:tattoos.items:designs:lotus": {
+"l": "莲花"
+},
+"lp:tattoos.items:designs:mandala": {
+"l": "曼陀罗"
+},
+"lp:tattoos.items:designs:moon": {
+"l": "月亮与星星"
+},
+"lp:tattoos.items:designs:naughty_word": {
+"l": "调皮的文字",
+"h": "选择“自定义文本”来输入想要的内容。"
+},
+"lp:tattoos.items:designs:pentagram": {
+"l": "五芒星"
+},
+"lp:tattoos.items:designs:phoenix": {
+"l": "凤凰"
+},
+"lp:tattoos.items:designs:queen_spades": {
+"l": "黑桃皇后",
+"h": "黑桃皇后符号,在情色图像中广为人知的标记。"
+},
+"lp:tattoos.items:designs:rose": {
+"l": "玫瑰"
+},
+"lp:tattoos.items:designs:runes": {
+"l": "符文"
+},
+"lp:tattoos.items:designs:sacred": {
+"l": "神圣几何"
+},
+"lp:tattoos.items:designs:sakura": {
+"l": "樱花"
+},
+"lp:tattoos.items:designs:skull": {
+"l": "骷髅"
+},
+"lp:tattoos.items:designs:snake": {
+"l": "蛇"
+},
+"lp:tattoos.items:designs:spider_web": {
+"l": "蜘蛛网"
+},
+"lp:tattoos.items:designs:stars": {
+"l": "星星"
+},
+"lp:tattoos.items:designs:succubus_crest": {
+"l": "魅魔纹章"
+},
+"lp:tattoos.items:designs:sun": {
+"l": "太阳"
+},
+"lp:tattoos.items:designs:tally": {
+"l": "计数线"
+},
+"lp:tattoos.items:designs:triangles": {
+"l": "三角形"
+},
+"lp:tattoos.items:designs:tribal": {
+"l": "部落图腾"
+},
+"lp:tattoos.items:designs:vines": {
+"l": "带刺的藤蔓"
+},
+"lp:tattoos.items:designs:waves": {
+"l": "海浪"
+},
+"lp:tattoos.items:designs:wolf": {
+"l": "狼"
+},
+"lp:tattoos.items:designs:womb": {
+"l": "子宫纹",
+"h": "形似子宫的装饰性心形图案,常带翅膀或冠饰,纹在小腹上。"
+},
+"lp:tattoos.items:designs:word": {
+"l": "文字",
+"h": "用字体写的短词或短句。选择“自定义文本”来输入文字。"
+},
+"lp:tattoos.items:places:ankle": {
+"l": "脚踝"
+},
+"lp:tattoos.items:places:behind_ear": {
+"l": "耳后"
+},
+"lp:tattoos.items:places:butt": {
+"l": "臀部"
+},
+"lp:tattoos.items:places:calf": {
+"l": "小腿"
+},
+"lp:tattoos.items:places:cheek": {
+"l": "脸颊"
+},
+"lp:tattoos.items:places:chest": {
+"l": "胸口"
+},
+"lp:tattoos.items:places:collarbone": {
+"l": "锁骨"
+},
+"lp:tattoos.items:places:fingers": {
+"l": "手指"
+},
+"lp:tattoos.items:places:foot": {
+"l": "脚"
+},
+"lp:tattoos.items:places:forearm": {
+"l": "前臂"
+},
+"lp:tattoos.items:places:forehead": {
+"l": "额头"
+},
+"lp:tattoos.items:places:full_back": {
+"l": "整个后背"
+},
+"lp:tattoos.items:places:hand": {
+"l": "手"
+},
+"lp:tattoos.items:places:hip": {
+"l": "髋部"
+},
+"lp:tattoos.items:places:inner_thigh": {
+"l": "大腿内侧"
+},
+"lp:tattoos.items:places:knee": {
+"l": "膝盖"
+},
+"lp:tattoos.items:places:lower_back": {
+"l": "腰背"
+},
+"lp:tattoos.items:places:lower_belly": {
+"l": "小腹"
+},
+"lp:tattoos.items:places:nape": {
+"l": "后颈"
+},
+"lp:tattoos.items:places:navel": {
+"l": "肚脐周围"
+},
+"lp:tattoos.items:places:neck": {
+"l": "脖子"
+},
+"lp:tattoos.items:places:pubic": {
+"l": "耻骨区"
+},
+"lp:tattoos.items:places:ribs": {
+"l": "肋骨"
+},
+"lp:tattoos.items:places:shoulder": {
+"l": "肩膀"
+},
+"lp:tattoos.items:places:shoulder_blade": {
+"l": "肩胛骨"
+},
+"lp:tattoos.items:places:sleeve": {
+"l": "整条花臂"
+},
+"lp:tattoos.items:places:spine": {
+"l": "沿脊柱"
+},
+"lp:tattoos.items:places:sternum": {
+"l": "胸骨"
+},
+"lp:tattoos.items:places:stomach": {
+"l": "肚子"
+},
+"lp:tattoos.items:places:temple": {
+"l": "太阳穴"
+},
+"lp:tattoos.items:places:thigh": {
+"l": "大腿"
+},
+"lp:tattoos.items:places:underboob": {
+"l": "乳房下方"
+},
+"lp:tattoos.items:places:upper_arm": {
+"l": "上臂"
+},
+"lp:tattoos.items:places:upper_back": {
+"l": "上背"
+},
+"lp:tattoos.items:places:wrist": {
+"l": "手腕"
+},
+"lp:tattoos.items:sizes:huge": {
+"l": "巨大"
+},
+"lp:tattoos.items:sizes:large": {
+"l": "大"
+},
+"lp:tattoos.items:sizes:medium": {
+"l": "中等"
+},
+"lp:tattoos.items:sizes:small": {
+"l": "小"
+},
+"lp:tattoos.items:sizes:tiny": {
+"l": "极小"
+},
+"lp:tattoos.items:styles:biomech": {
+"l": "赛博朋克 / 生物机械"
+},
+"lp:tattoos.items:styles:blackwork": {
+"l": "黑色线条"
+},
+"lp:tattoos.items:styles:dotwork": {
+"l": "点刺"
+},
+"lp:tattoos.items:styles:fine_line": {
+"l": "细线"
+},
+"lp:tattoos.items:styles:henna": {
+"l": "海娜"
+},
+"lp:tattoos.items:styles:japanese": {
+"l": "日式刺青"
+},
+"lp:tattoos.items:styles:minimal": {
+"l": "极简"
+},
+"lp:tattoos.items:styles:neo_trad": {
+"l": "新传统"
+},
+"lp:tattoos.items:styles:old_school": {
+"l": "老派"
+},
+"lp:tattoos.items:styles:ornamental": {
+"l": "装饰纹样"
+},
+"lp:tattoos.items:styles:realistic": {
+"l": "写实"
+},
+"lp:tattoos.items:styles:sketch": {
+"l": "素描"
+},
+"lp:tattoos.items:styles:tribal": {
+"l": "部落风"
+},
+"lp:tattoos.items:styles:watercolor": {
+"l": "水彩"
+},
+"o:body.arm_length:long": {
+"l": "长",
+"h": "较长的手臂。"
+},
+"o:body.arm_length:medium": {
+"l": "中等",
+"h": "普通长度的手臂。"
+},
+"o:body.arm_length:short": {
+"l": "短",
+"h": "较短的手臂。"
+},
+"o:body.body_fat:average": {
+"l": "中等",
+"h": "既不精瘦也不松软。"
+},
+"o:body.body_fat:chubby": {
+"l": "圆润",
+"h": "身体明显偏圆润。"
+},
+"o:body.body_fat:lean": {
+"l": "精瘦",
+"h": "身材苗条,体脂低。"
+},
+"o:body.body_fat:plump": {
+"l": "丰满",
+"h": "体型厚实、丰腴。"
+},
+"o:body.body_fat:soft": {
+"l": "柔软",
+"h": "有点柔软,看不到肌肉线条。"
+},
+"o:body.body_fat:very_lean": {
+"l": "极瘦",
+"h": "体脂极少;骨骼和肌肉清晰可见。"
+},
+"o:body.figure:athletic": {
+"l": "运动型",
+"h": "健康的运动体型,线条明显。"
+},
+"o:body.figure:curvy": {
+"l": "曲线丰满",
+"h": "胸、髋和大腿线条明显;比沙漏型更柔和。"
+},
+"o:body.figure:hourglass": {
+"l": "沙漏型",
+"h": "胸和髋宽度差不多,腰明显很细。"
+},
+"o:body.figure:pear": {
+"l": "梨形",
+"h": "髋部明显比肩和胸更宽。"
+},
+"o:body.figure:petite": {
+"l": "娇小",
+"h": "小巧精致的骨架,通常个子不高。"
+},
+"o:body.figure:rectangle": {
+"l": "直筒型",
+"h": "肩、腰、髋宽度差不多;腰线不明显。"
+},
+"o:body.figure:slender": {
+"l": "纤细",
+"h": "瘦,线条修长,曲线不多。"
+},
+"o:body.figure:stocky": {
+"l": "敦实",
+"h": "宽厚、结实、紧凑的体格。"
+},
+"o:body.figure:v_shape": {
+"l": "V 形",
+"h": "肩膀比髋部宽得多(倒三角)。"
+},
+"o:body.figure:voluptuous": {
+"l": "丰腴",
+"h": "胸和髋非常丰满;饱满诱人的身材。"
+},
+"o:body.height:average": {
+"l": "中等",
+"h": "平均身高。"
+},
+"o:body.height:short": {
+"l": "矮",
+"h": "低于平均身高。"
+},
+"o:body.height:tall": {
+"l": "高",
+"h": "高于平均身高。"
+},
+"o:body.height:very_short": {
+"l": "很矮",
+"h": "身材非常矮小。"
+},
+"o:body.height:very_tall": {
+"l": "很高",
+"h": "非常高。"
+},
+"o:body.leg_length:long": {
+"l": "长",
+"h": "较长的腿。"
+},
+"o:body.leg_length:medium": {
+"l": "中等",
+"h": "普通长度的腿。"
+},
+"o:body.leg_length:short": {
+"l": "短",
+"h": "较短的腿。"
+},
+"o:body.leg_length:very_long": {
+"l": "很长",
+"h": "非常长的腿。"
+},
+"o:body.neck:medium": {
+"l": "中等",
+"h": "普通粗细的脖子。"
+},
+"o:body.neck:slender": {
+"l": "纤细",
+"h": "纤细的脖子。"
+},
+"o:body.neck:thick": {
+"l": "粗",
+"h": "粗壮的脖子。"
+},
+"o:body.neck:very_slender": {
+"l": "很纤细",
+"h": "非常细长的脖子。"
+},
+"o:body.neck:very_thick": {
+"l": "很粗",
+"h": "非常粗壮、肌肉发达的脖子。"
+},
+"o:body.shoulders:broad": {
+"l": "宽",
+"h": "宽阔的肩膀。"
+},
+"o:body.shoulders:medium": {
+"l": "中等",
+"h": "普通宽度的肩膀。"
+},
+"o:body.shoulders:narrow": {
+"l": "窄",
+"h": "较窄的肩膀。"
+},
+"o:body.shoulders:very_broad": {
+"l": "很宽",
+"h": "非常宽阔的肩膀。"
+},
+"o:body.shoulders:very_narrow": {
+"l": "很窄",
+"h": "非常窄、溜肩的肩膀。"
+},
+"o:butt_legs.butt_firmness:firm": {
+"l": "紧实",
+"h": "紧致上提的臀部。"
+},
+"o:butt_legs.butt_firmness:natural": {
+"l": "自然",
+"h": "自然的臀部,看起来柔软。"
+},
+"o:butt_legs.butt_firmness:saggy": {
+"l": "下垂",
+"h": "位置低,臀下有很深的褶。"
+},
+"o:butt_legs.butt_firmness:soft": {
+"l": "柔软",
+"h": "柔软、会晃动,不紧绷。"
+},
+"o:butt_legs.butt_firmness:very_firm": {
+"l": "非常紧实",
+"h": "位置高、绷紧且上提。"
+},
+"o:butt_legs.butt_shape:bubble": {
+"l": "蜜桃臀",
+"h": "非常圆而高,从背后明显翘出。"
+},
+"o:butt_legs.butt_shape:heart": {
+"l": "心形",
+"h": "腰部窄、下方更饱满(倒置的心形)。"
+},
+"o:butt_legs.butt_shape:round": {
+"l": "圆形",
+"h": "饱满且弧度均匀,从后面看像一个圆。"
+},
+"o:butt_legs.butt_shape:square": {
+"l": "方形",
+"h": "从髋部往下侧边笔直;髋部和臀部一样宽。"
+},
+"o:butt_legs.butt_shape:v_shape": {
+"l": "V 形",
+"h": "上宽下窄。"
+},
+"o:butt_legs.butt_size:flat": {
+"l": "扁平",
+"h": "扁平的臀部。"
+},
+"o:butt_legs.butt_size:huge": {
+"l": "巨大",
+"h": "巨大的臀部。"
+},
+"o:butt_legs.butt_size:large": {
+"l": "大",
+"h": "较大的臀部。"
+},
+"o:butt_legs.butt_size:medium": {
+"l": "中等",
+"h": "中等大小的臀部。"
+},
+"o:butt_legs.butt_size:small": {
+"l": "小",
+"h": "较小的臀部。"
+},
+"o:butt_legs.butt_size:very_large": {
+"l": "很大",
+"h": "非常大的臀部。"
+},
+"o:butt_legs.calves:medium": {
+"l": "中等",
+"h": "普通粗细的小腿。"
+},
+"o:butt_legs.calves:muscular": {
+"l": "肌肉发达",
+"h": "肌肉发达、线条分明的小腿。"
+},
+"o:butt_legs.calves:shapely": {
+"l": "匀称",
+"h": "圆润、线条漂亮的小腿。"
+},
+"o:butt_legs.calves:slim": {
+"l": "纤细",
+"h": "纤细的小腿。"
+},
+"o:butt_legs.thigh_gap:none": {
+"l": "无",
+"h": "大腿上端贴在一起。"
+},
+"o:butt_legs.thigh_gap:slight": {
+"l": "小",
+"h": "大腿之间有一点点缝隙。"
+},
+"o:butt_legs.thigh_gap:visible": {
+"l": "明显",
+"h": "大腿之间有清晰的缝隙。"
+},
+"o:butt_legs.thigh_shape:curvy": {
+"l": "曲线丰满",
+"h": "从髋到膝盖的外侧有明显弧线。"
+},
+"o:butt_legs.thigh_shape:muscular": {
+"l": "肌肉发达",
+"h": "股四头肌明显;与“肌肉”>“腿部肌肉”有重叠。"
+},
+"o:butt_legs.thigh_shape:slender": {
+"l": "修长",
+"h": "笔直修长,弧度很小。"
+},
+"o:butt_legs.thigh_shape:soft": {
+"l": "柔软",
+"h": "丰满柔软,没有肌肉线条。"
+},
+"o:butt_legs.thigh_shape:toned": {
+"l": "紧实",
+"h": "紧致的大腿,带一点肌肉。"
+},
+"o:butt_legs.thighs:medium": {
+"l": "中等",
+"h": "中等粗细的大腿。"
+},
+"o:butt_legs.thighs:slim": {
+"l": "纤细",
+"h": "纤细的大腿。"
+},
+"o:butt_legs.thighs:thick": {
+"l": "粗壮",
+"h": "粗壮的大腿。"
+},
+"o:butt_legs.thighs:very_slim": {
+"l": "很纤细",
+"h": "非常纤细的大腿。"
+},
+"o:butt_legs.thighs:very_thick": {
+"l": "很粗壮",
+"h": "非常粗壮、沉重的大腿。"
+},
+"o:chest.areola_color:brown": {
+"l": "棕色"
+},
+"o:chest.areola_color:dark_brown": {
+"l": "深棕色"
+},
+"o:chest.areola_color:light_brown": {
+"l": "浅棕色"
+},
+"o:chest.areola_color:light_pink": {
+"l": "浅粉色"
+},
+"o:chest.areola_color:peach": {
+"l": "桃色"
+},
+"o:chest.areola_color:pink": {
+"l": "粉色"
+},
+"o:chest.areola_color:rosy_brown": {
+"l": "粉棕色"
+},
+"o:chest.areola_size:large": {
+"l": "大",
+"h": "较大的乳晕。"
+},
+"o:chest.areola_size:medium": {
+"l": "中等",
+"h": "中等大小的乳晕。"
+},
+"o:chest.areola_size:small": {
+"l": "小",
+"h": "较小的乳晕。"
+},
+"o:chest.areola_size:very_large": {
+"l": "很大",
+"h": "非常大的乳晕。"
+},
+"o:chest.breast_firmness:natural": {
+"l": "自然",
+"h": "放松时的自然位置,略柔软。"
+},
+"o:chest.breast_firmness:perky": {
+"l": "挺翘",
+"h": "位置高且紧致。"
+},
+"o:chest.breast_firmness:saggy": {
+"l": "下垂",
+"h": "沉重,低垂。"
+},
+"o:chest.breast_firmness:slightly_saggy": {
+"l": "略下垂",
+"h": "柔软,位置稍低。"
+},
+"o:chest.breast_firmness:very_perky": {
+"l": "非常挺翘",
+"h": "位置高且非常紧致,不受重力影响。"
+},
+"o:chest.breast_shape:bell": {
+"l": "钟形",
+"h": "上窄下宽,下部更饱满、更沉。"
+},
+"o:chest.breast_shape:close_set": {
+"l": "靠得较近",
+"h": "两个乳房之间距离小;自然的乳沟。"
+},
+"o:chest.breast_shape:perky_up": {
+"l": "上翘",
+"h": "乳头微微朝上。"
+},
+"o:chest.breast_shape:round": {
+"l": "圆形",
+"h": "乳头上下一样饱满。"
+},
+"o:chest.breast_shape:teardrop": {
+"l": "水滴形",
+"h": "上部较薄、下部更饱满;最自然的形状。"
+},
+"o:chest.breast_shape:wide_set": {
+"l": "分开较宽",
+"h": "两个乳房之间间距大;微微朝外。"
+},
+"o:chest.breast_size:flat": {
+"l": "平坦",
+"h": "几乎没有乳房体积。此时不使用形状和紧致度设置。"
+},
+"o:chest.breast_size:huge": {
+"l": "巨大",
+"h": "巨大的乳房。"
+},
+"o:chest.breast_size:large": {
+"l": "大",
+"h": "较大的乳房。"
+},
+"o:chest.breast_size:medium": {
+"l": "中等",
+"h": "中等大小的乳房。"
+},
+"o:chest.breast_size:small": {
+"l": "小",
+"h": "较小的乳房。"
+},
+"o:chest.breast_size:very_large": {
+"l": "很大",
+"h": "非常大的乳房。"
+},
+"o:chest.chest_hair:hairy": {
+"l": "多毛",
+"h": "毛发浓密的胸口。"
+},
+"o:chest.chest_hair:light": {
+"l": "少量",
+"h": "有一点稀疏的毛发。"
+},
+"o:chest.chest_hair:moderate": {
+"l": "适中",
+"h": "适量的胸毛。"
+},
+"o:chest.chest_hair:none": {
+"l": "无",
+"h": "光滑的胸口。"
+},
+"o:chest.chest_hair:very_hairy": {
+"l": "很多毛",
+"h": "胸毛非常浓密。"
+},
+"o:chest.nipple_shape:erect": {
+"l": "勃起",
+"h": "坚硬挺立,像受冷或兴奋时。"
+},
+"o:chest.nipple_shape:flat": {
+"l": "扁平",
+"h": "与乳晕齐平。"
+},
+"o:chest.nipple_shape:inverted": {
+"l": "内陷",
+"h": "乳头向内凹,而不是向外凸。"
+},
+"o:chest.nipple_shape:protruding": {
+"l": "突出",
+"h": "明显高出乳晕。"
+},
+"o:chest.nipple_shape:puffy": {
+"l": "饱满隆起",
+"h": "整个乳晕隆起成圆顶状。"
+},
+"o:chest.nipple_size:large": {
+"l": "大",
+"h": "较大的乳头。"
+},
+"o:chest.nipple_size:medium": {
+"l": "中等",
+"h": "中等大小的乳头。"
+},
+"o:chest.nipple_size:small": {
+"l": "小",
+"h": "较小的乳头。"
+},
+"o:chest.pecs:defined": {
+"l": "分明",
+"h": "轮廓清晰的胸肌。"
+},
+"o:chest.pecs:flat": {
+"l": "平坦",
+"h": "平坦的胸,看不到肌肉。"
+},
+"o:chest.pecs:massive": {
+"l": "巨大",
+"h": "健美运动员般巨大的胸肌。"
+},
+"o:chest.pecs:muscular": {
+"l": "发达",
+"h": "又大又发达的胸肌。"
+},
+"o:chest.pecs:slight": {
+"l": "轻微",
+"h": "胸肌隐约可见。"
+},
+"o:chest.pecs:toned": {
+"l": "紧实",
+"h": "紧致的运动型胸肌。"
+},
+"o:chest.ribcage:barrel": {
+"l": "桶状",
+"h": "深而圆的胸廓,前后和左右一样宽。"
+},
+"o:chest.ribcage:medium": {
+"l": "中等",
+"h": "普通宽度的胸廓。"
+},
+"o:chest.ribcage:narrow": {
+"l": "窄",
+"h": "较窄的胸廓。"
+},
+"o:chest.ribcage:wide": {
+"l": "宽",
+"h": "宽阔厚实的胸廓。"
+},
+"o:face.brow_shape:angled": {
+"l": "有棱角",
+"h": "眉峰处有尖锐的转折;凌厉的眼神。"
+},
+"o:face.brow_shape:high_arch": {
+"l": "高挑弧形",
+"h": "明显的眉峰;有表现力、很有魅力的样子。"
+},
+"o:face.brow_shape:soft_arch": {
+"l": "柔和弧形",
+"h": "轻柔的弧度;自然的样子。"
+},
+"o:face.brow_shape:straight": {
+"l": "平直",
+"h": "平直的眉毛,几乎没有弧度。"
+},
+"o:face.brow_thickness:bushy": {
+"l": "浓密",
+"h": "非常浓密、饱满自然的眉毛。"
+},
+"o:face.brow_thickness:medium": {
+"l": "中等",
+"h": "普通粗细的眉毛。"
+},
+"o:face.brow_thickness:thick": {
+"l": "粗",
+"h": "浓粗而醒目的眉毛。"
+},
+"o:face.brow_thickness:thin": {
+"l": "细",
+"h": "纤细精致的眉毛。"
+},
+"o:face.cheekbones:high": {
+"l": "高",
+"h": "位置较高的颧骨;雕塑般的轮廓。"
+},
+"o:face.cheekbones:medium": {
+"l": "中等",
+"h": "明显但不突兀的颧骨。"
+},
+"o:face.cheekbones:prominent": {
+"l": "突出",
+"h": "非常高而锋利的颧骨,下方脸颊凹陷。"
+},
+"o:face.cheekbones:soft": {
+"l": "柔和",
+"h": "颧骨几乎看不出来,脸颊饱满。"
+},
+"o:face.chin:cleft": {
+"l": "美人沟",
+"h": "下巴中间有一道竖向的凹陷。"
+},
+"o:face.chin:pointed": {
+"l": "尖下巴",
+"h": "窄窄的、收成尖角的下巴。"
+},
+"o:face.chin:rounded": {
+"l": "圆下巴",
+"h": "柔和圆润的下巴。"
+},
+"o:face.chin:small": {
+"l": "小",
+"h": "小巧精致的下巴。"
+},
+"o:face.chin:square": {
+"l": "方下巴",
+"h": "有力的方形下巴。"
+},
+"o:face.eye_glow:eyes": {
+"l": "发光的眼睛",
+"h": "整只眼睛发光,看不到瞳孔。"
+},
+"o:face.eye_glow:irises": {
+"l": "发光的虹膜",
+"h": "只有虹膜发光;瞳孔保持暗色。"
+},
+"o:face.eye_glow_power:faint": {
+"l": "微弱",
+"h": "几乎看不见的光。"
+},
+"o:face.eye_glow_power:intense": {
+"l": "炽烈",
+"h": "炽热、耀眼的光。"
+},
+"o:face.eye_glow_power:soft": {
+"l": "柔和",
+"h": "柔和的光。"
+},
+"o:face.eye_glow_power:strong": {
+"l": "强烈",
+"h": "强烈而清晰的光。"
+},
+"o:face.eye_glow_tint:blue": {
+"l": "蓝色"
+},
+"o:face.eye_glow_tint:cyan": {
+"l": "青色"
+},
+"o:face.eye_glow_tint:gold": {
+"l": "金色"
+},
+"o:face.eye_glow_tint:green": {
+"l": "绿色"
+},
+"o:face.eye_glow_tint:magenta": {
+"l": "洋红色"
+},
+"o:face.eye_glow_tint:orange": {
+"l": "橙色"
+},
+"o:face.eye_glow_tint:purple": {
+"l": "紫色"
+},
+"o:face.eye_glow_tint:red": {
+"l": "红色"
+},
+"o:face.eye_glow_tint:white": {
+"l": "白色"
+},
+"o:face.eye_hetero:central": {
+"l": "环",
+"h": "瞳孔周围有一圈第二种颜色。"
+},
+"o:face.eye_hetero:complete": {
+"l": "两种颜色",
+"h": "两只眼睛各一种颜色:左眼是主色,右眼是第二种颜色。"
+},
+"o:face.eye_hetero:sectoral": {
+"l": "斑块",
+"h": "虹膜里有一块第二种颜色。"
+},
+"o:face.eye_shape:almond": {
+"l": "杏仁眼",
+"h": "椭圆形的眼睛,外眼角略尖。最常见的眼型。"
+},
+"o:face.eye_shape:cat": {
+"l": "猫眼",
+"h": "细长的眼睛,外眼角上挑;妩媚的眼神。"
+},
+"o:face.eye_shape:downturned": {
+"l": "下垂眼",
+"h": "外眼角向下垂;柔和、略带忧伤的眼神。"
+},
+"o:face.eye_shape:hooded": {
+"l": "内双",
+"h": "眼皮上的皮肤褶遮住了大部分双眼皮褶。"
+},
+"o:face.eye_shape:monolid": {
+"l": "单眼皮",
+"h": "看不到双眼皮褶;常见于东亚面孔。"
+},
+"o:face.eye_shape:round": {
+"l": "圆眼",
+"h": "大而圆的眼睛,虹膜周围露出更多眼白。"
+},
+"o:face.eye_shape:upturned": {
+"l": "上扬眼",
+"h": "外眼角向上翘起。"
+},
+"o:face.eye_size:large": {
+"l": "大",
+"h": "大眼睛。"
+},
+"o:face.eye_size:medium": {
+"l": "中等",
+"h": "普通大小的眼睛。"
+},
+"o:face.eye_size:small": {
+"l": "小",
+"h": "较小的眼睛。"
+},
+"o:face.eye_size:very_large": {
+"l": "很大",
+"h": "巨大的、洋娃娃般的眼睛。"
+},
+"o:face.eye_size:very_small": {
+"l": "很小",
+"h": "非常小的眼睛。"
+},
+"o:face.face_shape:diamond": {
+"l": "菱形",
+"h": "额头和下颌窄,颧骨处最宽。"
+},
+"o:face.face_shape:heart": {
+"l": "心形",
+"h": "额头和颧骨宽,向下收窄到小而尖的下巴。"
+},
+"o:face.face_shape:long": {
+"l": "长形",
+"h": "明显长大于宽,常有高额头。"
+},
+"o:face.face_shape:oval": {
+"l": "椭圆形",
+"h": "长度略大于宽度,均衡柔和。最中性的脸型。"
+},
+"o:face.face_shape:round": {
+"l": "圆形",
+"h": "宽度和长度差不多,脸颊饱满柔和,下巴圆润。"
+},
+"o:face.face_shape:square": {
+"l": "方形",
+"h": "下颌宽而平直;额头、颧骨和下颌宽度差不多。"
+},
+"o:face.jaw:defined": {
+"l": "分明",
+"h": "从耳朵到下巴的线条清晰。"
+},
+"o:face.jaw:sharp": {
+"l": "尖锐",
+"h": "有棱角的下颌,转角分明。"
+},
+"o:face.jaw:soft": {
+"l": "柔和",
+"h": "圆润的下颌线,没有明显的棱角。"
+},
+"o:face.jaw:square": {
+"l": "方正有力",
+"h": "宽阔、有力、呈直角的下颌;阳刚的样子。"
+},
+"o:face.jaw:v_line": {
+"l": "V 形脸",
+"h": "窄下颌收向小下巴;韩系美的 V 形线条。"
+},
+"o:face.lips:full": {
+"l": "丰满",
+"h": "丰满、饱满的嘴唇。"
+},
+"o:face.lips:medium": {
+"l": "中等",
+"h": "普通厚度的嘴唇。"
+},
+"o:face.lips:plump": {
+"l": "厚唇",
+"h": "非常饱满、嘟起的嘴唇,像打过玻尿酸。"
+},
+"o:face.lips:thin": {
+"l": "薄",
+"h": "薄嘴唇。"
+},
+"o:face.lips:very_thin": {
+"l": "很薄",
+"h": "非常薄的嘴唇。"
+},
+"o:face.mouth:medium": {
+"l": "中等",
+"h": "普通大小的嘴。"
+},
+"o:face.mouth:small": {
+"l": "小",
+"h": "较小的嘴。"
+},
+"o:face.mouth:wide": {
+"l": "宽",
+"h": "较宽的嘴。"
+},
+"o:face.nose_shape:aquiline": {
+"l": "鹰钩鼻",
+"h": "弯曲带钩的鼻梁,像鹰嘴。"
+},
+"o:face.nose_shape:button": {
+"l": "小圆鼻",
+"h": "小巧圆润,鼻尖柔和且微微上翘。"
+},
+"o:face.nose_shape:roman": {
+"l": "罗马鼻",
+"h": "鼻梁高挺有力,有明显的隆起。"
+},
+"o:face.nose_shape:straight": {
+"l": "直鼻",
+"h": "从额头到鼻尖的鼻梁笔直。"
+},
+"o:face.nose_shape:thin": {
+"l": "纤细鼻",
+"h": "鼻梁窄,鼻孔小。"
+},
+"o:face.nose_shape:upturned": {
+"l": "上翘鼻",
+"h": "鼻尖微微向上(翘鼻)。"
+},
+"o:face.nose_shape:wide": {
+"l": "宽鼻",
+"h": "鼻梁宽,鼻孔宽。"
+},
+"o:face.nose_size:large": {
+"l": "大",
+"h": "较大的鼻子。"
+},
+"o:face.nose_size:medium": {
+"l": "中等",
+"h": "普通大小的鼻子。"
+},
+"o:face.nose_size:small": {
+"l": "小",
+"h": "较小的鼻子。"
+},
+"o:face.nose_size:very_large": {
+"l": "很大",
+"h": "非常大的鼻子。"
+},
+"o:face.nose_size:very_small": {
+"l": "很小",
+"h": "非常小的鼻子。"
+},
+"o:facial_hair.beard_density:bushy": {
+"l": "茂密",
+"h": "非常密实、蓬乱的胡须。"
+},
+"o:facial_hair.beard_density:light": {
+"l": "稀",
+"h": "不浓密但均匀。"
+},
+"o:facial_hair.beard_density:normal": {
+"l": "普通",
+"h": "普通、均匀的胡须。"
+},
+"o:facial_hair.beard_density:patchy": {
+"l": "稀疏不匀",
+"h": "稀薄不均匀,有空缺的地方。"
+},
+"o:facial_hair.beard_density:thick": {
+"l": "浓",
+"h": "浓密饱满的胡须。"
+},
+"o:facial_hair.beard_grey:grey": {
+"l": "灰白",
+"h": "大部分是灰白色。"
+},
+"o:facial_hair.beard_grey:salt": {
+"l": "花白相间",
+"h": "黑色和灰白色的胡须混在一起。"
+},
+"o:facial_hair.beard_grey:some": {
+"l": "少量白发",
+"h": "只有几根白色的胡须。"
+},
+"o:facial_hair.beard_grey:white": {
+"l": "全白",
+"h": "完全白色。"
+},
+"o:facial_hair.beard_length:long": {
+"l": "长",
+"h": "长胡须。"
+},
+"o:facial_hair.beard_length:medium": {
+"l": "中等",
+"h": "中等长度的胡须。"
+},
+"o:facial_hair.beard_length:short": {
+"l": "短",
+"h": "短胡须。"
+},
+"o:facial_hair.beard_length:very_long": {
+"l": "很长",
+"h": "垂到胸口的超长胡须。"
+},
+"o:facial_hair.beard_length:very_short": {
+"l": "贴肤短",
+"h": "剪得贴近皮肤,像胡茬。"
+},
+"o:facial_hair.beard_style:anchor": {
+"l": "船锚胡",
+"h": "尖尖的下巴胡,用沿下颌的细线与小胡子相连。"
+},
+"o:facial_hair.beard_style:chin_strap": {
+"l": "下颌带须",
+"h": "沿着下颌线的一条细须。"
+},
+"o:facial_hair.beard_style:circle": {
+"l": "圆环胡",
+"h": "小胡子和山羊胡连成围着嘴的一圈。"
+},
+"o:facial_hair.beard_style:clean": {
+"l": "刮净",
+"h": "没有胡须也没有小胡子。"
+},
+"o:facial_hair.beard_style:ducktail": {
+"l": "鸭尾胡",
+"h": "浓密的胡须,在下巴处收成尖角。"
+},
+"o:facial_hair.beard_style:forked": {
+"l": "分叉胡",
+"h": "分成两个尖角的长胡须。"
+},
+"o:facial_hair.beard_style:full": {
+"l": "络腮胡",
+"h": "覆盖脸颊、下颌和下巴的浓密胡须。"
+},
+"o:facial_hair.beard_style:garibaldi": {
+"l": "加里波第胡",
+"h": "宽而圆、下部更厚的浓密胡须。"
+},
+"o:facial_hair.beard_style:goatee": {
+"l": "山羊胡",
+"h": "只有下巴上有胡须。"
+},
+"o:facial_hair.beard_style:mutton_chops": {
+"l": "羊排络腮胡",
+"h": "浓密的鬓角在脸侧相连,下巴光滑。"
+},
+"o:facial_hair.beard_style:short_boxed": {
+"l": "短修剪胡",
+"h": "短而平整、修剪整齐的胡须。"
+},
+"o:facial_hair.beard_style:soul_patch": {
+"l": "唇下须",
+"h": "下嘴唇下方的一小撮胡子。"
+},
+"o:facial_hair.beard_style:stubble": {
+"l": "胡茬",
+"h": "几天没刮的短而扎的胡须。"
+},
+"o:facial_hair.beard_style:van_dyke": {
+"l": "梵戴克胡",
+"h": "尖尖的山羊胡,配分开的小胡子。"
+},
+"o:facial_hair.beard_style:viking": {
+"l": "维京胡",
+"h": "编了辫子的长胡须,北欧风格。"
+},
+"o:facial_hair.mustache_style:chevron": {
+"l": "人字须",
+"h": "浓密的小胡子,盖住整个上嘴唇。"
+},
+"o:facial_hair.mustache_style:dali": {
+"l": "达利须",
+"h": "细细的、打过蜡的两端高高卷起。"
+},
+"o:facial_hair.mustache_style:fu_manchu": {
+"l": "傅满洲须",
+"h": "长长的两端垂在嘴的两侧。"
+},
+"o:facial_hair.mustache_style:handlebar": {
+"l": "车把须",
+"h": "又长又密,两端向上卷起。"
+},
+"o:facial_hair.mustache_style:horseshoe": {
+"l": "马蹄须",
+"h": "在嘴两侧分成两条线,垂到下巴。"
+},
+"o:facial_hair.mustache_style:imperial": {
+"l": "帝王须",
+"h": "宽大、打过蜡的两端向上向外扬起。"
+},
+"o:facial_hair.mustache_style:natural": {
+"l": "自然",
+"h": "自然生长、没有造型的小胡子。"
+},
+"o:facial_hair.mustache_style:none": {
+"l": "无",
+"h": "没有小胡子。"
+},
+"o:facial_hair.mustache_style:pencil": {
+"l": "铅笔须",
+"h": "唇上方一条细细整齐的线。"
+},
+"o:facial_hair.mustache_style:toothbrush": {
+"l": "牙刷须",
+"h": "鼻子正下方一小块短短的方形胡须。"
+},
+"o:facial_hair.mustache_style:walrus": {
+"l": "海象须",
+"h": "浓密,垂在嘴唇上方。"
+},
+"o:feet.arch:flat": {
+"l": "扁平",
+"h": "整个脚底都贴地。"
+},
+"o:feet.arch:high": {
+"l": "高",
+"h": "明显的弧度;脚底中间不碰地。"
+},
+"o:feet.arch:normal": {
+"l": "正常",
+"h": "正常的足弓。"
+},
+"o:feet.foot_size:large": {
+"l": "大",
+"h": "较大的脚。"
+},
+"o:feet.foot_size:medium": {
+"l": "中等",
+"h": "普通大小的脚。"
+},
+"o:feet.foot_size:small": {
+"l": "小",
+"h": "较小的脚。"
+},
+"o:feet.foot_size:tiny": {
+"l": "极小",
+"h": "非常小的脚。"
+},
+"o:feet.foot_size:very_large": {
+"l": "很大",
+"h": "非常大的脚。"
+},
+"o:feet.foot_width:medium": {
+"l": "中等",
+"h": "普通宽度的脚。"
+},
+"o:feet.foot_width:narrow": {
+"l": "窄",
+"h": "较窄的脚。"
+},
+"o:feet.foot_width:wide": {
+"l": "宽",
+"h": "较宽的脚。"
+},
+"o:feet.toe_length:long": {
+"l": "长",
+"h": "较长的脚趾。"
+},
+"o:feet.toe_length:medium": {
+"l": "中等",
+"h": "普通长度的脚趾。"
+},
+"o:feet.toe_length:short": {
+"l": "短",
+"h": "较短的脚趾。"
+},
+"o:general.appearance:african": {
+"l": "非洲人",
+"h": "非洲人的长相:非洲典型的面部特征和肤色。"
+},
+"o:general.appearance:east_asian": {
+"l": "东亚人",
+"h": "东亚人的长相:中国、日本或韩国典型的面部特征。"
+},
+"o:general.appearance:european": {
+"l": "欧洲人",
+"h": "欧洲人的长相:欧洲典型的面部特征和肤色。"
+},
+"o:general.appearance:latin": {
+"l": "拉丁美洲人",
+"h": "拉丁美洲人的长相:拉美常见的混合面部特征。"
+},
+"o:general.appearance:mediterranean": {
+"l": "地中海人",
+"h": "地中海人的长相:橄榄色皮肤,深色头发和眼睛。"
+},
+"o:general.appearance:middle_eastern": {
+"l": "中东人",
+"h": "中东人的长相:阿拉伯人或波斯人典型的面部特征。"
+},
+"o:general.appearance:mixed": {
+"l": "混血",
+"h": "不属于单一族群的混合长相。"
+},
+"o:general.appearance:nordic": {
+"l": "北欧人",
+"h": "北欧人的长相:皮肤很白,头发和眼睛颜色浅。"
+},
+"o:general.appearance:slavic": {
+"l": "斯拉夫人",
+"h": "斯拉夫人的长相:典型特征是高颧骨、浅色眼睛和头发。"
+},
+"o:general.appearance:south_asian": {
+"l": "南亚人",
+"h": "南亚人的长相:印度或巴基斯坦典型的面部特征。"
+},
+"o:general.appearance:southeast_asian": {
+"l": "东南亚人",
+"h": "东南亚人的长相:泰国、越南或菲律宾典型的面部特征。"
+},
+"o:general.race:angel": {
+"l": "天使",
+"h": "有羽毛翅膀和光环的天界生灵。"
+},
+"o:general.race:aquarian": {
+"l": "水族",
+"h": "外星水栖种族,有鳃、鳍状的耳朵、蹼指和闪彩的鳞片。可以试试蓝色或紫色的皮肤。"
+},
+"o:general.race:cat": {
+"l": "猫族",
+"h": "长着猫耳朵和猫尾巴的人(兽耳娘)。"
+},
+"o:general.race:centaur": {
+"l": "半人马",
+"h": "腰部以上是人,以下是马。不使用腿和脚的参数。"
+},
+"o:general.race:dark_elf": {
+"l": "黑暗精灵",
+"h": "地下或暗夜领域的精灵,常有深灰、蓝或紫色的皮肤(在“肤色”里设置)。"
+},
+"o:general.race:demon": {
+"l": "恶魔",
+"h": "长着角、皮质翅膀和尾巴的恶魔。"
+},
+"o:general.race:dragon": {
+"l": "龙裔",
+"h": "长着龙角、带鳞尾巴和部分鳞片的人。"
+},
+"o:general.race:dwarf": {
+"l": "矮人",
+"h": "矮小、宽厚、结实;男性通常留浓密的胡须。"
+},
+"o:general.race:elf": {
+"l": "精灵",
+"h": "高挑、纤细、优雅,有长长的尖耳朵。"
+},
+"o:general.race:fairy": {
+"l": "妖精",
+"h": "娇小而神奇,长着半透明的昆虫般的翅膀。"
+},
+"o:general.race:fox": {
+"l": "狐族",
+"h": "长着狐狸耳朵和蓬松狐尾的人,像狐妖。"
+},
+"o:general.race:gnome": {
+"l": "侏儒",
+"h": "非常小巧,五官大而富有表情。"
+},
+"o:general.race:goblin": {
+"l": "哥布林",
+"h": "瘦小精悍,有大大的尖耳朵;皮肤通常为绿色或灰色(在“肤色”里设置)。"
+},
+"o:general.race:grey_alien": {
+"l": "灰外星人",
+"h": "经典的灰色外星人:光滑的灰色皮肤、巨大的黑色杏仁眼、小小的鼻子和嘴。请把肤色设为灰色。"
+},
+"o:general.race:half_elf": {
+"l": "半精灵",
+"h": "一半人类、一半精灵:人类的体格,耳朵微尖。"
+},
+"o:general.race:half_orc": {
+"l": "半兽人",
+"h": "一半人类、一半兽人:体格强壮,有小獠牙。"
+},
+"o:general.race:halfling": {
+"l": "半身人",
+"h": "个子小、性格开朗,身高大约是人类的一半。"
+},
+"o:general.race:human": {
+"l": "人类",
+"h": "普通人类。未设置时的默认值。“随机”选到人类的频率大约与所有奇幻种族加起来一样。"
+},
+"o:general.race:incubus": {
+"l": "梦魔",
+"h": "魅惑的男恶魔,有角、翅膀和尾巴。"
+},
+"o:general.race:insectoid": {
+"l": "虫族",
+"h": "外星昆虫族,长着触角、四肢上有光亮的几丁质外壳和半透明的翅膀。"
+},
+"o:general.race:oni": {
+"l": "鬼(鬼族)",
+"h": "额头长角的日本妖怪。"
+},
+"o:general.race:orc": {
+"l": "兽人",
+"h": "高大强壮,有獠牙;皮肤通常为绿色或灰色(在“肤色”里设置)。"
+},
+"o:general.race:rabbit": {
+"l": "兔族",
+"h": "长着长长的兔耳朵和圆圆小尾巴的人。"
+},
+"o:general.race:reptilian": {
+"l": "爬行类外星人",
+"h": "像爬行动物的外星人:有鳞片的皮肤、竖瞳和粗尾巴。皮肤常为绿色。"
+},
+"o:general.race:starborn": {
+"l": "星裔",
+"h": "由星光化成的异世生灵:隐隐发光的星座纹路和明亮的眼睛。可以试试蓝色或紫色的皮肤。"
+},
+"o:general.race:succubus": {
+"l": "魅魔",
+"h": "魅惑的女恶魔,有角、翅膀和心形尖端的尾巴。"
+},
+"o:general.race:tiefling": {
+"l": "提夫林",
+"h": "有恶魔血统:长着角和尾巴;皮肤可能是红、紫或蓝色(在“肤色”里设置)。"
+},
+"o:general.race:vampire": {
+"l": "吸血鬼",
+"h": "不老的不死生物,有尖牙;皮肤常常非常苍白(在“肤色”里设置)。"
+},
+"o:general.race:wolf": {
+"l": "狼族",
+"h": "长着狼耳朵和狼尾巴的人。"
+},
+"o:general.sex:female": {
+"l": "女性",
+"h": "女性:她 / 她的,并显示仅限女性的参数。"
+},
+"o:general.sex:male": {
+"l": "男性",
+"h": "男性:他 / 他的,并显示仅限男性的参数。"
+},
+"o:general.skin_shade:dark": {
+"l": "更深",
+"h": "这个肤色的较深版本。"
+},
+"o:general.skin_shade:light": {
+"l": "更浅",
+"h": "这个肤色的较浅版本。"
+},
+"o:general.skin_shade:normal": {
+"l": "正常",
+"h": "保持肤色原样。"
+},
+"o:general.skin_texture:fine_lines": {
+"l": "细纹",
+"h": "成熟的皮肤,眼睛和嘴周围有细纹。“随机”在 36 岁以下会跳过它。"
+},
+"o:general.skin_texture:flawless": {
+"l": "无瑕",
+"h": "光滑均匀的皮肤,看不到毛孔和瑕疵;像修过图的亮泽效果。"
+},
+"o:general.skin_texture:freckled": {
+"l": "雀斑",
+"h": "脸上有雀斑,常见于鼻子、脸颊和肩膀。"
+},
+"o:general.skin_texture:natural": {
+"l": "自然",
+"h": "逼真的皮肤,有可见的毛孔和细腻的纹理。有助于避免塑料感的 AI 效果。"
+},
+"o:general.skin_texture:sun_kissed": {
+"l": "阳光亲吻",
+"h": "温暖、微微晒黑的光泽,像晒过太阳之后。"
+},
+"o:general.skin_texture:wrinkled": {
+"l": "皱纹",
+"h": "年老时的深深皱纹。“随机”在 56 岁以下会跳过它。"
+},
+"o:general.skin_tint:ashen": {
+"l": "灰调",
+"h": "灰色、灰白的底调。"
+},
+"o:general.skin_tint:cool": {
+"l": "冷调",
+"h": "冷色底调:偏粉或偏蓝。"
+},
+"o:general.skin_tint:golden": {
+"l": "金调",
+"h": "皮肤带金色的光泽。"
+},
+"o:general.skin_tint:olive": {
+"l": "橄榄调",
+"h": "带绿的橄榄色底调。"
+},
+"o:general.skin_tint:rosy": {
+"l": "红润",
+"h": "粉红色的红晕。"
+},
+"o:general.skin_tint:warm": {
+"l": "暖调",
+"h": "暖色底调:偏黄或偏桃色。"
+},
+"o:general.skin_tone:blue": {
+"l": "蓝色",
+"h": "奇幻肤色,适用于兽人、哥布林、黑暗精灵或提夫林等种族。“随机”只会为它们选择。"
+},
+"o:general.skin_tone:brown": {
+"l": "棕色"
+},
+"o:general.skin_tone:dark_brown": {
+"l": "深棕色"
+},
+"o:general.skin_tone:deep": {
+"l": "黝黑"
+},
+"o:general.skin_tone:fair": {
+"l": "白皙"
+},
+"o:general.skin_tone:green": {
+"l": "绿色",
+"h": "奇幻肤色,适用于兽人、哥布林、黑暗精灵或提夫林等种族。“随机”只会为它们选择。"
+},
+"o:general.skin_tone:grey": {
+"l": "灰色",
+"h": "奇幻肤色,适用于兽人、哥布林、黑暗精灵或提夫林等种族。“随机”只会为它们选择。"
+},
+"o:general.skin_tone:light": {
+"l": "浅色"
+},
+"o:general.skin_tone:olive": {
+"l": "橄榄色"
+},
+"o:general.skin_tone:porcelain": {
+"l": "瓷白"
+},
+"o:general.skin_tone:purple": {
+"l": "紫色",
+"h": "奇幻肤色,适用于兽人、哥布林、黑暗精灵或提夫林等种族。“随机”只会为它们选择。"
+},
+"o:general.skin_tone:red": {
+"l": "红色",
+"h": "奇幻肤色,适用于兽人、哥布林、黑暗精灵或提夫林等种族。“随机”只会为它们选择。"
+},
+"o:general.skin_tone:tan": {
+"l": "古铜"
+},
+"o:genitals.anus_look:dark": {
+"l": "深色",
+"h": "周围的皮肤比旁边的皮肤更深。"
+},
+"o:genitals.anus_look:puffy": {
+"l": "饱满",
+"h": "肿起、边缘隆起。"
+},
+"o:genitals.anus_look:tight": {
+"l": "紧致",
+"h": "小而紧闭。"
+},
+"o:genitals.clitoris:large": {
+"l": "大",
+"h": "较大的阴蒂。"
+},
+"o:genitals.clitoris:small": {
+"l": "小",
+"h": "小阴蒂,几乎看不见。"
+},
+"o:genitals.clitoris:visible": {
+"l": "明显",
+"h": "清晰可见的阴蒂。"
+},
+"o:genitals.foreskin:circumcised": {
+"l": "已割包皮",
+"h": "没有包皮:龟头始终露出。"
+},
+"o:genitals.foreskin:phimosis": {
+"l": "包皮过长",
+"h": "又长又紧的包皮,即使勃起也仍盖住尖端。"
+},
+"o:genitals.foreskin:uncircumcised": {
+"l": "未割包皮",
+"h": "天然包皮:软时盖住龟头,勃起时向后退。"
+},
+"o:genitals.parts:anus": {
+"l": "肛门",
+"h": "肛门会写进描述。"
+},
+"o:genitals.parts:penis": {
+"l": "阴茎",
+"h": "角色有阴茎。"
+},
+"o:genitals.parts:smooth": {
+"l": "光滑",
+"h": "光滑的下体,没有生殖器,像娃娃一样。会排除其他部位。"
+},
+"o:genitals.parts:testicles": {
+"l": "睾丸",
+"h": "角色有睾丸。"
+},
+"o:genitals.parts:vulva": {
+"l": "外阴",
+"h": "女性生殖器。"
+},
+"o:genitals.penis_color:black": {
+"l": "黑色"
+},
+"o:genitals.penis_color:blue": {
+"l": "蓝色"
+},
+"o:genitals.penis_color:dark": {
+"l": "深色"
+},
+"o:genitals.penis_color:glowing": {
+"l": "发光"
+},
+"o:genitals.penis_color:gold": {
+"l": "金色"
+},
+"o:genitals.penis_color:green": {
+"l": "绿色"
+},
+"o:genitals.penis_color:pink": {
+"l": "粉色"
+},
+"o:genitals.penis_color:purple": {
+"l": "紫色"
+},
+"o:genitals.penis_color:red": {
+"l": "红色"
+},
+"o:genitals.penis_curve:bent_left": {
+"l": "偏左",
+"h": "从正面看,茎身偏向画面的左边(角色的右边)。"
+},
+"o:genitals.penis_curve:bent_right": {
+"l": "偏右",
+"h": "从正面看,茎身偏向画面的右边(角色的左边)。"
+},
+"o:genitals.penis_curve:curved_down": {
+"l": "向下弯",
+"h": "茎身向下弯,尖端比根部低。"
+},
+"o:genitals.penis_curve:curved_up": {
+"l": "向上弯",
+"h": "茎身朝肚子方向向上弯。"
+},
+"o:genitals.penis_curve:straight": {
+"l": "笔直",
+"h": "茎身从身体笔直伸出。"
+},
+"o:genitals.penis_girth:tapered": {
+"l": "渐细",
+"h": "根部粗,向尖端逐渐变细。"
+},
+"o:genitals.penis_girth:thick": {
+"l": "粗",
+"h": "整根都很粗;粗度比长度更突出。"
+},
+"o:genitals.penis_girth:very_thick": {
+"l": "很粗",
+"h": "茎身极粗;粗度是第一眼就能看到的特点。"
+},
+"o:genitals.penis_size:average": {
+"l": "中等",
+"h": "普通的、符合现实的大小。"
+},
+"o:genitals.penis_size:gigantic": {
+"l": "超巨大",
+"h": "夸张地巨大,奇幻比例。"
+},
+"o:genitals.penis_size:huge": {
+"l": "巨大",
+"h": "非常大,是成人内容里的那种比例。"
+},
+"o:genitals.penis_size:large": {
+"l": "大",
+"h": "明显大于平均水平。"
+},
+"o:genitals.penis_size:small": {
+"l": "小",
+"h": "比平均水平小。"
+},
+"o:genitals.penis_size:tiny": {
+"l": "极小",
+"h": "非常小,远小于平均水平。"
+},
+"o:genitals.penis_state:erect": {
+"l": "勃起",
+"h": "完全勃起。"
+},
+"o:genitals.penis_state:flaccid": {
+"l": "软",
+"h": "柔软放松。"
+},
+"o:genitals.penis_state:semi": {
+"l": "半勃起",
+"h": "部分勃起。"
+},
+"o:genitals.penis_type:alien": {
+"l": "外星",
+"h": "异世界的阴茎:光滑、有棱纹、略微半透明,顶端发光。"
+},
+"o:genitals.penis_type:demonic": {
+"l": "恶魔",
+"h": "恶魔的阴茎:深色皮肤,茎身上有软疣和刺,血管透出内在的热光。"
+},
+"o:genitals.penis_type:dragon": {
+"l": "龙",
+"h": "爬行类的龙之阴茎:茎身带脊和鳞片,向尖端收窄。"
+},
+"o:genitals.penis_type:horse": {
+"l": "马",
+"h": "马的阴茎:又长又重,龟头宽而扁、向外张开,茎身中间有一圈环。"
+},
+"o:genitals.penis_type:human": {
+"l": "人类",
+"h": "普通的人类阴茎。"
+},
+"o:genitals.penis_type:ridged": {
+"l": "棱纹",
+"h": "任意种类的阴茎,茎身上有明显的脊和棱。"
+},
+"o:genitals.penis_type:tentacle": {
+"l": "触手",
+"h": "触手般的阴茎:柔软、能缠绕、不停蠕动,向细长的尖端收窄。"
+},
+"o:genitals.penis_veins:bulging": {
+"l": "粗",
+"h": "明显而粗的青筋,清晰地凸在茎身上。"
+},
+"o:genitals.penis_veins:massive": {
+"l": "很粗",
+"h": "粗壮的、非常粗的鼓起青筋,缠绕整根茎身。"
+},
+"o:genitals.penis_veins:veiny": {
+"l": "可见",
+"h": "普通的青筋,沿茎身适度可见。"
+},
+"o:genitals.pubic_hair:bushy": {
+"l": "浓密",
+"h": "浓密茂盛、没修剪、向四周散开。"
+},
+"o:genitals.pubic_hair:heart": {
+"l": "心形",
+"h": "修成心形,其余剃净。"
+},
+"o:genitals.pubic_hair:landing_strip": {
+"l": "一字形",
+"h": "生殖器上方一条窄窄的竖条,其余剃净。"
+},
+"o:genitals.pubic_hair:natural": {
+"l": "自然",
+"h": "自然生长,没有修剪。"
+},
+"o:genitals.pubic_hair:none": {
+"l": "剃净",
+"h": "完全剃光或脱毛,皮肤光滑。"
+},
+"o:genitals.pubic_hair:stubble": {
+"l": "胡茬",
+"h": "刚长出的短毛,淡淡的一层阴影。"
+},
+"o:genitals.pubic_hair:trimmed": {
+"l": "修剪",
+"h": "保持短而整齐,自然的形状。"
+},
+"o:genitals.testicle_hang:low": {
+"l": "低垂",
+"h": "低低地松垂着,在茎身下方晃动。"
+},
+"o:genitals.testicle_hang:natural": {
+"l": "自然",
+"h": "普通放松的位置。"
+},
+"o:genitals.testicle_hang:tight": {
+"l": "紧缩",
+"h": "紧紧贴近身体。"
+},
+"o:genitals.testicle_size:huge": {
+"l": "巨大",
+"h": "巨大的睾丸。"
+},
+"o:genitals.testicle_size:large": {
+"l": "大",
+"h": "较大的睾丸。"
+},
+"o:genitals.testicle_size:medium": {
+"l": "中等",
+"h": "普通大小的睾丸。"
+},
+"o:genitals.testicle_size:small": {
+"l": "小",
+"h": "较小的睾丸。"
+},
+"o:genitals.vulva_shape:innie": {
+"l": "内收型",
+"h": "大阴唇闭合,小阴唇藏在里面。整齐的一道缝。"
+},
+"o:genitals.vulva_shape:outie": {
+"l": "外露型",
+"h": "小阴唇从大阴唇之间露出来。"
+},
+"o:genitals.vulva_shape:puffy": {
+"l": "饱满",
+"h": "饱满圆润的大阴唇和丰满的阴阜。"
+},
+"o:genitals.vulva_shape:spread": {
+"l": "张开",
+"h": "阴唇分开,里面可见。"
+},
+"o:hair.bangs:blunt": {
+"l": "齐刘海",
+"h": "平齐地剪过额头的刘海。"
+},
+"o:hair.bangs:curtain": {
+"l": "中分刘海",
+"h": "较长的刘海从中间分开,修饰脸型。"
+},
+"o:hair.bangs:none": {
+"l": "无刘海",
+"h": "没有刘海;头发梳开,额头露出。"
+},
+"o:hair.bangs:side": {
+"l": "斜刘海",
+"h": "向一侧梳的刘海。"
+},
+"o:hair.bangs:wispy": {
+"l": "空气刘海",
+"h": "薄而轻、能透出额头的刘海。"
+},
+"o:hair.hair_blend:sharp": {
+"l": "分明",
+"h": "两种颜色之间有清晰的边界。"
+},
+"o:hair.hair_blend:smooth": {
+"l": "非常柔滑",
+"h": "颜色彼此融化在一起。"
+},
+"o:hair.hair_blend:soft": {
+"l": "柔和",
+"h": "颜色之间平滑过渡。"
+},
+"o:hair.hair_dye:balayage": {
+"l": "手绘挑染",
+"h": "手工涂染的、像被阳光晒出的第二种颜色发束,自然融合。"
+},
+"o:hair.hair_dye:dip_dye": {
+"l": "发尾染",
+"h": "只染最末端的发尾。"
+},
+"o:hair.hair_dye:highlights": {
+"l": "挑染",
+"h": "单独几缕头发染成第二种颜色。"
+},
+"o:hair.hair_dye:ombre": {
+"l": "渐变染",
+"h": "从发根(主色)到发尾(第二种颜色)的渐变。可设置过渡的柔和程度。"
+},
+"o:hair.hair_dye:peekaboo": {
+"l": "隐藏挑染",
+"h": "上层头发下面的一层是第二种颜色;头发动起来时会露出。"
+},
+"o:hair.hair_dye:roots": {
+"l": "发根",
+"h": "靠近头皮的头发颜色不同,像染发后长出新发。"
+},
+"o:hair.hair_dye:split": {
+"l": "分半染",
+"h": "头发一半是一种颜色,另一半是另一种。"
+},
+"o:hair.hair_length:chin": {
+"l": "齐下巴",
+"h": "长度到下巴。"
+},
+"o:hair.hair_length:extreme": {
+"l": "及臀",
+"h": "长度到臀部或更长。"
+},
+"o:hair.hair_length:long": {
+"l": "长",
+"h": "长度在肩胛骨以下。"
+},
+"o:hair.hair_length:short": {
+"l": "短",
+"h": "在耳朵上方,或刚好盖住耳朵。"
+},
+"o:hair.hair_length:shoulder": {
+"l": "齐肩",
+"h": "长度到肩膀。"
+},
+"o:hair.hair_length:very_long": {
+"l": "及腰",
+"h": "长度到腰部。"
+},
+"o:hair.hair_length:very_short": {
+"l": "很短",
+"h": "剪得紧贴头皮。"
+},
+"o:hair.hair_shade:dark": {
+"l": "更深",
+"h": "所选颜色的较深版本。"
+},
+"o:hair.hair_shade:light": {
+"l": "更浅",
+"h": "所选颜色的较浅版本。"
+},
+"o:hair.hair_shade:normal": {
+"l": "正常",
+"h": "保持所选颜色原样。"
+},
+"o:hair.hair_streaks:few": {
+"l": "几缕",
+"h": "几缕细发束。"
+},
+"o:hair.hair_streaks:many": {
+"l": "很多缕",
+"h": "很多发束。"
+},
+"o:hair.hair_streaks:several": {
+"l": "若干缕",
+"h": "若干发束。"
+},
+"o:hair.hair_style:bob": {
+"l": "波波头",
+"h": "绕头一圈的齐整发型,长度约在下巴处。"
+},
+"o:hair.hair_style:braid": {
+"l": "麻花辫",
+"h": "一条辫子。"
+},
+"o:hair.hair_style:bun": {
+"l": "丸子头",
+"h": "头发盘成一个发髻。"
+},
+"o:hair.hair_style:half_up": {
+"l": "半扎发",
+"h": "上半部分束起,其余披下。"
+},
+"o:hair.hair_style:loose": {
+"l": "披发",
+"h": "头发放下来,没有扎起。"
+},
+"o:hair.hair_style:low_ponytail": {
+"l": "低马尾",
+"h": "在后颈处扎起。"
+},
+"o:hair.hair_style:messy_bun": {
+"l": "凌乱丸子头",
+"h": "随意盘起的发髻,有碎发散落。"
+},
+"o:hair.hair_style:pixie": {
+"l": "精灵短发",
+"h": "非常短的短发。"
+},
+"o:hair.hair_style:ponytail": {
+"l": "高马尾",
+"h": "在后脑勺高处扎起。"
+},
+"o:hair.hair_style:twin_braids": {
+"l": "双麻花辫",
+"h": "两条辫子,每侧一条。"
+},
+"o:hair.hair_style:twintails": {
+"l": "双马尾",
+"h": "头两侧各扎一束。"
+},
+"o:hair.hair_style:undercut": {
+"l": "剃边短发",
+"h": "两侧或后面剃短,头顶保留较长。"
+},
+"o:hair.hair_texture:coily": {
+"l": "细密小卷",
+"h": "非常紧密的小卷,蓬松量大(非洲式发质)。"
+},
+"o:hair.hair_texture:curly": {
+"l": "卷发",
+"h": "清晰的螺旋卷。"
+},
+"o:hair.hair_texture:ringlets": {
+"l": "螺旋长卷",
+"h": "又长又有弹性的独立螺旋卷;洋娃娃般的样子。"
+},
+"o:hair.hair_texture:slightly_wavy": {
+"l": "微波浪",
+"h": "轻微的弯曲;大体是直的。"
+},
+"o:hair.hair_texture:straight": {
+"l": "直发",
+"h": "完全没有波浪。"
+},
+"o:hair.hair_texture:wavy": {
+"l": "波浪",
+"h": "明显的 S 形波浪。"
+},
+"o:hair.hair_tint:ashy": {
+"l": "灰调",
+"h": "灰色、灰白的色调。"
+},
+"o:hair.hair_tint:cool": {
+"l": "冷调",
+"h": "偏冷的色调:更蓝。"
+},
+"o:hair.hair_tint:coppery": {
+"l": "铜调",
+"h": "偏红的铜色色调。"
+},
+"o:hair.hair_tint:glossy": {
+"l": "亮泽",
+"h": "光亮、有光泽的质感。"
+},
+"o:hair.hair_tint:golden": {
+"l": "金调",
+"h": "金色的色调。"
+},
+"o:hair.hair_tint:warm": {
+"l": "暖调",
+"h": "偏暖的色调:更红或更黄。"
+},
+"o:hands_nails.finger_length:long": {
+"l": "长",
+"h": "较长的手指。"
+},
+"o:hands_nails.finger_length:medium": {
+"l": "中等",
+"h": "普通长度的手指。"
+},
+"o:hands_nails.finger_length:short": {
+"l": "短",
+"h": "较短的手指。"
+},
+"o:hands_nails.finger_thickness:medium": {
+"l": "中等",
+"h": "普通粗细的手指。"
+},
+"o:hands_nails.finger_thickness:slender": {
+"l": "纤细",
+"h": "纤细的手指。"
+},
+"o:hands_nails.finger_thickness:thick": {
+"l": "粗",
+"h": "较粗的手指。"
+},
+"o:hands_nails.hand_size:large": {
+"l": "大",
+"h": "较大的手。"
+},
+"o:hands_nails.hand_size:medium": {
+"l": "中等",
+"h": "普通大小的手。"
+},
+"o:hands_nails.hand_size:small": {
+"l": "小",
+"h": "较小的手。"
+},
+"o:hands_nails.nail_length:long": {
+"l": "长",
+"h": "长指甲。"
+},
+"o:hands_nails.nail_length:medium": {
+"l": "中等",
+"h": "中等长度的指甲。"
+},
+"o:hands_nails.nail_length:short": {
+"l": "短",
+"h": "短指甲。"
+},
+"o:hands_nails.nail_length:very_long": {
+"l": "很长",
+"h": "远远超过指尖;通常是延长的指甲。"
+},
+"o:hands_nails.nail_length:very_short": {
+"l": "很短",
+"h": "剪到与指尖齐平。"
+},
+"o:hands_nails.nail_shape:almond": {
+"l": "杏仁形",
+"h": "两侧收窄,指尖柔和圆润。"
+},
+"o:hands_nails.nail_shape:coffin": {
+"l": "芭蕾形",
+"h": "逐渐收窄,指尖平直(又叫棺材形)。"
+},
+"o:hands_nails.nail_shape:oval": {
+"l": "椭圆形",
+"h": "圆润的椭圆形指尖。"
+},
+"o:hands_nails.nail_shape:round": {
+"l": "圆形",
+"h": "顺着指尖的弧度。"
+},
+"o:hands_nails.nail_shape:square": {
+"l": "方形",
+"h": "指尖平直,边角分明。"
+},
+"o:hands_nails.nail_shape:squoval": {
+"l": "方圆形",
+"h": "方形,边角柔和圆润。"
+},
+"o:hands_nails.nail_shape:stiletto": {
+"l": "尖形",
+"h": "又长又尖。"
+},
+"o:hands_nails.nail_type:acrylic": {
+"l": "丙烯酸",
+"h": "人工延长的指甲:更长、更厚、形状完美。"
+},
+"o:hands_nails.nail_type:gel": {
+"l": "凝胶",
+"h": "涂了凝胶的指甲,表面厚实且非常亮。"
+},
+"o:hands_nails.nail_type:natural": {
+"l": "天然",
+"h": "自己的指甲,没有加长。"
+},
+"o:muscle.abdomen:athletic": {
+"l": "隐约腹肌",
+"h": "光线好时能隐约看到腹肌。"
+},
+"o:muscle.abdomen:bodybuilder": {
+"l": "深刻线条",
+"h": "非常深刻、干练的八块腹肌。"
+},
+"o:muscle.abdomen:defined": {
+"l": "分明",
+"h": "腹肌轮廓清晰。"
+},
+"o:muscle.abdomen:muscular": {
+"l": "六块腹肌",
+"h": "清晰分开的六块腹肌。"
+},
+"o:muscle.abdomen:smooth": {
+"l": "平滑",
+"h": "平坦光滑,没有线条。"
+},
+"o:muscle.abdomen:soft": {
+"l": "柔软",
+"h": "柔软的肚子,没有肌肉。"
+},
+"o:muscle.abdomen:toned": {
+"l": "紧实",
+"h": "紧致的肚子,中线隐约可见。"
+},
+"o:muscle.overall:athletic": {
+"l": "运动型",
+"h": "健美有型,线条明显,像经常锻炼的人。"
+},
+"o:muscle.overall:bodybuilder": {
+"l": "健美运动员",
+"h": "极大的肌肉量,像比赛中的健美运动员。"
+},
+"o:muscle.overall:defined": {
+"l": "分明",
+"h": "体脂低,肌肉分离清晰,健身模特的样子。"
+},
+"o:muscle.overall:muscular": {
+"l": "肌肉发达",
+"h": "肌肉大而发达。"
+},
+"o:muscle.overall:smooth": {
+"l": "平滑",
+"h": "纤细,看不出肌肉线条。"
+},
+"o:muscle.overall:soft": {
+"l": "柔软",
+"h": "没有肌肉线条,柔软平滑。"
+},
+"o:muscle.overall:toned": {
+"l": "紧实",
+"h": "紧致,肌肉线条隐约可见。"
+},
+"o:waist_hips.belly:big": {
+"l": "大",
+"h": "又大又凸出的肚子。"
+},
+"o:waist_hips.belly:flat": {
+"l": "平坦",
+"h": "平坦的小腹。"
+},
+"o:waist_hips.belly:round": {
+"l": "圆",
+"h": "明显圆起的肚子。"
+},
+"o:waist_hips.belly:slightly_soft": {
+"l": "略柔软",
+"h": "肚脐下方有一点柔软。"
+},
+"o:waist_hips.belly:soft": {
+"l": "柔软",
+"h": "柔软圆润的小腹。"
+},
+"o:waist_hips.hips:medium": {
+"l": "中等",
+"h": "普通宽度的髋部。"
+},
+"o:waist_hips.hips:narrow": {
+"l": "窄",
+"h": "较窄的髋部。"
+},
+"o:waist_hips.hips:very_narrow": {
+"l": "很窄",
+"h": "非常窄的髋部。"
+},
+"o:waist_hips.hips:very_wide": {
+"l": "很宽",
+"h": "非常宽的髋部。"
+},
+"o:waist_hips.hips:wide": {
+"l": "宽",
+"h": "较宽的髋部。"
+},
+"o:waist_hips.waist:medium": {
+"l": "中等",
+"h": "普通宽度的腰。"
+},
+"o:waist_hips.waist:narrow": {
+"l": "细",
+"h": "纤细收紧的腰。"
+},
+"o:waist_hips.waist:very_narrow": {
+"l": "很细",
+"h": "非常细的蜂腰。"
+},
+"o:waist_hips.waist:very_wide": {
+"l": "很宽",
+"h": "非常宽的腰。"
+},
+"o:waist_hips.waist:wide": {
+"l": "宽",
+"h": "较宽的腰。"
+},
+"p:body.arm_length": {
+"l": "手臂长度",
+"h": "手臂相对于身体的长度。"
+},
+"p:body.body_fat": {
+"l": "体脂",
+"h": "身体有多柔软或多精瘦。与肌肉分开设置。"
+},
+"p:body.figure": {
+"l": "身材",
+"h": "身体的整体形状。同时也会改变轮廓。"
+},
+"p:body.height": {
+"l": "身高",
+"h": "相对于普通人的身高。"
+},
+"p:body.leg_length": {
+"l": "腿长",
+"h": "腿相对于身体的长度。"
+},
+"p:body.neck": {
+"l": "脖子",
+"h": "脖子有多细或多粗。"
+},
+"p:body.shoulders": {
+"l": "肩宽",
+"h": "肩膀有多窄或多宽。"
+},
+"p:butt_legs.butt_firmness": {
+"l": "臀部紧致度",
+"h": "臀部有多紧致、多上提。"
+},
+"p:butt_legs.butt_shape": {
+"l": "臀型",
+"h": "臀部的形状:圆形、蜜桃臀、心形、方形或 V 形。"
+},
+"p:butt_legs.butt_size": {
+"l": "臀部大小",
+"h": "臀部的大小,从扁平到巨大。"
+},
+"p:butt_legs.calves": {
+"l": "小腿",
+"h": "小腿有多纤细或多有肌肉。"
+},
+"p:butt_legs.thigh_gap": {
+"l": "大腿缝",
+"h": "双脚并拢站立时,大腿内侧之间的空隙。"
+},
+"p:butt_legs.thigh_shape": {
+"l": "大腿形状",
+"h": "大腿的形状,从纤细到肌肉发达。"
+},
+"p:butt_legs.thighs": {
+"l": "大腿粗细",
+"h": "大腿有多纤细或多粗壮。"
+},
+"p:chest.areola_color": {
+"l": "乳晕颜色",
+"h": "乳晕的颜色。选择色块或输入自己的颜色。"
+},
+"p:chest.areola_size": {
+"l": "乳晕大小",
+"h": "乳晕有多大。"
+},
+"p:chest.breast_firmness": {
+"l": "乳房紧致度",
+"h": "乳房的位置有多高、多紧致,从挺翘到下垂。"
+},
+"p:chest.breast_shape": {
+"l": "乳房形状",
+"h": "乳房的形状:圆形、水滴形、钟形、上翘、分开较宽或靠得较近。"
+},
+"p:chest.breast_size": {
+"l": "乳房大小",
+"h": "乳房的大小,从小巧到巨大。"
+},
+"p:chest.chest_hair": {
+"l": "胸毛",
+"h": "胸部有多少毛发。"
+},
+"p:chest.nipple_shape": {
+"l": "乳头形状",
+"h": "乳头的形状:扁平、突出、勃起、饱满或内陷。"
+},
+"p:chest.nipple_size": {
+"l": "乳头大小",
+"h": "乳头有多大。"
+},
+"p:chest.pecs": {
+"l": "胸肌",
+"h": "胸部的肌肉。未设置“整体肌肉”时,它们也会塑造轮廓中的胸线。"
+},
+"p:chest.ribcage": {
+"l": "胸廓",
+"h": "胸廓的宽度和体积。同时会让轮廓中的上半身变宽。"
+},
+"p:face.brow_shape": {
+"l": "眉形",
+"h": "眉毛的线条:平直、柔和弧形、高挑弧形或有棱角。"
+},
+"p:face.brow_thickness": {
+"l": "眉毛粗细",
+"h": "眉毛有多粗或多细。"
+},
+"p:face.cheekbones": {
+"l": "颧骨",
+"h": "颧骨有多高、多突出。"
+},
+"p:face.chin": {
+"l": "下巴",
+"h": "下巴的形状。"
+},
+"p:face.eye_color": {
+"l": "瞳色",
+"h": "虹膜的颜色。选择色块或输入自己的颜色。"
+},
+"p:face.eye_color2": {
+"l": "第二种颜色",
+"h": "右眼、环或斑块的颜色。"
+},
+"p:face.eye_glow": {
+"l": "眼睛发光",
+"h": "像魔法或科幻作品里那样发光的眼睛。发光颜色在下面的区块里设置。"
+},
+"p:face.eye_glow_power": {
+"l": "发光强度",
+"h": "眼睛发光有多强。仅在瞳色选择了发光颜色时生效。"
+},
+"p:face.eye_glow_tint": {
+"l": "光的颜色",
+"h": "光线的颜色。可以与瞳色不同:红色的眼睛配蓝色的光。"
+},
+"p:face.eye_hetero": {
+"l": "异瞳",
+"h": "两只眼睛颜色不同。上面的主色是左眼(或虹膜),第二种颜色是右眼、环或斑块。"
+},
+"p:face.eye_shape": {
+"l": "眼型",
+"h": "眼睛的轮廓:杏仁眼、圆眼、内双、上扬眼、猫眼等。"
+},
+"p:face.eye_size": {
+"l": "眼睛大小",
+"h": "眼睛在脸上看起来有多大。"
+},
+"p:face.face_shape": {
+"l": "脸型",
+"h": "脸部轮廓:椭圆形、圆形、方形、心形等。"
+},
+"p:face.jaw": {
+"l": "下颌",
+"h": "下颌线:柔和、分明、尖锐、方形或 V 形。"
+},
+"p:face.lips": {
+"l": "嘴唇",
+"h": "嘴唇有多丰满或多薄。"
+},
+"p:face.mouth": {
+"l": "嘴巴大小",
+"h": "嘴巴的宽度。"
+},
+"p:face.nose_shape": {
+"l": "鼻型",
+"h": "鼻子的形状:直鼻、圆润小鼻、鹰钩鼻、上翘鼻等。"
+},
+"p:face.nose_size": {
+"l": "鼻子大小",
+"h": "鼻子在脸上看起来有多大。"
+},
+"p:facial_hair.beard_color": {
+"l": "胡须颜色",
+"h": "头发的自然颜色;“同发色”会复制头发的颜色。"
+},
+"p:facial_hair.beard_density": {
+"l": "浓密程度",
+"h": "胡须长得有多浓密。"
+},
+"p:facial_hair.beard_grey": {
+"l": "花白",
+"h": "胡须里的白发。"
+},
+"p:facial_hair.beard_length": {
+"l": "胡须长度",
+"h": "胡须有多长,从胡茬到很长的胡须。"
+},
+"p:facial_hair.beard_style": {
+"l": "胡须样式",
+"h": "胡须的形状。选择“刮净”会关闭其他胡须和小胡子设置。"
+},
+"p:facial_hair.mustache_style": {
+"l": "小胡子",
+"h": "小胡子的形状。其中有几种是有名字的经典样式。"
+},
+"p:feet.arch": {
+"l": "足弓",
+"h": "脚底内侧的弧度。"
+},
+"p:feet.foot_size": {
+"l": "脚的大小",
+"h": "脚有多大。"
+},
+"p:feet.foot_width": {
+"l": "脚的宽度",
+"h": "脚有多窄或多宽。"
+},
+"p:feet.toe_length": {
+"l": "脚趾长度",
+"h": "脚趾有多长。"
+},
+"p:feet.toenail_color": {
+"l": "美甲颜色",
+"h": "脚趾甲的颜色。选择色块或输入自己的颜色。“与手相同”会复制手部的指甲颜色。"
+},
+"p:feet.toenail_finish": {
+"l": "美甲质感",
+"h": "脚趾甲油的表面效果:亮面、哑光、闪粉……"
+},
+"p:general.age": {
+"l": "年龄",
+"h": "18 到 90 岁。滑块下方的阶段名称仅供参考。"
+},
+"p:general.appearance": {
+"l": "外貌类型",
+"h": "脸和身体的现实族裔长相(奇幻种族也适用,例如北欧风格的精灵)。留空则由模型决定。"
+},
+"p:general.race": {
+"l": "种族",
+"h": "人类或奇幻种族。最多可选三个进行混合(例如精灵 + 狐族)。可与“外貌类型”(现实中的长相)和“肤色”组合。"
+},
+"p:general.sex": {
+"l": "性别",
+"h": "女性或男性。它决定提供哪些其他参数,以及文本中的代词(她 / 他)。"
+},
+"p:general.skin_shade": {
+"l": "深浅",
+"h": "比所选肤色更浅或更深。"
+},
+"p:general.skin_texture": {
+"l": "皮肤质感",
+"h": "近看时皮肤的样子。"
+},
+"p:general.skin_tint": {
+"l": "底色",
+"h": "皮肤的色调倾向:暖调、冷调、粉调等。"
+},
+"p:general.skin_tone": {
+"l": "肤色",
+"h": "皮肤的基础颜色。选择色块或输入自己的颜色。"
+},
+"p:genitals.anus_look": {
+"l": "肛门",
+"h": "肛门的样子:紧致、饱满或颜色较深。"
+},
+"p:genitals.clitoris": {
+"l": "阴蒂",
+"h": "阴蒂有多明显。需要在“部位”里选择外阴。"
+},
+"p:genitals.foreskin": {
+"l": "包皮",
+"h": "割过包皮、未割或包皮较长。需要在“部位”里选择阴茎。"
+},
+"p:genitals.parts": {
+"l": "部位",
+"h": "角色两腿之间有什么。可以选择多个(例如扶她选外阴 + 阴茎),也可以使用上面的快捷按钮。“光滑”表示什么都没有,像娃娃一样。"
+},
+"p:genitals.penis_color": {
+"l": "阴茎颜色",
+"h": "阴茎的特殊颜色,适用于奇幻角色。留空则使用自然肤色。"
+},
+"p:genitals.penis_curve": {
+"l": "阴茎弯曲",
+"h": "勃起时茎身向哪个方向弯曲。"
+},
+"p:genitals.penis_girth": {
+"l": "阴茎粗细",
+"h": "茎身整体有多粗。"
+},
+"p:genitals.penis_size": {
+"l": "阴茎大小",
+"h": "阴茎有多大。需要在“部位”里选择阴茎。"
+},
+"p:genitals.penis_state": {
+"l": "阴茎状态",
+"h": "软、半勃起或完全勃起。需要在“部位”里选择阴茎。"
+},
+"p:genitals.penis_type": {
+"l": "阴茎类型",
+"h": "是哪一种阴茎。大小、粗细、青筋、弯曲、颜色和状态仍然有效。"
+},
+"p:genitals.penis_veins": {
+"l": "青筋",
+"h": "茎身上的青筋有多明显。再次点击已选项可取消选择。"
+},
+"p:genitals.pubic_hair": {
+"l": "阴毛",
+"h": "阴毛有多少、如何修剪,从剃净到浓密。"
+},
+"p:genitals.testicle_hang": {
+"l": "睾丸下垂程度",
+"h": "睾丸垂得有多低:紧缩、自然或低垂。需要在“部位”里选择睾丸。"
+},
+"p:genitals.testicle_size": {
+"l": "睾丸大小",
+"h": "睾丸有多大。需要在“部位”里选择睾丸。"
+},
+"p:genitals.vulva_shape": {
+"l": "外阴形状",
+"h": "大小阴唇的样子。"
+},
+"p:hair.bangs": {
+"l": "刘海",
+"h": "额头上的刘海。"
+},
+"p:hair.hair_blend": {
+"l": "过渡",
+"h": "两种颜色之间的过渡有多生硬或多柔和。"
+},
+"p:hair.hair_color": {
+"l": "发色",
+"h": "头发的主色。选择色块或输入自己的颜色。"
+},
+"p:hair.hair_color2": {
+"l": "第二种颜色",
+"h": "发尾、挑染发束或隐藏层的颜色。"
+},
+"p:hair.hair_dye": {
+"l": "染发",
+"h": "头发上的第二种颜色。颜色在下面的区块里选择。"
+},
+"p:hair.hair_length": {
+"l": "头发长度",
+"h": "头发有多长,从很短到及臀。"
+},
+"p:hair.hair_shade": {
+"l": "深浅",
+"h": "比所选颜色更浅或更深。"
+},
+"p:hair.hair_streaks": {
+"l": "数量",
+"h": "有多少发丝是第二种颜色。"
+},
+"p:hair.hair_style": {
+"l": "发型",
+"h": "有些发型需要足够的长度;开启“避免冲突”后,随机会跳过不合适的发型。"
+},
+"p:hair.hair_texture": {
+"l": "发质",
+"h": "头发的卷曲程度,从直发经波浪卷、卷发到细密小卷。"
+},
+"p:hair.hair_tint": {
+"l": "色调",
+"h": "颜色的倾向:暖调、冷调、灰调、金调等。"
+},
+"p:hands_nails.finger_length": {
+"l": "手指长度",
+"h": "手指有多长。"
+},
+"p:hands_nails.finger_thickness": {
+"l": "手指粗细",
+"h": "手指有多纤细或多粗。"
+},
+"p:hands_nails.hand_size": {
+"l": "手的大小",
+"h": "手有多大。"
+},
+"p:hands_nails.nail_color": {
+"l": "指甲颜色",
+"h": "指甲油的颜色。选择色块或输入自己的颜色。"
+},
+"p:hands_nails.nail_finish": {
+"l": "指甲质感",
+"h": "指甲油的表面效果:亮面、哑光、闪粉……"
+},
+"p:hands_nails.nail_length": {
+"l": "指甲长度",
+"h": "指甲有多长。"
+},
+"p:hands_nails.nail_shape": {
+"l": "指甲形状",
+"h": "指尖的形状:方形、圆形、椭圆形、杏仁形、棺材形、尖形……"
+},
+"p:hands_nails.nail_type": {
+"l": "指甲类型",
+"h": "天然指甲,或用丙烯酸、凝胶做的人工指甲。"
+},
+"p:muscle.abdomen": {
+"l": "腹肌",
+"h": "可见的腹部肌肉。肚子大小另行设置(“腰与臀”>“腹部”)。"
+},
+"p:muscle.arms": {
+"l": "手臂肌肉",
+"h": "覆盖此区域的“整体肌肉”。未设置时,该区域跟随“整体肌肉”。"
+},
+"p:muscle.back": {
+"l": "背部与肩部肌肉",
+"h": "覆盖此区域的“整体肌肉”。未设置时,该区域跟随“整体肌肉”。"
+},
+"p:muscle.glutes": {
+"l": "臀部肌肉",
+"h": "覆盖此区域的“整体肌肉”。未设置时,该区域跟随“整体肌肉”。"
+},
+"p:muscle.legs": {
+"l": "腿部肌肉",
+"h": "覆盖此区域的“整体肌肉”。未设置时,该区域跟随“整体肌肉”。"
+},
+"p:muscle.overall": {
+"l": "整体肌肉",
+"h": "全身的肌肉。手臂、背部、腹肌、臀部和腿部的数值会覆盖它在各自区域的效果。"
+},
+"p:tattoos.items": {
+"l": "纹身",
+"h": "最多 8 个纹身。每个纹身从列表里选择位置和图案,或自己输入;风格、大小和颜色可不选。字段保持“随机”时,由种子来决定。"
+},
+"p:waist_hips.belly": {
+"l": "腹部",
+"h": "肚子的大小,与腹肌分开设置(“肌肉”>“腹肌”)。"
+},
+"p:waist_hips.hips": {
+"l": "髋宽",
+"h": "髋部有多宽。"
+},
+"p:waist_hips.waist": {
+"l": "腰",
+"h": "腰有多细或多宽。细腰配宽髋会形成沙漏身材。"
+},
+"s:beard_colors:as_hair": {
+"l": "同发色",
+"h": "与头发相同的颜色。"
+},
+"s:beard_colors:ash": {
+"l": "灰金色"
+},
+"s:beard_colors:auburn": {
+"l": "赤褐色"
+},
+"s:beard_colors:black": {
+"l": "黑色"
+},
+"s:beard_colors:brown": {
+"l": "棕色"
+},
+"s:beard_colors:dark_brown": {
+"l": "深棕色"
+},
+"s:beard_colors:ginger": {
+"l": "姜黄色"
+},
+"s:beard_colors:golden": {
+"l": "金黄色"
+},
+"s:beard_colors:light_brown": {
+"l": "浅棕色"
+},
+"s:beard_colors:platinum": {
+"l": "铂金色"
+},
+"s:beard_colors:red": {
+"l": "红色"
+},
+"s:beard_colors:silver": {
+"l": "银色"
+},
+"s:beard_colors:strawberry": {
+"l": "草莓金"
+},
+"s:beard_colors:white": {
+"l": "白色"
+},
+"s:eye_colors:amber": {
+"l": "琥珀色"
+},
+"s:eye_colors:blue": {
+"l": "蓝色"
+},
+"s:eye_colors:brown": {
+"l": "棕色"
+},
+"s:eye_colors:dark_brown": {
+"l": "深棕色"
+},
+"s:eye_colors:gray": {
+"l": "灰色"
+},
+"s:eye_colors:green": {
+"l": "绿色"
+},
+"s:eye_colors:hazel": {
+"l": "榛色"
+},
+"s:eye_colors:light_blue": {
+"l": "浅蓝色"
+},
+"s:eye_colors:red": {
+"l": "红色"
+},
+"s:eye_colors:violet": {
+"l": "紫罗兰色"
+},
+"s:hair_colors:ash": {
+"l": "灰金色"
+},
+"s:hair_colors:auburn": {
+"l": "赤褐色"
+},
+"s:hair_colors:black": {
+"l": "黑色"
+},
+"s:hair_colors:blue": {
+"l": "蓝色"
+},
+"s:hair_colors:brown": {
+"l": "棕色"
+},
+"s:hair_colors:dark_brown": {
+"l": "深棕色"
+},
+"s:hair_colors:ginger": {
+"l": "姜黄色"
+},
+"s:hair_colors:golden": {
+"l": "金黄色"
+},
+"s:hair_colors:green": {
+"l": "绿色"
+},
+"s:hair_colors:light_brown": {
+"l": "浅棕色"
+},
+"s:hair_colors:pink": {
+"l": "粉色"
+},
+"s:hair_colors:platinum": {
+"l": "铂金色"
+},
+"s:hair_colors:purple": {
+"l": "紫色"
+},
+"s:hair_colors:red": {
+"l": "红色"
+},
+"s:hair_colors:silver": {
+"l": "银色"
+},
+"s:hair_colors:strawberry": {
+"l": "草莓金"
+},
+"s:hair_colors:white": {
+"l": "白色"
+},
+"s:muscle:athletic": {
+"l": "运动型",
+"h": "健美有型,线条明显,像经常锻炼的人。"
+},
+"s:muscle:bodybuilder": {
+"l": "健美运动员",
+"h": "极大的肌肉量,像比赛中的健美运动员。"
+},
+"s:muscle:defined": {
+"l": "分明",
+"h": "体脂低,肌肉分离清晰,健身模特的样子。"
+},
+"s:muscle:muscular": {
+"l": "肌肉发达",
+"h": "肌肉大而发达。"
+},
+"s:muscle:smooth": {
+"l": "平滑",
+"h": "纤细,看不出肌肉线条。"
+},
+"s:muscle:soft": {
+"l": "柔软",
+"h": "没有肌肉线条,柔软平滑。"
+},
+"s:muscle:toned": {
+"l": "紧实",
+"h": "紧致,肌肉线条隐约可见。"
+},
+"s:nail_colors:black": {
+"l": "黑色"
+},
+"s:nail_colors:blue": {
+"l": "蓝色"
+},
+"s:nail_colors:burgundy": {
+"l": "酒红色"
+},
+"s:nail_colors:coral": {
+"l": "珊瑚色"
+},
+"s:nail_colors:gold": {
+"l": "金色"
+},
+"s:nail_colors:hot_pink": {
+"l": "艳粉色"
+},
+"s:nail_colors:nude": {
+"l": "裸色"
+},
+"s:nail_colors:pink": {
+"l": "粉色"
+},
+"s:nail_colors:purple": {
+"l": "紫色"
+},
+"s:nail_colors:red": {
+"l": "红色"
+},
+"s:nail_colors:silver": {
+"l": "银色"
+},
+"s:nail_colors:white": {
+"l": "白色"
+},
+"s:nail_finish:bare": {
+"l": "无甲油",
+"h": "完全不涂甲油。此时不使用颜色设置。"
+},
+"s:nail_finish:chrome": {
+"l": "镜面金属",
+"h": "金属质感的镜面光泽。"
+},
+"s:nail_finish:clear": {
+"l": "透明甲油",
+"h": "透明的甲油:自然色加轻微光泽。此时不使用颜色设置。"
+},
+"s:nail_finish:french": {
+"l": "法式",
+"h": "自然的粉色底加白色指尖。此时不使用颜色设置。"
+},
+"s:nail_finish:glitter": {
+"l": "闪粉",
+"h": "带闪烁亮片的甲油。"
+},
+"s:nail_finish:glossy": {
+"l": "亮面",
+"h": "闪亮、如镜面般的甲油。"
+},
+"s:nail_finish:matte": {
+"l": "哑光",
+"h": "平整无光泽的甲油。"
+},
+"sg:general.age:18": {
+"l": "年轻"
+},
+"sg:general.age:26": {
+"l": "成年"
+},
+"sg:general.age:41": {
+"l": "成熟"
+},
+"sg:general.age:61": {
+"l": "年长"
+},
+"t:body": {
+"l": "身体"
+},
+"t:butt_legs": {
+"l": "臀与腿"
+},
+"t:chest": {
+"l": "胸部"
+},
+"t:face": {
+"l": "面部"
+},
+"t:facial_hair": {
+"l": "面部毛发"
+},
+"t:feet": {
+"l": "脚"
+},
+"t:general": {
+"l": "基本信息"
+},
+"t:genitals": {
+"l": "生殖器"
+},
+"t:hair": {
+"l": "头发"
+},
+"t:hands_nails": {
+"l": "手与指甲"
+},
+"t:muscle": {
+"l": "肌肉"
+},
+"t:tattoos": {
+"l": "纹身"
+},
+"t:waist_hips": {
+"l": "腰与臀"
+},
+"z:arms": {
+"l": "手臂",
+"h": "手臂的粗细、肌肉和整体样子。"
+},
+"z:build": {
+"l": "整体身形",
+"h": "整个身体:身高以及手臂和腿的长度。"
+},
+"z:chest": {
+"l": "胸部",
+"h": "女性的乳房,男性的胸肌和胸毛,以及乳头和乳晕。"
+},
+"z:face": {
+"l": "面部",
+"h": "脸型,以及眼睛、眉毛、鼻子、嘴唇、下颌和下巴的样子。"
+},
+"z:facial_hair": {
+"l": "面部毛发",
+"h": "胡须:长度、浓密程度、花白程度和样式。默认仅适用于男性。"
+},
+"z:feet": {
+"l": "脚",
+"h": "脚和脚趾:大小、宽度、足弓和美甲。"
+},
+"z:general": {
+"l": "基本信息",
+"h": "角色是谁:性别、年龄、种族、外貌和肤色。请从这里开始。"
+},
+"z:genitals": {
+"l": "生殖器",
+"h": "衣服下面的身体部位。仅在开启“生殖器”选项时显示;仅限虚构的成年角色。"
+},
+"z:hair": {
+"l": "头发",
+"h": "头发的颜色、长度、质地、发型和细节。"
+},
+"z:hands": {
+"l": "手与指甲",
+"h": "手、手指和指甲:大小、长度、形状、颜色和质感。"
+},
+"z:hips": {
+"l": "臀与髋",
+"h": "髋部、臀部和大腿:宽度、大小、形状和紧致度。"
+},
+"z:legs": {
+"l": "腿部",
+"h": "大腿、小腿和腿型。"
+},
+"z:neck": {
+"l": "颈部",
+"h": "脖子的粗细和样子。"
+},
+"z:shoulders": {
+"l": "肩与背",
+"h": "肩宽以及上背部的样子。"
+},
+"z:tattoos": {
+"l": "纹身",
+"h": "最多八个纹身:为每个选择位置、图案、风格、大小和颜色。"
+},
+"z:waist": {
+"l": "腰部",
+"h": "腰有多细或多宽。"
+},
+"zc:feet": {
+"l": "与手相同",
+"h": "把“手与指甲”里的指甲颜色和质感复制到脚趾甲。"
+},
+"zq:genitals:0": {
+"l": "女性",
+"h": "外阴和肛门。"
+},
+"zq:genitals:1": {
+"l": "男性",
+"h": "阴茎、睾丸和肛门。"
+},
+"zq:genitals:2": {
+"l": "扶她",
+"h": "外阴、阴茎、睾丸和肛门。"
+},
+"zq:genitals:3": {
+"l": "带阴茎的女孩",
+"h": "阴茎、睾丸和肛门,没有外阴。请把性别设为女性。"
+},
+"zq:genitals:4": {
+"l": "光滑",
+"h": "什么都没有,像娃娃一样。"
+}
+},
+"outfit": {
+"o:accessories.bag:backpack": {
+"l": "背包",
+"h": "背在背上的包。"
+},
+"o:accessories.bag:clutch": {
+"l": "手拿包",
+"h": "拿在手里的小包。"
+},
+"o:accessories.bag:crossbody": {
+"l": "斜挎包",
+"h": "带斜挎在胸前的带子的包。"
+},
+"o:accessories.bag:handbag": {
+"l": "手提包",
+"h": "提着手柄拿的包。"
+},
+"o:accessories.bag:satchel": {
+"l": "邮差包",
+"h": "带翻盖和肩带的皮包。"
+},
+"o:accessories.belt:belt": {
+"l": "腰带",
+"h": "腰上的普通皮带。"
+},
+"o:accessories.belt:corset_belt": {
+"l": "束腰带",
+"h": "收紧腰部的宽腰带。"
+},
+"o:accessories.belt:sword_belt": {
+"l": "佩剑腰带",
+"h": "挂着剑的宽腰带。"
+},
+"o:accessories.belt:utility_belt": {
+"l": "工具腰带",
+"h": "带小包和工具的腰带。"
+},
+"o:accessories.earrings:chandelier": {
+"l": "枝形吊灯耳环",
+"h": "大而繁复的垂坠耳环。"
+},
+"o:accessories.earrings:drops": {
+"l": "垂坠耳环",
+"h": "向下垂的耳环。"
+},
+"o:accessories.earrings:hoops": {
+"l": "圈形耳环",
+"h": "圆环形的耳环。"
+},
+"o:accessories.earrings:studs": {
+"l": "耳钉",
+"h": "戴在耳垂上的小耳环。"
+},
+"o:accessories.extras:anklet": {
+"l": "脚链",
+"h": "脚踝上的链条或带子。"
+},
+"o:accessories.extras:body_chain": {
+"l": "身体链",
+"h": "挂在身上的链条。"
+},
+"o:accessories.extras:harness": {
+"l": "皮革束带",
+"h": "交叉缠在胸口和身体上的皮带。"
+},
+"o:accessories.extras:holster": {
+"l": "枪套",
+"h": "带武器枪套的带子。"
+},
+"o:accessories.extras:pauldrons": {
+"l": "肩甲",
+"h": "肩膀上的铠甲板。"
+},
+"o:accessories.extras:pocket_watch": {
+"l": "怀表",
+"h": "带链子的老式怀表。"
+},
+"o:accessories.extras:thigh_garter": {
+"l": "大腿环",
+"h": "戴在大腿上的带子。"
+},
+"o:accessories.eyewear:aviators": {
+"l": "飞行员墨镜",
+"h": "经典的水滴形墨镜。"
+},
+"o:accessories.eyewear:cyber_eyes": {
+"l": "赛博面罩",
+"h": "遮住眼睛的未来感面罩。"
+},
+"o:accessories.eyewear:glasses": {
+"l": "眼镜",
+"h": "普通的眼镜。"
+},
+"o:accessories.eyewear:monocle": {
+"l": "单片眼镜",
+"h": "夹在一只眼睛上的单片镜。"
+},
+"o:accessories.eyewear:round_glasses": {
+"l": "圆框眼镜",
+"h": "圆形镜片的眼镜。"
+},
+"o:accessories.eyewear:sunglasses": {
+"l": "太阳镜",
+"h": "带色镜片的眼镜。"
+},
+"o:accessories.face:cyber_mask": {
+"l": "面罩",
+"h": "遮住鼻子和嘴的未来感面罩。"
+},
+"o:accessories.face:half_mask": {
+"l": "半脸面具",
+"h": "只遮住半张脸的面具。"
+},
+"o:accessories.face:masquerade": {
+"l": "假面舞会面具",
+"h": "遮住眼睛的装饰面具。"
+},
+"o:accessories.face:surgical": {
+"l": "医用口罩",
+"h": "医疗用的口罩。"
+},
+"o:accessories.metal:black_metal": {
+"l": "黑金属",
+"h": "发黑的深色金属。"
+},
+"o:accessories.metal:brass": {
+"l": "黄铜",
+"h": "黄褐色的黄铜。"
+},
+"o:accessories.metal:gold": {
+"l": "黄金",
+"h": "黄金首饰。"
+},
+"o:accessories.metal:rose_gold": {
+"l": "玫瑰金",
+"h": "玫瑰金首饰。"
+},
+"o:accessories.metal:silver": {
+"l": "白银",
+"h": "银首饰。"
+},
+"o:accessories.neckwear:ascot": {
+"l": "阿斯科特领巾",
+"h": "塞进衬衫里的宽丝巾。"
+},
+"o:accessories.neckwear:bow_tie": {
+"l": "领结",
+"h": "系在领口的小蝴蝶结。"
+},
+"o:accessories.neckwear:chain": {
+"l": "链条项链",
+"h": "脖子上的金属链。"
+},
+"o:accessories.neckwear:choker": {
+"l": "颈链",
+"h": "紧贴脖子的带子。"
+},
+"o:accessories.neckwear:collar": {
+"l": "项圈",
+"h": "围在脖子上的宽带,常带一个环。"
+},
+"o:accessories.neckwear:necktie": {
+"l": "领带",
+"h": "配衬衫的长领带。"
+},
+"o:accessories.neckwear:pearls": {
+"l": "珍珠项链",
+"h": "一串珍珠。"
+},
+"o:accessories.neckwear:pendant": {
+"l": "吊坠项链",
+"h": "带垂坠的项链。"
+},
+"o:accessories.neckwear:scarf": {
+"l": "围巾",
+"h": "布质围巾。"
+},
+"o:accessories.rings:ring": {
+"l": "一枚戒指",
+"h": "手指上的一枚戒指。"
+},
+"o:accessories.rings:rings": {
+"l": "多枚戒指",
+"h": "几根手指上都有戒指。"
+},
+"o:accessories.wrist:bangles": {
+"l": "手镯",
+"h": "手腕上的几个硬环。"
+},
+"o:accessories.wrist:bracelet": {
+"l": "手链",
+"h": "戴在手腕上的手链。"
+},
+"o:accessories.wrist:cuffs": {
+"l": "护腕",
+"h": "手腕上的宽金属或皮革带。"
+},
+"o:accessories.wrist:watch": {
+"l": "手表",
+"h": "手腕上的手表。"
+},
+"o:bottom.length:above_knee": {
+"l": "膝上",
+"h": "刚好在膝盖上方结束。"
+},
+"o:bottom.length:ankle": {
+"l": "及踝",
+"h": "到脚踝处结束。"
+},
+"o:bottom.length:floor": {
+"l": "拖地",
+"h": "长到碰到地面。"
+},
+"o:bottom.length:knee": {
+"l": "及膝",
+"h": "到膝盖处结束。"
+},
+"o:bottom.length:micro": {
+"l": "超短",
+"h": "刚好盖住髋部。"
+},
+"o:bottom.length:midi": {
+"l": "中长",
+"h": "在膝盖下方、小腿中部结束。"
+},
+"o:bottom.length:mini": {
+"l": "迷你",
+"h": "到大腿中部。"
+},
+"o:bottom.state:hiked": {
+"l": "掀起裙子",
+"h": "裙子被往上掀起。"
+},
+"o:bottom.state:partly_off": {
+"l": "脱了一半",
+"h": "正在脱,脱了一半。"
+},
+"o:bottom.state:pulled_aside": {
+"l": "拨到一边",
+"h": "被拨到一边,露出下面的部位。"
+},
+"o:bottom.state:pulled_down": {
+"l": "往下拉",
+"h": "被拉到髋部。"
+},
+"o:bottom.state:see_through": {
+"l": "透视",
+"h": "面料透出身体。"
+},
+"o:bottom.state:torn": {
+"l": "撕破",
+"h": "被撕开、损坏。"
+},
+"o:bottom.state:unzipped": {
+"l": "拉链拉开",
+"h": "拉链被往下拉开。"
+},
+"o:bottom.state:wet": {
+"l": "湿透",
+"h": "湿透了,贴在皮肤上。"
+},
+"o:bottom.type:a_line": {
+"l": "A 字裙",
+"h": "从腰部向下自然变宽的裙子。"
+},
+"o:bottom.type:bike_shorts": {
+"l": "骑行短裤",
+"h": "紧身的弹力短裤。"
+},
+"o:bottom.type:breeches": {
+"l": "马裤",
+"h": "骑马用的合身裤子。"
+},
+"o:bottom.type:bustle_skirt": {
+"l": "裙撑裙",
+"h": "在后面堆起来的裙子。"
+},
+"o:bottom.type:cargo": {
+"l": "工装裤",
+"h": "带大侧袋的宽松裤子。"
+},
+"o:bottom.type:denim_shorts": {
+"l": "牛仔短裤",
+"h": "短款的牛仔裤。"
+},
+"o:bottom.type:hakama": {
+"l": "袴",
+"h": "宽大有褶的日本裤裙。"
+},
+"o:bottom.type:harem": {
+"l": "灯笼裤",
+"h": "宽松、在脚踝处收紧的裤子。"
+},
+"o:bottom.type:jeans": {
+"l": "牛仔裤",
+"h": "经典的牛仔长裤。"
+},
+"o:bottom.type:kilt": {
+"l": "苏格兰短裙",
+"h": "有褶的格纹裙。"
+},
+"o:bottom.type:leather_pants": {
+"l": "皮裤",
+"h": "紧身的皮革长裤。"
+},
+"o:bottom.type:leggings": {
+"l": "打底裤",
+"h": "紧身的弹力裤。"
+},
+"o:bottom.type:maxi_skirt": {
+"l": "长裙",
+"h": "长到脚踝的裙子。"
+},
+"o:bottom.type:miniskirt": {
+"l": "迷你裙",
+"h": "非常短的裙子。"
+},
+"o:bottom.type:pencil_skirt": {
+"l": "铅笔裙",
+"h": "紧身、长度到膝盖附近的裙子。"
+},
+"o:bottom.type:pleated": {
+"l": "百褶裙",
+"h": "带褶皱的裙子。"
+},
+"o:bottom.type:shorts": {
+"l": "短裤",
+"h": "短款的裤子。"
+},
+"o:bottom.type:sweatpants": {
+"l": "运动裤",
+"h": "柔软宽松的运动长裤。"
+},
+"o:bottom.type:tactical": {
+"l": "战术裤",
+"h": "带很多口袋的结实裤子。"
+},
+"o:bottom.type:trousers": {
+"l": "西裤",
+"h": "剪裁合身的正装长裤。"
+},
+"o:bottom.type:yoga": {
+"l": "瑜伽裤",
+"h": "训练用的弹力裤。"
+},
+"o:footwear.heel:block": {
+"l": "粗跟",
+"h": "又粗又宽的鞋跟。"
+},
+"o:footwear.heel:kitten": {
+"l": "小猫跟",
+"h": "低而细的鞋跟。"
+},
+"o:footwear.heel:platform": {
+"l": "厚底",
+"h": "整个脚下都是厚鞋底。"
+},
+"o:footwear.heel:stiletto": {
+"l": "细跟",
+"h": "非常高而细的鞋跟。"
+},
+"o:footwear.type:ankle_boots": {
+"l": "短靴",
+"h": "到脚踝的靴子。"
+},
+"o:footwear.type:barefoot": {
+"l": "赤脚",
+"h": "完全不穿鞋。"
+},
+"o:footwear.type:combat_boots": {
+"l": "战斗靴",
+"h": "厚重的系带靴子。"
+},
+"o:footwear.type:cowboy_boots": {
+"l": "牛仔靴",
+"h": "尖头的西部风格靴子。"
+},
+"o:footwear.type:flats": {
+"l": "芭蕾平底鞋",
+"h": "平底的软鞋。"
+},
+"o:footwear.type:flip_flops": {
+"l": "人字拖",
+"h": "带夹趾带的轻便沙滩凉鞋。"
+},
+"o:footwear.type:geta": {
+"l": "木屐",
+"h": "日本的木制凉鞋。"
+},
+"o:footwear.type:heels": {
+"l": "高跟鞋",
+"h": "鞋跟抬高的鞋。"
+},
+"o:footwear.type:knee_boots": {
+"l": "过膝靴",
+"h": "到膝盖的靴子。"
+},
+"o:footwear.type:loafers": {
+"l": "乐福鞋",
+"h": "免系带的皮鞋。"
+},
+"o:footwear.type:oxfords": {
+"l": "牛津鞋",
+"h": "经典的系带正装鞋。"
+},
+"o:footwear.type:platform_heels": {
+"l": "厚底高跟鞋",
+"h": "前面带厚鞋底的高跟鞋。"
+},
+"o:footwear.type:running": {
+"l": "跑鞋",
+"h": "跑步用的鞋。"
+},
+"o:footwear.type:sabatons": {
+"l": "铁甲靴",
+"h": "金属的足部铠甲。"
+},
+"o:footwear.type:sandals": {
+"l": "凉鞋",
+"h": "带绑带的露趾鞋。"
+},
+"o:footwear.type:sneakers": {
+"l": "运动鞋",
+"h": "休闲运动鞋。"
+},
+"o:footwear.type:stilettos": {
+"l": "细高跟鞋",
+"h": "鞋跟又细又高的鞋。"
+},
+"o:footwear.type:thigh_boots": {
+"l": "过大腿靴",
+"h": "到大腿的靴子。"
+},
+"o:footwear.type:victorian_boots": {
+"l": "维多利亚靴",
+"h": "19 世纪的带扣或系带高筒靴。"
+},
+"o:hands.type:bracers": {
+"l": "护臂",
+"h": "前臂的护甲。"
+},
+"o:hands.type:cyber_gloves": {
+"l": "赛博手套",
+"h": "带科技细节的未来感手套。"
+},
+"o:hands.type:detached_sleeves": {
+"l": "分离式袖套",
+"h": "不带上衣单独穿的袖子。"
+},
+"o:hands.type:driving_gloves": {
+"l": "驾驶手套",
+"h": "指关节处镂空的薄皮手套。"
+},
+"o:hands.type:fingerless": {
+"l": "半指手套",
+"h": "指尖露出来的手套。"
+},
+"o:hands.type:gauntlets": {
+"l": "铠甲手套",
+"h": "金属铠甲手套。"
+},
+"o:hands.type:lace_gloves": {
+"l": "蕾丝手套",
+"h": "蕾丝做的手套。"
+},
+"o:hands.type:latex_gloves": {
+"l": "乳胶手套",
+"h": "闪亮的橡胶手套。"
+},
+"o:hands.type:leather_gloves": {
+"l": "皮手套",
+"h": "皮革做的手套。"
+},
+"o:hands.type:mittens": {
+"l": "连指手套",
+"h": "四根手指共用一个空间的手套。"
+},
+"o:hands.type:opera_gloves": {
+"l": "长款手套",
+"h": "长过手肘的长手套。"
+},
+"o:head.type:bandana": {
+"l": "头巾",
+"h": "折好后系在头上的布。"
+},
+"o:head.type:beanie": {
+"l": "针织帽",
+"h": "针织的冬季帽子。"
+},
+"o:head.type:beret": {
+"l": "贝雷帽",
+"h": "柔软扁平的圆帽。"
+},
+"o:head.type:cap": {
+"l": "棒球帽",
+"h": "带弧形帽檐的运动帽。"
+},
+"o:head.type:cat_ears": {
+"l": "动物耳朵发箍",
+"h": "带动物耳朵的发箍。"
+},
+"o:head.type:circlet": {
+"l": "额环",
+"h": "戴在额头上的细环。"
+},
+"o:head.type:cowboy_hat": {
+"l": "牛仔帽",
+"h": "西部风格的宽檐帽。"
+},
+"o:head.type:crown": {
+"l": "王冠",
+"h": "皇室的王冠。"
+},
+"o:head.type:cyber_visor": {
+"l": "赛博面罩",
+"h": "遮住眼睛的未来感面罩。"
+},
+"o:head.type:fedora": {
+"l": "软呢帽",
+"h": "带帽檐、帽顶有凹痕的毡帽。"
+},
+"o:head.type:flower_crown": {
+"l": "花冠",
+"h": "用花编成的花环。"
+},
+"o:head.type:goggles": {
+"l": "头上的护目镜",
+"h": "推到额头或头发上的护目镜。"
+},
+"o:head.type:hair_bow": {
+"l": "蝴蝶结发饰",
+"h": "头发上的蝴蝶结。"
+},
+"o:head.type:headband": {
+"l": "发带",
+"h": "把头发固定住的带子。"
+},
+"o:head.type:headscarf": {
+"l": "包头巾",
+"h": "包在头发外面的围巾。"
+},
+"o:head.type:helmet": {
+"l": "骑士头盔",
+"h": "全封闭的金属骑士头盔。"
+},
+"o:head.type:hood": {
+"l": "兜帽",
+"h": "罩在头上的兜帽。"
+},
+"o:head.type:military_cap": {
+"l": "军帽",
+"h": "带帽檐的制服帽。"
+},
+"o:head.type:sun_hat": {
+"l": "遮阳帽",
+"h": "柔软的宽檐夏季帽子。"
+},
+"o:head.type:tiara": {
+"l": "小皇冠",
+"h": "戴在头顶、镶有宝石的小王冠。"
+},
+"o:head.type:top_hat": {
+"l": "高顶礼帽",
+"h": "高高的正式礼帽。"
+},
+"o:head.type:veil": {
+"l": "面纱",
+"h": "盖在头上的薄布面纱。"
+},
+"o:head.type:witch_hat": {
+"l": "女巫帽",
+"h": "高高的尖顶宽檐帽。"
+},
+"o:legwear.state:rolled_down": {
+"l": "卷下来",
+"h": "顺着腿卷了下来。"
+},
+"o:legwear.state:see_through": {
+"l": "透视",
+"h": "面料透出皮肤。"
+},
+"o:legwear.state:torn": {
+"l": "撕破",
+"h": "被撕开、损坏。"
+},
+"o:legwear.state:wet": {
+"l": "湿透",
+"h": "湿透了,贴在皮肤上。"
+},
+"o:legwear.type:ankle_socks": {
+"l": "短袜",
+"h": "到脚踝的短袜子。"
+},
+"o:legwear.type:fishnet_stockings": {
+"l": "渔网长筒袜",
+"h": "网状的长筒袜。"
+},
+"o:legwear.type:fishnet_tights": {
+"l": "渔网连裤袜",
+"h": "网状的连裤袜。"
+},
+"o:legwear.type:garter_stockings": {
+"l": "带吊袜带的长袜",
+"h": "用吊袜带固定的长筒袜。"
+},
+"o:legwear.type:knee_socks": {
+"l": "及膝袜",
+"h": "到膝盖的袜子。"
+},
+"o:legwear.type:lace_stockings": {
+"l": "蕾丝边长筒袜",
+"h": "顶部带蕾丝边的长筒袜。"
+},
+"o:legwear.type:leg_warmers": {
+"l": "暖腿套",
+"h": "套在腿上的针织筒。"
+},
+"o:legwear.type:opaque_tights": {
+"l": "不透明连裤袜",
+"h": "厚实、不透明的连裤袜。"
+},
+"o:legwear.type:pantyhose": {
+"l": "连裤袜",
+"h": "从腰到脚趾的薄连裤袜。"
+},
+"o:legwear.type:ripped_tights": {
+"l": "破洞连裤袜",
+"h": "被撕出洞的连裤袜。"
+},
+"o:legwear.type:thigh_highs": {
+"l": "过膝长袜",
+"h": "长到大腿的长袜。"
+},
+"o:legwear.type:thigh_socks": {
+"l": "过膝袜",
+"h": "到大腿的袜子。"
+},
+"o:onepiece.length:above_knee": {
+"l": "膝上",
+"h": "刚好在膝盖上方结束。"
+},
+"o:onepiece.length:ankle": {
+"l": "及踝",
+"h": "到脚踝处结束。"
+},
+"o:onepiece.length:floor": {
+"l": "拖地",
+"h": "长到碰到地面。"
+},
+"o:onepiece.length:knee": {
+"l": "及膝",
+"h": "到膝盖处结束。"
+},
+"o:onepiece.length:micro": {
+"l": "超短",
+"h": "刚好盖住髋部。"
+},
+"o:onepiece.length:midi": {
+"l": "中长",
+"h": "在膝盖下方、小腿中部结束。"
+},
+"o:onepiece.length:mini": {
+"l": "迷你",
+"h": "到大腿中部。"
+},
+"o:onepiece.state:hiked": {
+"l": "掀起裙子",
+"h": "裙子被往上掀起。"
+},
+"o:onepiece.state:off_shoulder": {
+"l": "滑下一边肩膀",
+"h": "从一边肩膀滑落。"
+},
+"o:onepiece.state:partly_off": {
+"l": "脱了一半",
+"h": "正在脱,脱了一半。"
+},
+"o:onepiece.state:pulled_down": {
+"l": "往下拉",
+"h": "被往下拉,露出胸部。"
+},
+"o:onepiece.state:see_through": {
+"l": "透视",
+"h": "面料透出身体。"
+},
+"o:onepiece.state:torn": {
+"l": "撕破",
+"h": "被撕开、损坏。"
+},
+"o:onepiece.state:unzipped": {
+"l": "拉链拉开",
+"h": "拉链被往下拉开。"
+},
+"o:onepiece.state:wet": {
+"l": "湿透",
+"h": "湿透了,贴在皮肤上。"
+},
+"o:onepiece.type:ball_gown": {
+"l": "舞会礼服",
+"h": "带宽大裙摆的华丽礼服。"
+},
+"o:onepiece.type:bathrobe": {
+"l": "浴袍",
+"h": "洗澡后穿的厚浴袍。"
+},
+"o:onepiece.type:bodycon": {
+"l": "紧身连衣裙",
+"h": "紧贴身体的连衣裙。"
+},
+"o:onepiece.type:bodysuit": {
+"l": "连体紧身衣",
+"h": "贴身的连体上衣。"
+},
+"o:onepiece.type:catsuit": {
+"l": "紧身连体衣",
+"h": "包住全身的紧身服装。"
+},
+"o:onepiece.type:cocktail": {
+"l": "鸡尾酒裙",
+"h": "短款的正式派对裙。"
+},
+"o:onepiece.type:evening_gown": {
+"l": "晚礼服",
+"h": "长款的优雅礼服。"
+},
+"o:onepiece.type:hanfu": {
+"l": "汉服",
+"h": "中国传统的飘逸长袍。"
+},
+"o:onepiece.type:jumpsuit": {
+"l": "连体裤",
+"h": "上衣和裤子连在一起。"
+},
+"o:onepiece.type:kimono": {
+"l": "和服",
+"h": "用腰带系住的日本传统长袍。"
+},
+"o:onepiece.type:latex_catsuit": {
+"l": "乳胶连体衣",
+"h": "闪亮、紧贴皮肤的橡胶服。"
+},
+"o:onepiece.type:lbd": {
+"l": "小黑裙",
+"h": "经典的小黑裙。"
+},
+"o:onepiece.type:leotard": {
+"l": "紧身舞衣",
+"h": "用于舞蹈或体操的紧身连体衣。"
+},
+"o:onepiece.type:medieval_gown": {
+"l": "中世纪长裙",
+"h": "带合身上身的长款历史服装。"
+},
+"o:onepiece.type:negligee": {
+"l": "薄纱睡裙",
+"h": "轻薄精致的睡裙。"
+},
+"o:onepiece.type:nightgown": {
+"l": "睡裙",
+"h": "睡觉穿的宽松裙子。"
+},
+"o:onepiece.type:overalls": {
+"l": "背带裤",
+"h": "带胸片和背带的裤子。"
+},
+"o:onepiece.type:qipao": {
+"l": "旗袍",
+"h": "高领、侧边开衩的中式连衣裙。"
+},
+"o:onepiece.type:robe": {
+"l": "长袍",
+"h": "宽松、裹身的长袍。"
+},
+"o:onepiece.type:sci_suit": {
+"l": "科幻紧身服",
+"h": "紧身的未来感服装。"
+},
+"o:onepiece.type:shirt_dress": {
+"l": "衬衫裙",
+"h": "当作裙子穿的长衬衫。"
+},
+"o:onepiece.type:slip_dress": {
+"l": "吊带裙",
+"h": "细肩带的薄缎面裙。"
+},
+"o:onepiece.type:sundress": {
+"l": "夏日连衣裙",
+"h": "轻薄的夏季连衣裙。"
+},
+"o:onepiece.type:swimsuit": {
+"l": "连体泳衣",
+"h": "连体的泳装。"
+},
+"o:onepiece.type:toga": {
+"l": "托加袍",
+"h": "古罗马的披挂式布衣。"
+},
+"o:onepiece.type:wedding": {
+"l": "婚纱",
+"h": "新娘的礼服。"
+},
+"o:onepiece.type:wrap_dress": {
+"l": "裹身裙",
+"h": "裹在身上、在腰间系带的裙子。"
+},
+"o:outer.state:off_shoulders": {
+"l": "滑下肩膀",
+"h": "从肩膀上滑落。"
+},
+"o:outer.state:open": {
+"l": "敞开",
+"h": "敞着穿。"
+},
+"o:outer.state:partly_off": {
+"l": "脱了一半",
+"h": "正在脱,脱了一半。"
+},
+"o:outer.state:see_through": {
+"l": "透视",
+"h": "面料透出身体。"
+},
+"o:outer.state:torn": {
+"l": "撕破",
+"h": "被撕开、损坏。"
+},
+"o:outer.state:unzipped": {
+"l": "拉链拉开",
+"h": "拉链被往下拉开。"
+},
+"o:outer.state:wet": {
+"l": "湿透",
+"h": "湿透了,贴在皮肤上。"
+},
+"o:outer.type:blazer": {
+"l": "西装外套",
+"h": "剪裁合身的外套,像套装的一部分。"
+},
+"o:outer.type:bolero": {
+"l": "波蕾若短外套",
+"h": "非常短的敞开式小外套。"
+},
+"o:outer.type:bomber": {
+"l": "飞行员夹克",
+"h": "带罗纹袖口的短款拉链夹克。"
+},
+"o:outer.type:cape": {
+"l": "披肩斗篷",
+"h": "从肩膀垂下的短斗篷。"
+},
+"o:outer.type:cardigan": {
+"l": "开衫",
+"h": "前襟敞开的针织毛衣。"
+},
+"o:outer.type:cloak": {
+"l": "斗篷",
+"h": "带兜帽的长布披风。"
+},
+"o:outer.type:denim_jacket": {
+"l": "牛仔夹克",
+"h": "短款牛仔夹克。"
+},
+"o:outer.type:duster": {
+"l": "风尘大衣",
+"h": "狂野西部那种非常长的轻便大衣。"
+},
+"o:outer.type:fur_coat": {
+"l": "皮草大衣",
+"h": "用毛皮做的大衣。"
+},
+"o:outer.type:haori": {
+"l": "羽织",
+"h": "日本传统外褂。"
+},
+"o:outer.type:lab_coat": {
+"l": "实验服",
+"h": "医生或科学家的白大褂。"
+},
+"o:outer.type:leather_armor": {
+"l": "皮甲",
+"h": "用硬化皮革制成的铠甲。"
+},
+"o:outer.type:leather_jacket": {
+"l": "皮夹克",
+"h": "经典的机车夹克。"
+},
+"o:outer.type:long_coat": {
+"l": "长大衣",
+"h": "长过膝盖的大衣。"
+},
+"o:outer.type:military_jacket": {
+"l": "军装外套",
+"h": "制服外套。"
+},
+"o:outer.type:neon_jacket": {
+"l": "LED 灯带夹克",
+"h": "带发光 LED 线条的夹克。"
+},
+"o:outer.type:plate_armor": {
+"l": "板甲",
+"h": "用金属板制成的铠甲。"
+},
+"o:outer.type:puffer": {
+"l": "羽绒夹克",
+"h": "保暖的绗缝夹克。"
+},
+"o:outer.type:tailcoat": {
+"l": "燕尾服",
+"h": "后面带长燕尾的正式外套。"
+},
+"o:outer.type:trench": {
+"l": "风衣",
+"h": "带腰带的长款雨衣。"
+},
+"o:outer.type:varsity": {
+"l": "棒球外套",
+"h": "袖子颜色对比的学院风夹克。"
+},
+"o:style.bare:arms": {
+"l": "手臂",
+"h": "露出手臂。"
+},
+"o:style.bare:back": {
+"l": "后背",
+"h": "露出后背。再次点击可选择露出多少。"
+},
+"o:style.bare:balls": {
+"l": "裸露睾丸",
+"h": "露出睾丸,而阴茎仍被遮住。"
+},
+"o:style.bare:breasts": {
+"l": "裸露乳房",
+"h": "乳房完全裸露。"
+},
+"o:style.bare:butt": {
+"l": "裸露臀部",
+"h": "丁字裤、镂空或开裆裤:衣服仍然穿着,臀部可见。"
+},
+"o:style.bare:cleavage": {
+"l": "乳沟",
+"h": "露出乳沟的领口。再次点击可选择深度。"
+},
+"o:style.bare:feet": {
+"l": "脚",
+"h": "光着脚。"
+},
+"o:style.bare:hands": {
+"l": "手",
+"h": "露出双手。"
+},
+"o:style.bare:legs": {
+"l": "腿",
+"h": "露出双腿。"
+},
+"o:style.bare:midriff": {
+"l": "腹部",
+"h": "露出肚子。再次点击可选择露出多少。"
+},
+"o:style.bare:nipples": {
+"l": "裸露乳头",
+"h": "通过镂空或被拨开的布料露出来;衣服仍然穿着。再次点击可选择露出多少。"
+},
+"o:style.bare:no_bra": {
+"l": "不穿文胸",
+"h": "上衣里面没有文胸。"
+},
+"o:style.bare:no_panties": {
+"l": "不穿内裤",
+"h": "衣服里面没有内裤。"
+},
+"o:style.bare:no_underwear": {
+"l": "不穿内衣",
+"h": "没有文胸,也没有内裤。"
+},
+"o:style.bare:penis": {
+"l": "裸露阴茎",
+"h": "阴茎被遮住多少;衣服仍然穿着。"
+},
+"o:style.bare:pussy": {
+"l": "裸露私处",
+"h": "敞开或镂空的衣服:衣服仍然穿着,私处可见。"
+},
+"o:style.bare:shoulders": {
+"l": "肩膀",
+"h": "露出肩膀。"
+},
+"o:style.bare:sideboob": {
+"l": "侧乳",
+"h": "露出乳房的侧面。再次点击可选择露出多少。"
+},
+"o:style.bare:thighs": {
+"l": "大腿",
+"h": "露出大腿。"
+},
+"o:style.bare:underboob": {
+"l": "下乳",
+"h": "乳房下缘从上衣下面露出来。再次点击可选择露出多少。"
+},
+"o:style.exposure:bottomless": {
+"l": "下身裸露",
+"h": "下半身什么都不穿。"
+},
+"o:style.exposure:nude": {
+"l": "全裸",
+"h": "没有衣服,也没有配饰。"
+},
+"o:style.exposure:nude_except": {
+"l": "仅留配饰",
+"h": "完全没有衣服,只保留所选的配饰。"
+},
+"o:style.exposure:topless": {
+"l": "上身裸露",
+"h": "上半身什么都不穿。"
+},
+"o:style.exposure:underwear_only": {
+"l": "仅内衣",
+"h": "只穿内衣,别的什么都没有。"
+},
+"o:style.palette:earth": {
+"l": "大地色",
+"h": "棕色、橄榄色、米色和其他自然色。"
+},
+"o:style.palette:jewel": {
+"l": "宝石色",
+"h": "祖母绿、红宝石、蓝宝石那样的深邃浓郁颜色。"
+},
+"o:style.palette:mono_black": {
+"l": "全黑",
+"h": "全身黑色。"
+},
+"o:style.palette:mono_white": {
+"l": "全白",
+"h": "全身白色。"
+},
+"o:style.palette:navy_white": {
+"l": "藏青白",
+"h": "藏青色和白色的组合。"
+},
+"o:style.palette:neon": {
+"l": "霓虹",
+"h": "明亮发光的颜色。"
+},
+"o:style.palette:pastel": {
+"l": "粉彩",
+"h": "柔和的浅色。"
+},
+"o:style.palette:red_black": {
+"l": "红黑",
+"h": "红色和黑色的组合。"
+},
+"o:style.styles:beach": {
+"l": "海滩",
+"h": "适合海滩的轻便服装。"
+},
+"o:style.styles:boho": {
+"l": "波西米亚",
+"h": "自由飘逸的波西米亚风服装。"
+},
+"o:style.styles:boudoir": {
+"l": "闺房",
+"h": "内衣和卧室风格。"
+},
+"o:style.styles:business": {
+"l": "商务",
+"h": "办公室和正式的工作服装。"
+},
+"o:style.styles:casual": {
+"l": "休闲",
+"h": "轻松的日常服装。"
+},
+"o:style.styles:cyberpunk": {
+"l": "赛博朋克",
+"h": "霓虹、科技和未来都市的时尚。"
+},
+"o:style.styles:east_asian": {
+"l": "东亚",
+"h": "东亚的传统服装。"
+},
+"o:style.styles:elegant": {
+"l": "优雅",
+"h": "讲究的正装。"
+},
+"o:style.styles:fantasy": {
+"l": "奇幻",
+"h": "魔法童话风格的服装。"
+},
+"o:style.styles:gothic": {
+"l": "哥特",
+"h": "带蕾丝和黑色的暗黑戏剧风服装。"
+},
+"o:style.styles:medieval": {
+"l": "中世纪",
+"h": "中世纪的历史服装。"
+},
+"o:style.styles:military": {
+"l": "军事",
+"h": "制服和野战装备。"
+},
+"o:style.styles:punk": {
+"l": "朋克",
+"h": "撕破、带铆钉、叛逆的服装。"
+},
+"o:style.styles:sci_fi": {
+"l": "科幻",
+"h": "太空时代的未来感服装。"
+},
+"o:style.styles:sporty": {
+"l": "运动",
+"h": "运动服装。"
+},
+"o:style.styles:steampunk": {
+"l": "蒸汽朋克",
+"h": "带黄铜和齿轮的维多利亚式服装。"
+},
+"o:style.styles:street": {
+"l": "街头",
+"h": "都市街头时尚。"
+},
+"o:style.styles:victorian": {
+"l": "维多利亚",
+"h": "19 世纪的束腰和长裙服装。"
+},
+"o:style.styles:western": {
+"l": "西部",
+"h": "牛仔和狂野西部的服装。"
+},
+"o:style.wearer:female": {
+"l": "女性",
+"h": "女装。"
+},
+"o:style.wearer:male": {
+"l": "男性",
+"h": "男装。"
+},
+"o:style.wearer:neutral": {
+"l": "中性",
+"h": "男女通用的服装。"
+},
+"o:top.sleeves:long": {
+"l": "长袖",
+"h": "袖子到手腕。"
+},
+"o:top.sleeves:rolled": {
+"l": "卷起的袖子",
+"h": "长袖卷到手肘。"
+},
+"o:top.sleeves:short": {
+"l": "短袖",
+"h": "袖子到上臂。"
+},
+"o:top.sleeves:sleeveless": {
+"l": "无袖",
+"h": "没有袖子。"
+},
+"o:top.state:lifted": {
+"l": "掀起",
+"h": "被掀起,露出肚子或胸部。"
+},
+"o:top.state:off_shoulder": {
+"l": "滑下一边肩膀",
+"h": "从一边肩膀滑落。"
+},
+"o:top.state:partly_off": {
+"l": "脱了一半",
+"h": "正在脱,脱了一半。"
+},
+"o:top.state:pulled_down": {
+"l": "往下拉",
+"h": "被往下拉,露出胸部。"
+},
+"o:top.state:see_through": {
+"l": "透视",
+"h": "面料透出身体。"
+},
+"o:top.state:tied": {
+"l": "在腰间打结",
+"h": "下摆在腰上系成结。"
+},
+"o:top.state:torn": {
+"l": "撕破",
+"h": "被撕开、损坏。"
+},
+"o:top.state:unbuttoned": {
+"l": "解开纽扣",
+"h": "前面的纽扣解开了。"
+},
+"o:top.state:wet": {
+"l": "湿透",
+"h": "湿透了,贴在皮肤上。"
+},
+"o:top.type:blouse": {
+"l": "女式衬衫",
+"h": "轻盈而正式的女式衬衫。"
+},
+"o:top.type:bustier": {
+"l": "抹胸束衣",
+"h": "无肩带、没有长骨的贴身上衣。"
+},
+"o:top.type:chain_shirt": {
+"l": "锁子甲衫",
+"h": "用金属环编成的衣服。"
+},
+"o:top.type:corset": {
+"l": "束腰",
+"h": "系带的紧身胸衣,塑造腰线。"
+},
+"o:top.type:crop": {
+"l": "短上衣",
+"h": "露出肚子的短款上衣。"
+},
+"o:top.type:halter": {
+"l": "挂脖上衣",
+"h": "在脖子后系带、后背裸露的上衣。"
+},
+"o:top.type:hoodie": {
+"l": "连帽衫",
+"h": "带兜帽的保暖卫衣。"
+},
+"o:top.type:leather_vest": {
+"l": "皮背心",
+"h": "无袖的皮革背心。"
+},
+"o:top.type:mesh_top": {
+"l": "网眼上衣",
+"h": "透明的网状上衣。"
+},
+"o:top.type:off_shoulder": {
+"l": "露肩上衣",
+"h": "落在肩膀下方的上衣。"
+},
+"o:top.type:polo": {
+"l": "Polo 衫",
+"h": "带领子和短纽扣门襟的衬衫。"
+},
+"o:top.type:shirt": {
+"l": "扣领衬衫",
+"h": "前襟有纽扣的经典衬衫。"
+},
+"o:top.type:sports_bra": {
+"l": "运动文胸",
+"h": "训练用的弹力文胸,当上衣穿。"
+},
+"o:top.type:sweater": {
+"l": "毛衣",
+"h": "针织套头衫。"
+},
+"o:top.type:tank": {
+"l": "背心",
+"h": "带宽肩带的无袖上衣。"
+},
+"o:top.type:techwear_top": {
+"l": "机能风上衣",
+"h": "带绑带和拉链的功能性未来感上衣。"
+},
+"o:top.type:tshirt": {
+"l": "T 恤",
+"h": "简单的短袖上衣。"
+},
+"o:top.type:tube": {
+"l": "抹胸",
+"h": "横在胸前、无肩带的弹力布带。"
+},
+"o:top.type:tunic": {
+"l": "束腰长衫",
+"h": "又长又宽松的衬衫。"
+},
+"o:top.type:turtleneck": {
+"l": "高领衫",
+"h": "带高翻领的上衣。"
+},
+"o:underwear.bottom_type:bikini_bottom": {
+"l": "比基尼下装",
+"h": "泳装的下半部分。"
+},
+"o:underwear.bottom_type:boxer_briefs": {
+"l": "平角紧身内裤",
+"h": "长到大腿的紧身平角裤。"
+},
+"o:underwear.bottom_type:boxers": {
+"l": "宽松平角裤",
+"h": "宽松的短内裤。"
+},
+"o:underwear.bottom_type:boyshorts": {
+"l": "平角内裤",
+"h": "短而贴身、像短裤一样的内裤。"
+},
+"o:underwear.bottom_type:briefs": {
+"l": "三角内裤",
+"h": "经典的包裹式内裤。"
+},
+"o:underwear.bottom_type:crotchless": {
+"l": "开裆内裤",
+"h": "裆部有开口的内裤。"
+},
+"o:underwear.bottom_type:g_string": {
+"l": "T 字裤",
+"h": "细绳般的极小丁字裤。"
+},
+"o:underwear.bottom_type:garter_belt": {
+"l": "吊袜带",
+"h": "带带子用来固定长筒袜的腰带。"
+},
+"o:underwear.bottom_type:high_waist": {
+"l": "高腰内裤",
+"h": "一直到腰部的内裤。"
+},
+"o:underwear.bottom_type:lace_panties": {
+"l": "蕾丝内裤",
+"h": "用蕾丝做的内裤。"
+},
+"o:underwear.bottom_type:micro_bikini_bottom": {
+"l": "微型比基尼下装",
+"h": "极小的泳装下装,几乎什么都遮不住。"
+},
+"o:underwear.bottom_type:panties": {
+"l": "内裤",
+"h": "普通的日常内裤。"
+},
+"o:underwear.bottom_type:thong": {
+"l": "丁字裤",
+"h": "后面只有一条细带的内裤。"
+},
+"o:underwear.matching:matching": {
+"l": "成套",
+"h": "文胸和内裤是一套,外观一致。"
+},
+"o:underwear.state:partly_off": {
+"l": "脱了一半",
+"h": "正在脱,脱了一半。"
+},
+"o:underwear.state:pulled_aside": {
+"l": "拨到一边",
+"h": "被拨到一边,露出下面的部位。"
+},
+"o:underwear.state:pulled_down": {
+"l": "往下拉",
+"h": "被往下拉。"
+},
+"o:underwear.state:see_through": {
+"l": "透视",
+"h": "面料透出身体。"
+},
+"o:underwear.state:slipping": {
+"l": "正在滑落",
+"h": "正从身上滑落。"
+},
+"o:underwear.state:torn": {
+"l": "撕破",
+"h": "被撕开、损坏。"
+},
+"o:underwear.state:wet": {
+"l": "湿透",
+"h": "湿透了,贴在皮肤上。"
+},
+"o:underwear.top_type:babydoll": {
+"l": "娃娃装睡衣",
+"h": "短款半透明睡衣。"
+},
+"o:underwear.top_type:balconette": {
+"l": "半杯文胸",
+"h": "领口低而平直的文胸。"
+},
+"o:underwear.top_type:bikini_top": {
+"l": "比基尼上装",
+"h": "泳装的上半部分。"
+},
+"o:underwear.top_type:bra": {
+"l": "文胸",
+"h": "普通的日常文胸。"
+},
+"o:underwear.top_type:bralette": {
+"l": "无钢圈文胸",
+"h": "柔软、没有钢圈的文胸。"
+},
+"o:underwear.top_type:lace_bra": {
+"l": "蕾丝文胸",
+"h": "用蕾丝做的文胸。"
+},
+"o:underwear.top_type:micro_bikini_top": {
+"l": "微型比基尼上装",
+"h": "极小的泳装上装,几乎什么都遮不住。"
+},
+"o:underwear.top_type:open_cup": {
+"l": "开杯文胸",
+"h": "杯罩被剪开的文胸。"
+},
+"o:underwear.top_type:pasties": {
+"l": "乳贴",
+"h": "只遮住乳头的小贴片。"
+},
+"o:underwear.top_type:pushup": {
+"l": "聚拢文胸",
+"h": "带衬垫、托起乳房的文胸。"
+},
+"o:underwear.top_type:strapless_bra": {
+"l": "无肩带文胸",
+"h": "没有肩带的文胸。"
+},
+"o:underwear.top_type:teddy": {
+"l": "连体情趣内衣",
+"h": "连体的内衣式紧身衣。"
+},
+"o:underwear.top_type:undershirt": {
+"l": "打底衫",
+"h": "穿在衣服里面的薄衫。"
+},
+"p:accessories.bag": {
+"l": "包",
+"h": "包。",
+"ph": "例如:翡翠吊坠",
+"ch": "用文字输入你自己的单品。"
+},
+"p:accessories.belt": {
+"l": "腰带",
+"h": "皮带和腰带。",
+"ph": "例如:翡翠吊坠",
+"ch": "用文字输入你自己的单品。"
+},
+"p:accessories.color": {
+"l": "颜色",
+"h": "布质单品的颜色(围巾、领带、包、面具、腰带……)。"
+},
+"p:accessories.earrings": {
+"l": "耳环",
+"h": "耳环。",
+"ph": "例如:翡翠吊坠",
+"ch": "用文字输入你自己的单品。"
+},
+"p:accessories.extras": {
+"l": "其他配饰",
+"h": "最多再加三件。皮革束带和身体链需要开启“露骨内容”开关。",
+"ph": "例如:翡翠吊坠",
+"ch": "用文字输入你自己的单品。"
+},
+"p:accessories.eyewear": {
+"l": "眼镜",
+"h": "眼镜和面罩。",
+"ph": "例如:翡翠吊坠",
+"ch": "用文字输入你自己的单品。"
+},
+"p:accessories.face": {
+"l": "面部",
+"h": "面具。",
+"ph": "例如:翡翠吊坠",
+"ch": "用文字输入你自己的单品。"
+},
+"p:accessories.metal": {
+"l": "金属",
+"h": "首饰的金属(项链、耳环、戒指、手链……)。"
+},
+"p:accessories.neckwear": {
+"l": "颈部",
+"h": "项链、颈链、围巾、领带。",
+"ph": "例如:翡翠吊坠",
+"ch": "用文字输入你自己的单品。"
+},
+"p:accessories.rings": {
+"l": "戒指",
+"h": "戒指。",
+"ph": "例如:翡翠吊坠",
+"ch": "用文字输入你自己的单品。"
+},
+"p:accessories.wrist": {
+"l": "手腕",
+"h": "手链、手表、护腕。",
+"ph": "例如:翡翠吊坠",
+"ch": "用文字输入你自己的单品。"
+},
+"p:bottom.color": {
+"l": "颜色",
+"h": "单品的颜色。"
+},
+"p:bottom.fit": {
+"l": "版型",
+"h": "单品穿在身上的松紧效果。"
+},
+"p:bottom.length": {
+"l": "长度",
+"h": "裙子的长度。"
+},
+"p:bottom.material": {
+"l": "材质",
+"h": "面料。乳胶和 PVC 需要开启“露骨内容”开关。",
+"ph": "例如:镭射箔"
+},
+"p:bottom.pattern": {
+"l": "图案",
+"h": "印花或装饰。“纯色”不会往文本里添加任何内容。"
+},
+"p:bottom.state": {
+"l": "状态",
+"h": "单品当前的状态。敞开、解开纽扣、湿透、撕破;露骨的状态需要开启“露骨内容”开关。状态会改变单品遮住的部位。"
+},
+"p:bottom.type": {
+"l": "类型",
+"h": "裤子、短裤或裙子。",
+"ph": "例如:天鹅绒飞行员夹克",
+"ch": "用文字输入你自己的单品。"
+},
+"p:footwear.color": {
+"l": "颜色",
+"h": "单品的颜色。"
+},
+"p:footwear.heel": {
+"l": "鞋跟",
+"h": "鞋跟的形状。"
+},
+"p:footwear.material": {
+"l": "材质",
+"h": "面料。乳胶和 PVC 需要开启“露骨内容”开关。",
+"ph": "例如:镭射箔"
+},
+"p:footwear.type": {
+"l": "类型",
+"h": "鞋和靴子。“赤脚”会写进文本里。",
+"ph": "例如:天鹅绒飞行员夹克",
+"ch": "用文字输入你自己的单品。"
+},
+"p:hands.color": {
+"l": "颜色",
+"h": "单品的颜色。"
+},
+"p:hands.material": {
+"l": "材质",
+"h": "面料。乳胶和 PVC 需要开启“露骨内容”开关。",
+"ph": "例如:镭射箔"
+},
+"p:hands.type": {
+"l": "类型",
+"h": "手套、铠甲手套、分离式袖套。",
+"ph": "例如:天鹅绒飞行员夹克",
+"ch": "用文字输入你自己的单品。"
+},
+"p:head.color": {
+"l": "颜色",
+"h": "单品的颜色。"
+},
+"p:head.material": {
+"l": "材质",
+"h": "面料。乳胶和 PVC 需要开启“露骨内容”开关。",
+"ph": "例如:镭射箔"
+},
+"p:head.type": {
+"l": "类型",
+"h": "帽子、王冠、兜帽和其他戴在头上的东西。兜帽或头盔会遮住头发。",
+"ph": "例如:天鹅绒飞行员夹克",
+"ch": "用文字输入你自己的单品。"
+},
+"p:legwear.color": {
+"l": "颜色",
+"h": "单品的颜色。"
+},
+"p:legwear.state": {
+"l": "状态",
+"h": "单品当前的状态。敞开、解开纽扣、湿透、撕破;露骨的状态需要开启“露骨内容”开关。状态会改变单品遮住的部位。"
+},
+"p:legwear.type": {
+"l": "类型",
+"h": "长筒袜、连裤袜或袜子。",
+"ph": "例如:天鹅绒飞行员夹克",
+"ch": "用文字输入你自己的单品。"
+},
+"p:onepiece.color": {
+"l": "颜色",
+"h": "单品的颜色。"
+},
+"p:onepiece.fit": {
+"l": "版型",
+"h": "单品穿在身上的松紧效果。"
+},
+"p:onepiece.length": {
+"l": "长度",
+"h": "裙子的长度。它决定腿被遮住多少。"
+},
+"p:onepiece.material": {
+"l": "材质",
+"h": "面料。乳胶和 PVC 需要开启“露骨内容”开关。",
+"ph": "例如:镭射箔"
+},
+"p:onepiece.pattern": {
+"l": "图案",
+"h": "印花或装饰。“纯色”不会往文本里添加任何内容。"
+},
+"p:onepiece.state": {
+"l": "状态",
+"h": "单品当前的状态。敞开、解开纽扣、湿透、撕破;露骨的状态需要开启“露骨内容”开关。状态会改变单品遮住的部位。"
+},
+"p:onepiece.type": {
+"l": "类型",
+"h": "裙子、连体衣等。只要设置了它,“上装”和“下装”就不会被使用。",
+"ph": "例如:天鹅绒飞行员夹克",
+"ch": "用文字输入你自己的单品。"
+},
+"p:outer.color": {
+"l": "颜色",
+"h": "单品的颜色。"
+},
+"p:outer.fit": {
+"l": "版型",
+"h": "单品穿在身上的松紧效果。"
+},
+"p:outer.material": {
+"l": "材质",
+"h": "面料。乳胶和 PVC 需要开启“露骨内容”开关。",
+"ph": "例如:镭射箔"
+},
+"p:outer.pattern": {
+"l": "图案",
+"h": "印花或装饰。“纯色”不会往文本里添加任何内容。"
+},
+"p:outer.state": {
+"l": "状态",
+"h": "单品当前的状态。敞开、解开纽扣、湿透、撕破;露骨的状态需要开启“露骨内容”开关。状态会改变单品遮住的部位。"
+},
+"p:outer.type": {
+"l": "类型",
+"h": "穿在其他衣服外面的夹克、大衣或铠甲。",
+"ph": "例如:天鹅绒飞行员夹克",
+"ch": "用文字输入你自己的单品。"
+},
+"p:style.bare": {
+"l": "裸露部位",
+"h": "逐个选择身体的哪些部位不遮盖(最多 8 个)。有些会去掉那里的衣服,有些只是让身体透过衣服显出来。带程度的部位(乳沟、乳头、阴茎……)会在标签下面出现一个选择器:露出多少。私密部位需要开启“露骨内容”开关。"
+},
+"p:style.exposure": {
+"l": "暴露程度",
+"h": "整体穿多少:一个现成的状态。它会把整个部位从服装里去掉,让 Character Builder 展示身体。要单独指定某些部位,请用“裸露部位”。"
+},
+"p:style.palette": {
+"l": "配色",
+"h": "单品的随机颜色来自这个配色。你自己设置的颜色不会改变。"
+},
+"p:style.styles": {
+"l": "风格",
+"h": "最多三种风格混合。“随机”只会选符合这些风格的单品(适合所有风格的单品依然可能被选中),风格名称会写进文本。"
+},
+"p:style.wearer": {
+"l": "穿着者",
+"h": "这是谁的服装:决定使用“她 / 他”的措辞,以及随机可以选哪些单品。当服装接入 Character Builder 时,会改用角色的性别。"
+},
+"p:top.color": {
+"l": "颜色",
+"h": "单品的颜色。"
+},
+"p:top.fit": {
+"l": "版型",
+"h": "单品穿在身上的松紧效果。"
+},
+"p:top.material": {
+"l": "材质",
+"h": "面料。乳胶和 PVC 需要开启“露骨内容”开关。",
+"ph": "例如:镭射箔"
+},
+"p:top.pattern": {
+"l": "图案",
+"h": "印花或装饰。“纯色”不会往文本里添加任何内容。"
+},
+"p:top.sleeves": {
+"l": "袖子",
+"h": "袖子的长度。它也决定手臂被遮住多少。"
+},
+"p:top.state": {
+"l": "状态",
+"h": "单品当前的状态。敞开、解开纽扣、湿透、撕破;露骨的状态需要开启“露骨内容”开关。状态会改变单品遮住的部位。"
+},
+"p:top.type": {
+"l": "类型",
+"h": "穿在上身的衣服。连体装(裙子、连体衣)会取代上装和下装。",
+"ph": "例如:天鹅绒飞行员夹克",
+"ch": "用文字输入你自己的单品。"
+},
+"p:underwear.bottom_type": {
+"l": "下装",
+"h": "内裤、比基尼下装等。",
+"ph": "例如:天鹅绒飞行员夹克",
+"ch": "用文字输入你自己的单品。"
+},
+"p:underwear.color": {
+"l": "颜色",
+"h": "单品的颜色。"
+},
+"p:underwear.matching": {
+"l": "成套",
+"h": "下装与上装的颜色和材质一致:“黑色蕾丝文胸和配套内裤”。"
+},
+"p:underwear.material": {
+"l": "材质",
+"h": "面料。乳胶和 PVC 需要开启“露骨内容”开关。",
+"ph": "例如:镭射箔"
+},
+"p:underwear.state": {
+"l": "状态",
+"h": "单品当前的状态。敞开、解开纽扣、湿透、撕破;露骨的状态需要开启“露骨内容”开关。状态会改变单品遮住的部位。"
+},
+"p:underwear.top_type": {
+"l": "上装",
+"h": "文胸、比基尼上装等。",
+"ph": "例如:天鹅绒飞行员夹克",
+"ch": "用文字输入你自己的单品。"
+},
+"s:clothing_colors:beige": {
+"l": "米色"
+},
+"s:clothing_colors:black": {
+"l": "黑色"
+},
+"s:clothing_colors:blue": {
+"l": "蓝色"
+},
+"s:clothing_colors:brown": {
+"l": "棕色"
+},
+"s:clothing_colors:burgundy": {
+"l": "酒红色"
+},
+"s:clothing_colors:charcoal": {
+"l": "炭灰色"
+},
+"s:clothing_colors:emerald": {
+"l": "祖母绿"
+},
+"s:clothing_colors:gold": {
+"l": "金色"
+},
+"s:clothing_colors:green": {
+"l": "绿色"
+},
+"s:clothing_colors:grey": {
+"l": "灰色"
+},
+"s:clothing_colors:hot_pink": {
+"l": "艳粉色"
+},
+"s:clothing_colors:ivory": {
+"l": "象牙白"
+},
+"s:clothing_colors:lavender": {
+"l": "薰衣草色"
+},
+"s:clothing_colors:mustard": {
+"l": "芥末黄"
+},
+"s:clothing_colors:navy": {
+"l": "藏青色"
+},
+"s:clothing_colors:olive": {
+"l": "橄榄绿"
+},
+"s:clothing_colors:orange": {
+"l": "橙色"
+},
+"s:clothing_colors:pink": {
+"l": "粉色"
+},
+"s:clothing_colors:purple": {
+"l": "紫色"
+},
+"s:clothing_colors:red": {
+"l": "红色"
+},
+"s:clothing_colors:silver": {
+"l": "银色"
+},
+"s:clothing_colors:sky_blue": {
+"l": "天蓝色"
+},
+"s:clothing_colors:teal": {
+"l": "青绿色"
+},
+"s:clothing_colors:white": {
+"l": "白色"
+},
+"s:clothing_colors:yellow": {
+"l": "黄色"
+},
+"s:fits:cropped": {
+"l": "短款",
+"h": "剪短了,比通常的长度更短。"
+},
+"s:fits:fitted": {
+"l": "修身",
+"h": "贴合身形但不勒。"
+},
+"s:fits:loose": {
+"l": "宽松",
+"h": "宽敞、放松。"
+},
+"s:fits:oversized": {
+"l": "超大码",
+"h": "比身体大很多。"
+},
+"s:fits:tight": {
+"l": "紧身",
+"h": "绷紧,贴合每一处曲线。"
+},
+"s:materials:brocade": {
+"l": "锦缎",
+"h": "厚重的面料,带凸起的花纹。"
+},
+"s:materials:chainmail": {
+"l": "锁子甲",
+"h": "金属环编成的铠甲。"
+},
+"s:materials:chiffon": {
+"l": "雪纺",
+"h": "轻盈飘逸、半透明。"
+},
+"s:materials:cotton": {
+"l": "棉",
+"h": "柔软、哑光的日常面料。"
+},
+"s:materials:denim": {
+"l": "牛仔布",
+"h": "结实的牛仔裤面料。"
+},
+"s:materials:faux_fur": {
+"l": "人造毛皮",
+"h": "柔软的人造毛皮。"
+},
+"s:materials:faux_leather": {
+"l": "人造革",
+"h": "看起来像皮革,稍微更亮一些。"
+},
+"s:materials:fur": {
+"l": "皮草",
+"h": "真正的动物毛皮。"
+},
+"s:materials:knit": {
+"l": "针织",
+"h": "柔软的针织纱线。"
+},
+"s:materials:lace": {
+"l": "蕾丝",
+"h": "精致的镂空面料。"
+},
+"s:materials:latex": {
+"l": "乳胶",
+"h": "极亮、紧贴皮肤的橡胶。"
+},
+"s:materials:leather": {
+"l": "皮革",
+"h": "真皮,带轻微光泽。"
+},
+"s:materials:linen": {
+"l": "亚麻",
+"h": "轻薄、带褶皱的夏季面料。"
+},
+"s:materials:mesh": {
+"l": "网眼",
+"h": "带小孔的网状面料。"
+},
+"s:materials:neoprene": {
+"l": "氯丁橡胶",
+"h": "厚实、有弹性的潜水服橡胶。"
+},
+"s:materials:nylon": {
+"l": "尼龙",
+"h": "光滑轻薄的合成面料。"
+},
+"s:materials:pvc": {
+"l": "PVC",
+"h": "闪亮的塑料质感乙烯材料。"
+},
+"s:materials:satin": {
+"l": "缎面",
+"h": "光滑的面料,一面有光泽。"
+},
+"s:materials:silk": {
+"l": "丝绸",
+"h": "光滑、细腻、有光泽。"
+},
+"s:materials:spandex": {
+"l": "氨纶",
+"h": "紧贴身体的弹力面料。"
+},
+"s:materials:steel": {
+"l": "钢板",
+"h": "整块的钢板。"
+},
+"s:materials:suede": {
+"l": "麂皮",
+"h": "柔软、绒面的皮革。"
+},
+"s:materials:tweed": {
+"l": "粗花呢",
+"h": "质地粗糙、有编织纹理的毛料。"
+},
+"s:materials:velvet": {
+"l": "天鹅绒",
+"h": "柔软、绒毛厚密的面料。"
+},
+"s:materials:wool": {
+"l": "羊毛",
+"h": "保暖、厚实、略带绒毛。"
+},
+"s:patterns:camo": {
+"l": "迷彩",
+"h": "迷彩印花。"
+},
+"s:patterns:checkered": {
+"l": "棋盘格",
+"h": "像棋盘一样的方格。"
+},
+"s:patterns:embroidered": {
+"l": "刺绣",
+"h": "刺绣装饰。"
+},
+"s:patterns:floral": {
+"l": "碎花",
+"h": "整块布料上都是花朵。"
+},
+"s:patterns:geometric": {
+"l": "几何图案",
+"h": "几何形状和线条。"
+},
+"s:patterns:lace_trim": {
+"l": "蕾丝边",
+"h": "素色面料,边缘带蕾丝。"
+},
+"s:patterns:leopard": {
+"l": "豹纹",
+"h": "豹子斑点。"
+},
+"s:patterns:metallic": {
+"l": "金属质感",
+"h": "闪亮的金属光泽。"
+},
+"s:patterns:paisley": {
+"l": "佩斯利花纹",
+"h": "卷曲的水滴形图案。"
+},
+"s:patterns:pinstriped": {
+"l": "细条纹",
+"h": "细细的竖线,像商务西装。"
+},
+"s:patterns:plaid": {
+"l": "格纹",
+"h": "交叉的条纹,苏格兰格子。"
+},
+"s:patterns:polka": {
+"l": "波点",
+"h": "圆点。"
+},
+"s:patterns:sequined": {
+"l": "亮片",
+"h": "布满闪闪发光的亮片。"
+},
+"s:patterns:snake": {
+"l": "蛇纹",
+"h": "蛇皮印花。"
+},
+"s:patterns:solid": {
+"l": "纯色",
+"h": "单一的素色,没有图案。"
+},
+"s:patterns:striped": {
+"l": "条纹",
+"h": "规则的条纹。"
+},
+"t:accessories": {
+"l": "配饰"
+},
+"t:bottom": {
+"l": "下装"
+},
+"t:footwear": {
+"l": "鞋"
+},
+"t:hands": {
+"l": "手套"
+},
+"t:head": {
+"l": "头部"
+},
+"t:legwear": {
+"l": "腿部穿着"
+},
+"t:onepiece": {
+"l": "连体装"
+},
+"t:outer": {
+"l": "外套"
+},
+"t:style": {
+"l": "风格"
+},
+"t:top": {
+"l": "上装"
+},
+"t:underwear": {
+"l": "内衣"
+},
+"v:style.bare:back:low": {
+"l": "很低",
+"h": "一直裸露到很低的腰背。"
+},
+"v:style.bare:back:upper": {
+"l": "上背露出",
+"h": "只露出上背部。"
+},
+"v:style.bare:back:waist": {
+"l": "到腰部",
+"h": "后背一直裸露到腰部。"
+},
+"v:style.bare:balls:full": {
+"l": "完全露出",
+"h": "完全可见。"
+},
+"v:style.bare:balls:half": {
+"l": "露出一半",
+"h": "露出一半。"
+},
+"v:style.bare:balls:peek": {
+"l": "露出边缘",
+"h": "只是一瞥。"
+},
+"v:style.bare:butt:full": {
+"l": "完全露出",
+"h": "臀部完全可见。"
+},
+"v:style.bare:butt:half": {
+"l": "露出一半",
+"h": "露出一半臀部。"
+},
+"v:style.bare:butt:peek": {
+"l": "露出边缘",
+"h": "臀部的边缘露出来。"
+},
+"v:style.bare:cleavage:deep": {
+"l": "深",
+"h": "很深的领口。"
+},
+"v:style.bare:cleavage:normal": {
+"l": "普通",
+"h": "普通的领口。"
+},
+"v:style.bare:cleavage:super": {
+"l": "极深",
+"h": "极其深的领口。"
+},
+"v:style.bare:midriff:bust": {
+"l": "到胸下",
+"h": "裸露到胸部下方。"
+},
+"v:style.bare:midriff:full": {
+"l": "完全裸露",
+"h": "整个肚子都裸露。"
+},
+"v:style.bare:midriff:strip": {
+"l": "一条",
+"h": "一条窄窄的裸露腹部。"
+},
+"v:style.bare:nipples:full": {
+"l": "完全露出",
+"h": "乳晕和乳头完全可见。"
+},
+"v:style.bare:nipples:half": {
+"l": "半个乳晕,乳头可见",
+"h": "露出一半乳晕和乳头。"
+},
+"v:style.bare:nipples:peek": {
+"l": "乳晕露边",
+"h": "露出乳晕的边缘。"
+},
+"v:style.bare:penis:base_cov": {
+"l": "遮住根部",
+"h": "只有根部被遮住。"
+},
+"v:style.bare:penis:full": {
+"l": "完全露出",
+"h": "整根阴茎都可见。"
+},
+"v:style.bare:penis:head_cov": {
+"l": "仅遮住龟头",
+"h": "只有龟头被遮住。"
+},
+"v:style.bare:penis:head_half_cov": {
+"l": "遮住龟头和一半茎身",
+"h": "龟头和一半茎身被遮住。"
+},
+"v:style.bare:penis:head_only": {
+"l": "仅露出龟头",
+"h": "只有龟头露出,其余被遮住。"
+},
+"v:style.bare:pussy:full": {
+"l": "完全露出",
+"h": "完全可见。"
+},
+"v:style.bare:pussy:most": {
+"l": "大部分露出",
+"h": "大部分可见。"
+},
+"v:style.bare:pussy:peek": {
+"l": "露出边缘",
+"h": "只是一瞥。"
+},
+"v:style.bare:sideboob:clear": {
+"l": "明显",
+"h": "乳房侧面清楚可见。"
+},
+"v:style.bare:sideboob:hint": {
+"l": "隐约",
+"h": "只是隐约露出乳房侧面。"
+},
+"v:style.bare:sideboob:most": {
+"l": "几乎全部",
+"h": "几乎整个乳房侧面都露出来。"
+},
+"v:style.bare:underboob:full": {
+"l": "完全",
+"h": "下乳完全可见。"
+},
+"v:style.bare:underboob:half": {
+"l": "一半",
+"h": "露出一半的下乳。"
+},
+"v:style.bare:underboob:hint": {
+"l": "隐约",
+"h": "只是隐约露出下乳。"
+},
+"z:accessories": {
+"l": "配饰",
+"h": "首饰、眼镜、腰带、包和其他配件。"
+},
+"z:bottom": {
+"l": "下装",
+"h": "裤子、短裤和裙子。"
+},
+"z:footwear": {
+"l": "鞋",
+"h": "鞋和靴子。"
+},
+"z:hands": {
+"l": "手套",
+"h": "手套、分离式袖套和护臂。"
+},
+"z:head": {
+"l": "头部",
+"h": "帽子、王冠、发饰和其他戴在头上的东西。"
+},
+"z:legwear": {
+"l": "腿部穿着",
+"h": "长筒袜、连裤袜和袜子。"
+},
+"z:onepiece": {
+"l": "连体装",
+"h": "裙子、连体衣和长袍。连体装会关闭“上装”和“下装”。"
+},
+"z:outer": {
+"l": "外套",
+"h": "穿在上装外面的夹克、大衣、披风和铠甲。"
+},
+"z:style": {
+"l": "风格",
+"h": "整体造型:谁穿、风格、配色,以及身体露出多少。"
+},
+"z:top": {
+"l": "上装",
+"h": "穿在上半身的衬衫、上衣和束身衣。"
+},
+"z:underwear": {
+"l": "内衣",
+"h": "文胸、内裤和情趣内衣,可成套也可单独选。"
+}
+},
+"pose": {
+"g:Action": {
+"l": "动作"
+},
+"g:Anal": {
+"l": "肛门"
+},
+"g:Anus": {
+"l": "肛门"
+},
+"g:Back view": {
+"l": "背面"
+},
+"g:Boudoir": {
+"l": "闺房"
+},
+"g:Breasts": {
+"l": "胸部"
+},
+"g:Climax": {
+"l": "高潮"
+},
+"g:Dance": {
+"l": "舞蹈"
+},
+"g:Everyday": {
+"l": "日常"
+},
+"g:Futanari": {
+"l": "扶她"
+},
+"g:Grinding": {
+"l": "磨蹭"
+},
+"g:Heroic": {
+"l": "英雄"
+},
+"g:Lying": {
+"l": "躺姿"
+},
+"g:On a seat": {
+"l": "坐在座位上"
+},
+"g:On the back": {
+"l": "仰卧"
+},
+"g:On the floor": {
+"l": "坐在地上"
+},
+"g:On the side": {
+"l": "侧卧"
+},
+"g:On the stomach": {
+"l": "俯卧"
+},
+"g:Other": {
+"l": "其他"
+},
+"g:Penis": {
+"l": "阴茎"
+},
+"g:Pin-up": {
+"l": "复古海报女郎"
+},
+"g:Reclining": {
+"l": "半躺"
+},
+"g:Seated": {
+"l": "坐姿"
+},
+"g:Showing off": {
+"l": "展示"
+},
+"g:Standing": {
+"l": "站姿"
+},
+"g:Testicles": {
+"l": "睾丸"
+},
+"g:Toys": {
+"l": "玩具"
+},
+"g:Vulva": {
+"l": "外阴"
+},
+"g:Yoga & Fitness": {
+"l": "瑜伽与健身"
+},
+"o:arms.both:behind_back": {
+"l": "双手背后",
+"h": "双手放在背后。"
+},
+"o:arms.both:behind_head": {
+"l": "双手放脑后",
+"h": "双手都放在脑后。"
+},
+"o:arms.both:clasped": {
+"l": "双手相扣",
+"h": "双手握在一起。"
+},
+"o:arms.both:cover_breasts": {
+"l": "遮胸",
+"h": "双臂遮住乳房。"
+},
+"o:arms.both:cover_crotch": {
+"l": "遮挡下身",
+"h": "双手遮住下身。"
+},
+"o:arms.both:crossed": {
+"l": "双臂交叉",
+"h": "双臂抱在胸前。"
+},
+"o:arms.both:hips": {
+"l": "双手叉腰",
+"h": "双手都叉在腰上。"
+},
+"o:arms.both:hold_breasts": {
+"l": "托住乳房",
+"h": "双手托着乳房。"
+},
+"o:arms.both:hug_self": {
+"l": "抱住自己",
+"h": "双臂环抱着身体。"
+},
+"o:arms.both:in_hair": {
+"l": "双手拨发",
+"h": "双手都在头发里。"
+},
+"o:arms.both:on_knees": {
+"l": "双手放膝上",
+"h": "双手都放在膝盖上。"
+},
+"o:arms.both:on_thighs": {
+"l": "双手放大腿上",
+"h": "双手都放在大腿上。"
+},
+"o:arms.both:planted": {
+"l": "双手后撑",
+"h": "双手撑在身后的平面上,身体后靠。"
+},
+"o:arms.both:raised": {
+"l": "双臂举起",
+"h": "双臂都举起。"
+},
+"o:arms.both:spread_butt": {
+"l": "扒开臀瓣",
+"h": "双手把臀瓣扒开。"
+},
+"o:arms.both:spread_legs": {
+"l": "扶开双腿",
+"h": "双手把双腿扶开。"
+},
+"o:arms.both:stretched": {
+"l": "双臂展开",
+"h": "双臂向两侧伸直。"
+},
+"o:arms.prop:book": {
+"l": "书",
+"h": "一本书。"
+},
+"o:arms.prop:bow": {
+"l": "弓",
+"h": "一张弓。"
+},
+"o:arms.prop:coffee": {
+"l": "咖啡",
+"h": "一杯咖啡。"
+},
+"o:arms.prop:flower": {
+"l": "花",
+"h": "一朵花。"
+},
+"o:arms.prop:guitar": {
+"l": "吉他",
+"h": "一把吉他。"
+},
+"o:arms.prop:gun": {
+"l": "枪",
+"h": "一把枪。"
+},
+"o:arms.prop:mic": {
+"l": "麦克风",
+"h": "一支麦克风。"
+},
+"o:arms.prop:mirror": {
+"l": "手持镜",
+"h": "一面小手持镜。"
+},
+"o:arms.prop:phone": {
+"l": "手机",
+"h": "手里拿着手机。"
+},
+"o:arms.prop:pillow": {
+"l": "枕头",
+"h": "一个枕头。"
+},
+"o:arms.prop:pole": {
+"l": "舞蹈钢管",
+"h": "一根舞蹈钢管。"
+},
+"o:arms.prop:staff": {
+"l": "法杖",
+"h": "一根法杖。"
+},
+"o:arms.prop:sword": {
+"l": "剑",
+"h": "一把剑。"
+},
+"o:arms.prop:towel": {
+"l": "毛巾",
+"h": "一条毛巾。"
+},
+"o:arms.prop:umbrella": {
+"l": "雨伞",
+"h": "一把伞。"
+},
+"o:arms.prop:wine": {
+"l": "红酒杯",
+"h": "一杯红酒。"
+},
+"o:fluids.items:cum": {
+"l": "精液",
+"h": "精液。再次点击可选择落在哪里。"
+},
+"o:fluids.items:juice": {
+"l": "爱液",
+"h": "阴部自然的湿润。"
+},
+"o:fluids.items:lube": {
+"l": "润滑液",
+"h": "滑溜溜的润滑剂。"
+},
+"o:fluids.items:oil": {
+"l": "身体油",
+"h": "皮肤上的油。"
+},
+"o:fluids.items:precum": {
+"l": "前列腺液",
+"h": "从阴茎流出的透明液体。"
+},
+"o:fluids.items:saliva": {
+"l": "唾液",
+"h": "口水和涎液。"
+},
+"o:fluids.items:squirt": {
+"l": "喷水",
+"h": "高潮时喷涌的液体。"
+},
+"o:fluids.items:sweat": {
+"l": "汗水",
+"h": "皮肤上的汗。"
+},
+"o:head.expression:ahegao": {
+"l": "阿黑颜",
+"h": "眼睛上翻,舌头伸出,一脸陶醉。"
+},
+"o:head.expression:bliss": {
+"l": "陶醉",
+"h": "沉浸在快感中的脸。"
+},
+"o:head.expression:confident": {
+"l": "自信",
+"h": "平静而自信的神情。"
+},
+"o:head.expression:drool": {
+"l": "流口水",
+"h": "口水从嘴里滴下来。"
+},
+"o:head.expression:fierce": {
+"l": "凶悍",
+"h": "凶狠而坚决的神情。"
+},
+"o:head.expression:flushed": {
+"l": "脸红",
+"h": "脸颊泛红。"
+},
+"o:head.expression:laugh": {
+"l": "大笑",
+"h": "在笑。"
+},
+"o:head.expression:lip_bite": {
+"l": "咬唇",
+"h": "咬着下嘴唇。"
+},
+"o:head.expression:moan": {
+"l": "呻吟",
+"h": "呻吟的表情,嘴唇微张。"
+},
+"o:head.expression:pant": {
+"l": "喘息",
+"h": "张着嘴大口喘气。"
+},
+"o:head.expression:playful": {
+"l": "俏皮",
+"h": "挑逗而有趣的神情。"
+},
+"o:head.expression:seductive": {
+"l": "诱惑",
+"h": "勾人的眼神。"
+},
+"o:head.expression:serious": {
+"l": "严肃",
+"h": "严肃的脸。"
+},
+"o:head.expression:shy": {
+"l": "害羞",
+"h": "羞怯腼腆的神情。"
+},
+"o:head.expression:smile": {
+"l": "微笑",
+"h": "温暖的微笑。"
+},
+"o:head.expression:smirk": {
+"l": "坏笑",
+"h": "狡黠的半边笑。"
+},
+"o:head.expression:surprised": {
+"l": "惊讶",
+"h": "睁大眼睛,张开嘴。"
+},
+"o:head.expression:tongue": {
+"l": "吐舌头",
+"h": "舌头伸出来。"
+},
+"o:head.gaze:away": {
+"l": "看向别处",
+"h": "目光避开镜头。"
+},
+"o:head.gaze:camera": {
+"l": "看向镜头",
+"h": "直视镜头。"
+},
+"o:head.gaze:closed": {
+"l": "闭眼",
+"h": "眼睛闭着。"
+},
+"o:head.gaze:down": {
+"l": "向下看",
+"h": "看向下方。"
+},
+"o:head.gaze:half": {
+"l": "半闭",
+"h": "眼皮沉重,半闭着。"
+},
+"o:head.gaze:own_body": {
+"l": "看自己的身体",
+"h": "看着自己的身体。"
+},
+"o:head.gaze:rolled": {
+"l": "翻白眼",
+"h": "眼睛向上翻。"
+},
+"o:head.gaze:shoulder": {
+"l": "回眸",
+"h": "越过肩膀回头看。"
+},
+"o:head.gaze:side": {
+"l": "看向侧面",
+"h": "看向一侧。"
+},
+"o:head.gaze:up": {
+"l": "向上看",
+"h": "看向上方。"
+},
+"o:head.tilt:back": {
+"l": "后仰",
+"h": "头向后仰。"
+},
+"o:head.tilt:down": {
+"l": "低下巴",
+"h": "下巴收低。"
+},
+"o:head.tilt:side": {
+"l": "偏向一侧",
+"h": "头歪向一边。"
+},
+"o:head.tilt:up": {
+"l": "抬下巴",
+"h": "下巴抬起。"
+},
+"o:legs.feet:crossed_ankles": {
+"l": "脚踝交叉",
+"h": "脚踝交叉。"
+},
+"o:legs.feet:curled": {
+"l": "脚趾蜷起",
+"h": "脚趾蜷缩着。"
+},
+"o:legs.feet:planted": {
+"l": "脚踏实地",
+"h": "双脚平放在地上。"
+},
+"o:legs.feet:pointed": {
+"l": "绷脚尖",
+"h": "脚尖绷直。"
+},
+"o:legs.feet:soles": {
+"l": "脚底朝镜头",
+"h": "脚底朝向镜头。"
+},
+"o:legs.pose:apart": {
+"l": "分开",
+"h": "双腿分开。"
+},
+"o:legs.pose:arabesque": {
+"l": "阿拉贝斯克",
+"h": "一条腿笔直向后抬起。"
+},
+"o:legs.pose:armrests": {
+"l": "搭在扶手上",
+"h": "双腿搭在扶手上。"
+},
+"o:legs.pose:behind_head": {
+"l": "放在脑后",
+"h": "双腿拉到头后面。"
+},
+"o:legs.pose:chair_foot": {
+"l": "脚踩椅子",
+"h": "一只脚踩在椅子上。"
+},
+"o:legs.pose:crossed": {
+"l": "交叉",
+"h": "双腿交叉。"
+},
+"o:legs.pose:high_kick": {
+"l": "高踢腿",
+"h": "一条腿高高踢起。"
+},
+"o:legs.pose:kick": {
+"l": "踢起双脚",
+"h": "双脚在身后踢起。"
+},
+"o:legs.pose:knee_fwd": {
+"l": "膝盖前顶",
+"h": "一个膝盖向前顶出。"
+},
+"o:legs.pose:knees_apart": {
+"l": "膝盖分开",
+"h": "膝盖大大分开。"
+},
+"o:legs.pose:knees_up": {
+"l": "屈膝收起",
+"h": "膝盖向上收起。"
+},
+"o:legs.pose:leg_high": {
+"l": "单腿高抬",
+"h": "一条腿高高抬起。"
+},
+"o:legs.pose:legs_up": {
+"l": "双腿抬起",
+"h": "双腿抬到半空。"
+},
+"o:legs.pose:lunge": {
+"l": "弓步",
+"h": "一条腿向前弯曲,另一条向后伸直。"
+},
+"o:legs.pose:m_legs": {
+"l": "M 字形",
+"h": "膝盖抬起并分开,呈 M 形。"
+},
+"o:legs.pose:one_up": {
+"l": "单腿抬起",
+"h": "一条腿抬起。"
+},
+"o:legs.pose:pillow_wrap": {
+"l": "缠住枕头",
+"h": "双腿缠着枕头。"
+},
+"o:legs.pose:split_front": {
+"l": "前劈叉",
+"h": "前劈叉。"
+},
+"o:legs.pose:split_side": {
+"l": "侧劈叉",
+"h": "侧劈叉。"
+},
+"o:legs.pose:spread": {
+"l": "大大张开",
+"h": "双腿大大张开。"
+},
+"o:legs.pose:stretched": {
+"l": "伸直",
+"h": "双腿笔直伸出。"
+},
+"o:legs.pose:tiptoe": {
+"l": "踮脚",
+"h": "踮着脚尖站着。"
+},
+"o:legs.pose:together": {
+"l": "并拢",
+"h": "双腿并在一起。"
+},
+"o:legs.pose:tree": {
+"l": "树式",
+"h": "瑜伽的树式站姿,一只脚放在大腿内侧。"
+},
+"o:legs.pose:tucked": {
+"l": "折在身下",
+"h": "双腿折在身体下面。"
+},
+"o:legs.pose:v_legs": {
+"l": "V 字形",
+"h": "双腿抬起并分开,呈 V 形。"
+},
+"o:legs.pose:w_sit": {
+"l": "W 形坐姿",
+"h": "坐着,膝盖并拢,双脚分在两侧。"
+},
+"o:legs.pose:warrior": {
+"l": "战士式",
+"h": "瑜伽的战士站姿。"
+},
+"o:legs.pose:wide": {
+"l": "宽站姿",
+"h": "宽阔的站姿。"
+},
+"o:pleasure.act1:areola": {
+"l": "绕乳晕",
+"h": "用手指绕着乳晕画圈。"
+},
+"o:pleasure.act1:belly": {
+"l": "手滑下小腹",
+"h": "一只手顺着肚子滑下去。"
+},
+"o:pleasure.act1:clit_circle": {
+"l": "画圈揉阴蒂",
+"h": "用手指绕着阴蒂画圈。"
+},
+"o:pleasure.act1:clit_rub": {
+"l": "揉搓阴蒂",
+"h": "揉搓阴蒂。"
+},
+"o:pleasure.act1:cup_balls": {
+"l": "托住睾丸",
+"h": "手托着睾丸。"
+},
+"o:pleasure.act1:cup_pussy": {
+"l": "手捂阴部",
+"h": "一只手捂住阴部。"
+},
+"o:pleasure.act1:finger1": {
+"l": "一根手指",
+"h": "一根手指在里面。"
+},
+"o:pleasure.act1:finger2": {
+"l": "两根手指",
+"h": "两根手指在里面。"
+},
+"o:pleasure.act1:finger3": {
+"l": "三根手指",
+"h": "三根手指在里面。"
+},
+"o:pleasure.act1:finger_anus": {
+"l": "手指插肛门",
+"h": "一根手指在肛门里。"
+},
+"o:pleasure.act1:grind_palm": {
+"l": "磨蹭手掌",
+"h": "在手掌上磨蹭。"
+},
+"o:pleasure.act1:grip_base": {
+"l": "边缘控制",
+"h": "握住根部,忍住不射。"
+},
+"o:pleasure.act1:knead_both": {
+"l": "揉双乳",
+"h": "揉捏两侧乳房。"
+},
+"o:pleasure.act1:lick": {
+"l": "舔乳头",
+"h": "舔自己的乳头。"
+},
+"o:pleasure.act1:lift": {
+"l": "托起乳房",
+"h": "托起一侧乳房。"
+},
+"o:pleasure.act1:muffle": {
+"l": "捂住呻吟",
+"h": "用手捂住嘴,压住呻吟声。"
+},
+"o:pleasure.act1:pinch": {
+"l": "捏乳头",
+"h": "捏着乳头。"
+},
+"o:pleasure.act1:press_together": {
+"l": "挤到一起",
+"h": "把两侧乳房挤在一起。"
+},
+"o:pleasure.act1:pump": {
+"l": "对镜头撸动",
+"h": "朝着镜头撸动阴茎。"
+},
+"o:pleasure.act1:roll": {
+"l": "捻乳头",
+"h": "用手指捻着乳头。"
+},
+"o:pleasure.act1:rub_head": {
+"l": "揉龟头",
+"h": "揉搓阴茎的龟头。"
+},
+"o:pleasure.act1:sheets": {
+"l": "抓紧床单",
+"h": "紧紧抓住床单。"
+},
+"o:pleasure.act1:spread_labia": {
+"l": "掰开阴唇",
+"h": "掰开阴唇。"
+},
+"o:pleasure.act1:squeeze": {
+"l": "捏乳房",
+"h": "捏着一侧乳房。"
+},
+"o:pleasure.act1:stroke": {
+"l": "撸动",
+"h": "撸动阴茎。"
+},
+"o:pleasure.act1:stroke_both": {
+"l": "双手",
+"h": "用双手撸动。"
+},
+"o:pleasure.act1:stroke_tight": {
+"l": "握紧",
+"h": "紧紧握住撸动。"
+},
+"o:pleasure.act1:tease_anus": {
+"l": "逗弄肛门",
+"h": "逗弄肛门。"
+},
+"o:pleasure.act1:tease_head": {
+"l": "逗弄龟头",
+"h": "逗弄阴茎的龟头。"
+},
+"o:pleasure.act1:thigh": {
+"l": "抚摸大腿",
+"h": "抚摸大腿内侧。"
+},
+"o:pleasure.act1:tug_balls": {
+"l": "轻拉睾丸",
+"h": "轻轻拉扯睾丸。"
+},
+"o:pleasure.act2:areola": {
+"l": "绕乳晕",
+"h": "用手指绕着乳晕画圈。"
+},
+"o:pleasure.act2:belly": {
+"l": "手滑下小腹",
+"h": "一只手顺着肚子滑下去。"
+},
+"o:pleasure.act2:clit_circle": {
+"l": "画圈揉阴蒂",
+"h": "用手指绕着阴蒂画圈。"
+},
+"o:pleasure.act2:clit_rub": {
+"l": "揉搓阴蒂",
+"h": "揉搓阴蒂。"
+},
+"o:pleasure.act2:cup_balls": {
+"l": "托住睾丸",
+"h": "手托着睾丸。"
+},
+"o:pleasure.act2:cup_pussy": {
+"l": "手捂阴部",
+"h": "一只手捂住阴部。"
+},
+"o:pleasure.act2:finger1": {
+"l": "一根手指",
+"h": "一根手指在里面。"
+},
+"o:pleasure.act2:finger2": {
+"l": "两根手指",
+"h": "两根手指在里面。"
+},
+"o:pleasure.act2:finger3": {
+"l": "三根手指",
+"h": "三根手指在里面。"
+},
+"o:pleasure.act2:finger_anus": {
+"l": "手指插肛门",
+"h": "一根手指在肛门里。"
+},
+"o:pleasure.act2:grind_palm": {
+"l": "磨蹭手掌",
+"h": "在手掌上磨蹭。"
+},
+"o:pleasure.act2:grip_base": {
+"l": "边缘控制",
+"h": "握住根部,忍住不射。"
+},
+"o:pleasure.act2:knead_both": {
+"l": "揉双乳",
+"h": "揉捏两侧乳房。"
+},
+"o:pleasure.act2:lick": {
+"l": "舔乳头",
+"h": "舔自己的乳头。"
+},
+"o:pleasure.act2:lift": {
+"l": "托起乳房",
+"h": "托起一侧乳房。"
+},
+"o:pleasure.act2:muffle": {
+"l": "捂住呻吟",
+"h": "用手捂住嘴,压住呻吟声。"
+},
+"o:pleasure.act2:pinch": {
+"l": "捏乳头",
+"h": "捏着乳头。"
+},
+"o:pleasure.act2:press_together": {
+"l": "挤到一起",
+"h": "把两侧乳房挤在一起。"
+},
+"o:pleasure.act2:pump": {
+"l": "对镜头撸动",
+"h": "朝着镜头撸动阴茎。"
+},
+"o:pleasure.act2:roll": {
+"l": "捻乳头",
+"h": "用手指捻着乳头。"
+},
+"o:pleasure.act2:rub_head": {
+"l": "揉龟头",
+"h": "揉搓阴茎的龟头。"
+},
+"o:pleasure.act2:sheets": {
+"l": "抓紧床单",
+"h": "紧紧抓住床单。"
+},
+"o:pleasure.act2:spread_labia": {
+"l": "掰开阴唇",
+"h": "掰开阴唇。"
+},
+"o:pleasure.act2:squeeze": {
+"l": "捏乳房",
+"h": "捏着一侧乳房。"
+},
+"o:pleasure.act2:stroke": {
+"l": "撸动",
+"h": "撸动阴茎。"
+},
+"o:pleasure.act2:stroke_both": {
+"l": "双手",
+"h": "用双手撸动。"
+},
+"o:pleasure.act2:stroke_tight": {
+"l": "握紧",
+"h": "紧紧握住撸动。"
+},
+"o:pleasure.act2:tease_anus": {
+"l": "逗弄肛门",
+"h": "逗弄肛门。"
+},
+"o:pleasure.act2:tease_head": {
+"l": "逗弄龟头",
+"h": "逗弄阴茎的龟头。"
+},
+"o:pleasure.act2:thigh": {
+"l": "抚摸大腿",
+"h": "抚摸大腿内侧。"
+},
+"o:pleasure.act2:tug_balls": {
+"l": "轻拉睾丸",
+"h": "轻轻拉扯睾丸。"
+},
+"o:pleasure.body:grind_armrest": {
+"l": "蹭扶手",
+"h": "在扶手上磨蹭。"
+},
+"o:pleasure.body:grind_edge": {
+"l": "蹭床沿",
+"h": "在床沿上磨蹭。"
+},
+"o:pleasure.body:grind_floor": {
+"l": "蹭地面",
+"h": "在地面上磨蹭。"
+},
+"o:pleasure.body:hump_pillow": {
+"l": "蹭枕头",
+"h": "在枕头上磨蹭。"
+},
+"o:pleasure.body:shower_head": {
+"l": "花洒",
+"h": "用花洒的水流。"
+},
+"o:pleasure.clothes:aside": {
+"l": "拨开衣物",
+"h": "衣物被拨到一边。"
+},
+"o:pleasure.clothes:inside": {
+"l": "手伸进去",
+"h": "手伸到衣服里面。"
+},
+"o:pleasure.clothes:through": {
+"l": "隔着衣服",
+"h": "隔着衣服触摸。"
+},
+"o:pleasure.intensity:afterglow": {
+"l": "余韵",
+"h": "高潮之后放松下来。"
+},
+"o:pleasure.intensity:aroused": {
+"l": "兴奋",
+"h": "明显很兴奋。"
+},
+"o:pleasure.intensity:climax": {
+"l": "高潮",
+"h": "高潮的瞬间。"
+},
+"o:pleasure.intensity:edge": {
+"l": "临界",
+"h": "正处在高潮的边缘。"
+},
+"o:pleasure.intensity:intense": {
+"l": "强烈",
+"h": "强烈而快速。"
+},
+"o:pleasure.intensity:tease": {
+"l": "挑逗",
+"h": "缓慢而挑逗的开始。"
+},
+"o:pose.preset:action_aim_gun": {
+"l": "持枪瞄准",
+"h": "用枪瞄准目标。"
+},
+"o:pose.preset:action_archer": {
+"l": "拉弓",
+"h": "拉开弓。"
+},
+"o:pose.preset:action_back_to_back": {
+"l": "守护姿态",
+"h": "戒备的站姿,随时准备保护。"
+},
+"o:pose.preset:action_cape": {
+"l": "叉腰披风",
+"h": "双拳叉腰,披风飘动。"
+},
+"o:pose.preset:action_cast": {
+"l": "施法",
+"h": "用双手施展法术。"
+},
+"o:pose.preset:action_crouch_spring": {
+"l": "蓄势待发",
+"h": "蹲下,准备一跃而起。"
+},
+"o:pose.preset:action_fighter": {
+"l": "格斗姿势",
+"h": "武术的格斗姿势。"
+},
+"o:pose.preset:action_gaze_far": {
+"l": "远眺",
+"h": "站着望向远方。"
+},
+"o:pose.preset:action_gun_ready": {
+"l": "持枪戒备",
+"h": "端着枪戒备,枪口朝上或朝下。"
+},
+"o:pose.preset:action_high_kick": {
+"l": "高踢腿",
+"h": "把腿高高踢起。"
+},
+"o:pose.preset:action_jump": {
+"l": "空中跳跃",
+"h": "跳起来,定格在半空。"
+},
+"o:pose.preset:action_landing": {
+"l": "超级英雄落地",
+"h": "超级英雄落地姿势:一个膝盖和一只拳头撑在地上。"
+},
+"o:pose.preset:action_punch": {
+"l": "出拳",
+"h": "打出一拳。"
+},
+"o:pose.preset:action_sprint": {
+"l": "冲刺",
+"h": "全速奔跑。"
+},
+"o:pose.preset:action_stance": {
+"l": "英雄站姿",
+"h": "宽阔的英雄站姿。"
+},
+"o:pose.preset:action_sword_draw": {
+"l": "拔剑",
+"h": "从剑鞘里拔出剑。"
+},
+"o:pose.preset:action_sword_planted": {
+"l": "单膝拄剑",
+"h": "跪着,剑插在地上。"
+},
+"o:pose.preset:action_sword_raised": {
+"l": "举剑",
+"h": "把剑高高举起。"
+},
+"o:pose.preset:dance_arabesque": {
+"l": "阿拉贝斯克",
+"h": "舞者单腿站立,另一条腿向后伸直。"
+},
+"o:pose.preset:dance_bridge": {
+"l": "桥式",
+"h": "瑜伽的桥式,髋部抬起。"
+},
+"o:pose.preset:dance_dance_twirl": {
+"l": "舞中旋转",
+"h": "在舞蹈中旋转。"
+},
+"o:pose.preset:dance_downdog": {
+"l": "下犬式",
+"h": "瑜伽的下犬式。"
+},
+"o:pose.preset:dance_lunge": {
+"l": "弓步",
+"h": "深深的弓步。"
+},
+"o:pose.preset:dance_mat_stretch": {
+"l": "垫上拉伸",
+"h": "在瑜伽垫上拉伸。"
+},
+"o:pose.preset:dance_pirouette": {
+"l": "旋转",
+"h": "踮着脚尖旋转。"
+},
+"o:pose.preset:dance_pole_spin": {
+"l": "钢管旋转",
+"h": "绕着舞蹈钢管旋转。"
+},
+"o:pose.preset:dance_splits_front": {
+"l": "前劈叉",
+"h": "做前劈叉。"
+},
+"o:pose.preset:dance_splits_side": {
+"l": "侧劈叉",
+"h": "做侧劈叉。"
+},
+"o:pose.preset:dance_tree": {
+"l": "树式",
+"h": "瑜伽的树式,单腿站立。"
+},
+"o:pose.preset:dance_warrior": {
+"l": "战士式",
+"h": "瑜伽的战士式。"
+},
+"o:pose.preset:explicit_all_fours_present": {
+"l": "爬姿展示",
+"h": "四肢着地,从后面展示。"
+},
+"o:pose.preset:explicit_armrests": {
+"l": "腿搭扶手",
+"h": "双腿搭在椅子的扶手上。"
+},
+"o:pose.preset:explicit_back_hips": {
+"l": "抬高髋部",
+"h": "仰卧,髋部抬起。"
+},
+"o:pose.preset:explicit_back_v": {
+"l": "仰卧 V 字腿",
+"h": "仰卧,双腿呈 V 形。"
+},
+"o:pose.preset:explicit_behind_head": {
+"l": "腿放脑后",
+"h": "躺着,双腿拉到头后面。"
+},
+"o:pose.preset:explicit_bend_wall": {
+"l": "弯腰扶墙",
+"h": "弯下腰,双手撑在墙上。"
+},
+"o:pose.preset:explicit_breast_hold": {
+"l": "托起乳房",
+"h": "用手把乳房托起来。"
+},
+"o:pose.preset:explicit_chair_foot": {
+"l": "脚踩椅子",
+"h": "一只脚踩在椅子上,双腿打开。"
+},
+"o:pose.preset:explicit_face_down": {
+"l": "趴下翘臀",
+"h": "脸朝下,臀部抬起。"
+},
+"o:pose.preset:explicit_hands_open": {
+"l": "手扶双腿张开",
+"h": "用手把双腿扶开。"
+},
+"o:pose.preset:explicit_kneel_back": {
+"l": "跪姿回头",
+"h": "跪着,越过肩膀回头看。"
+},
+"o:pose.preset:explicit_kneel_open": {
+"l": "跪姿分腿",
+"h": "跪着,膝盖分开。"
+},
+"o:pose.preset:explicit_lean_hands": {
+"l": "后仰膝分开",
+"h": "双手后撑,膝盖大大分开。"
+},
+"o:pose.preset:explicit_m_display": {
+"l": "M 字腿展示",
+"h": "坐着,膝盖抬起并分开,呈 M 形。"
+},
+"o:pose.preset:explicit_mirror_open": {
+"l": "镜前敞开",
+"h": "在镜子前敞开地坐着。"
+},
+"o:pose.preset:explicit_penis_rest": {
+"l": "阴茎搭在大腿上",
+"h": "需要有阴茎的角色。"
+},
+"o:pose.preset:explicit_penis_show": {
+"l": "展示阴茎",
+"h": "需要有阴茎的角色。"
+},
+"o:pose.preset:explicit_pillow": {
+"l": "骑着枕头",
+"h": "趴在枕头上,双腿夹着它。"
+},
+"o:pose.preset:explicit_seat_spread": {
+"l": "坐着张腿",
+"h": "坐着,双腿大大分开。"
+},
+"o:pose.preset:explicit_shower_arch": {
+"l": "淋浴拱背",
+"h": "在淋浴下拱起后背。"
+},
+"o:pose.preset:explicit_side_leg": {
+"l": "侧卧高抬腿",
+"h": "侧卧,上面的腿高高抬起。"
+},
+"o:pose.preset:explicit_spread_butt": {
+"l": "扒开臀瓣",
+"h": "用手把臀瓣扒开。"
+},
+"o:pose.preset:explicit_squat_wide": {
+"l": "蹲姿膝分开",
+"h": "蹲着,膝盖大大分开。"
+},
+"o:pose.preset:explicit_stand_open": {
+"l": "站姿手放脑后",
+"h": "站着,双腿分开,双手放在脑后。"
+},
+"o:pose.preset:lying_back_arms_up": {
+"l": "双臂举过头",
+"h": "仰卧,双臂举过头顶。"
+},
+"o:pose.preset:lying_back_knee": {
+"l": "单膝弯起",
+"h": "仰卧,一条腿的膝盖弯起。"
+},
+"o:pose.preset:lying_curled": {
+"l": "蜷缩",
+"h": "侧卧,蜷成一团。"
+},
+"o:pose.preset:lying_elbows": {
+"l": "手肘撑起",
+"h": "半躺,用手肘撑着身体。"
+},
+"o:pose.preset:lying_head_hang": {
+"l": "头垂在边缘外",
+"h": "仰卧,头垂在边缘外面。"
+},
+"o:pose.preset:lying_legs_wall": {
+"l": "腿靠墙",
+"h": "仰卧,双腿靠在墙上向上抬起。"
+},
+"o:pose.preset:lying_reclined_grass": {
+"l": "半躺在草地上",
+"h": "半躺在草地上。"
+},
+"o:pose.preset:lying_sand": {
+"l": "躺在沙滩上",
+"h": "躺在沙子上。"
+},
+"o:pose.preset:lying_side_head": {
+"l": "侧卧撑头",
+"h": "侧卧,头用一只手撑着。"
+},
+"o:pose.preset:lying_side_sofa": {
+"l": "斜倚沙发",
+"h": "侧卧,身体搭在沙发上。"
+},
+"o:pose.preset:lying_sprawled": {
+"l": "大字躺",
+"h": "仰卧,四肢随意摊开。"
+},
+"o:pose.preset:lying_stomach_back_look": {
+"l": "俯卧回头",
+"h": "俯卧,回头看。"
+},
+"o:pose.preset:lying_stomach_book": {
+"l": "趴着看书",
+"h": "俯卧,在看一本书。"
+},
+"o:pose.preset:lying_stomach_chin": {
+"l": "双手托下巴",
+"h": "俯卧,下巴放在手里。"
+},
+"o:pose.preset:masturbation_allfours_reach": {
+"l": "爬姿向后伸手",
+"h": "四肢着地,一只手向后伸。"
+},
+"o:pose.preset:masturbation_an_allfours": {
+"l": "爬姿手指",
+"h": "四肢着地,用手指玩弄肛门。"
+},
+"o:pose.preset:masturbation_an_beads": {
+"l": "趴下拉珠",
+"h": "脸朝下,带着拉珠。"
+},
+"o:pose.preset:masturbation_an_plug": {
+"l": "仰卧肛塞",
+"h": "仰卧,带着肛塞。"
+},
+"o:pose.preset:masturbation_an_ride": {
+"l": "蹲坐假阳具",
+"h": "蹲坐在肛门假阳具上。"
+},
+"o:pose.preset:masturbation_armchair_open": {
+"l": "扶手椅腿搭扶手",
+"h": "在扶手椅上,双腿搭在扶手上。"
+},
+"o:pose.preset:masturbation_br_knead": {
+"l": "闭眼揉捏",
+"h": "闭着眼睛揉捏乳房。"
+},
+"o:pose.preset:masturbation_br_lick": {
+"l": "舔乳头",
+"h": "舔自己的乳头。"
+},
+"o:pose.preset:masturbation_br_pinch": {
+"l": "捏乳头",
+"h": "捏着乳头。"
+},
+"o:pose.preset:masturbation_br_squeeze": {
+"l": "揉捏乳房",
+"h": "揉捏着乳房。"
+},
+"o:pose.preset:masturbation_br_vibe": {
+"l": "乳头上的震动器",
+"h": "震动器按在乳头上。"
+},
+"o:pose.preset:masturbation_cl_afterglow": {
+"l": "余韵",
+"h": "高潮之后无力地躺着。"
+},
+"o:pose.preset:masturbation_cl_ahegao": {
+"l": "阿黑颜高潮",
+"h": "带着阿黑颜的高潮。"
+},
+"o:pose.preset:masturbation_cl_squirt": {
+"l": "喷水高潮",
+"h": "高潮并喷水。"
+},
+"o:pose.preset:masturbation_cl_toes": {
+"l": "全身高潮",
+"h": "全身高潮,脚趾蜷起。"
+},
+"o:pose.preset:masturbation_clit_back": {
+"l": "仰卧揉搓",
+"h": "仰卧,揉搓阴蒂。"
+},
+"o:pose.preset:masturbation_edge_hand": {
+"l": "床边",
+"h": "坐在床边,手放在双腿之间。"
+},
+"o:pose.preset:masturbation_fingers_breast": {
+"l": "两指探入,手按乳房",
+"h": "手指在里面,另一只手放在乳房上。"
+},
+"o:pose.preset:masturbation_futa_both": {
+"l": "撸动并指交",
+"h": "一边撸动阴茎,一边用手指插入。"
+},
+"o:pose.preset:masturbation_futa_climax": {
+"l": "同时射精喷水",
+"h": "同时射精和喷水。"
+},
+"o:pose.preset:masturbation_futa_clit": {
+"l": "撸动并揉阴蒂",
+"h": "一边撸动阴茎,一边揉搓阴蒂。"
+},
+"o:pose.preset:masturbation_futa_ride": {
+"l": "骑假阳具并撸动",
+"h": "骑在假阳具上,同时撸动阴茎。"
+},
+"o:pose.preset:masturbation_kneel_hand": {
+"l": "跪姿手放腿间",
+"h": "跪着,手放在双腿之间。"
+},
+"o:pose.preset:masturbation_mirror_open": {
+"l": "镜前",
+"h": "在镜子前抚摸自己。"
+},
+"o:pose.preset:masturbation_pen_back": {
+"l": "仰卧撸动",
+"h": "仰卧,撸动阴茎。"
+},
+"o:pose.preset:masturbation_pen_belly": {
+"l": "射在肚子上",
+"h": "精液落在肚子上。"
+},
+"o:pose.preset:masturbation_pen_big_both": {
+"l": "大阴茎双手",
+"h": "阴茎大小在 Character Builder 里设置。"
+},
+"o:pose.preset:masturbation_pen_edging": {
+"l": "边缘控制",
+"h": "握住根部,忍住不射。"
+},
+"o:pose.preset:masturbation_pen_kneel_balls": {
+"l": "跪姿托睾丸",
+"h": "跪着,手托着睾丸。"
+},
+"o:pose.preset:masturbation_pen_pov": {
+"l": "第一人称对镜头",
+"h": "第一人称视角,朝镜头撸动。"
+},
+"o:pose.preset:masturbation_pen_shower": {
+"l": "淋浴中",
+"h": "在淋浴下撸动。"
+},
+"o:pose.preset:masturbation_pen_side": {
+"l": "侧卧缓慢",
+"h": "侧卧,缓慢地撸动。"
+},
+"o:pose.preset:masturbation_pen_sit_both": {
+"l": "坐姿双手",
+"h": "坐着,用双手撸动。"
+},
+"o:pose.preset:masturbation_pen_stand": {
+"l": "站姿仰头",
+"h": "站着,头向后仰,撸动。"
+},
+"o:pose.preset:masturbation_pen_stroker": {
+"l": "用飞机杯",
+"h": "使用飞机杯。"
+},
+"o:pose.preset:masturbation_pen_tease": {
+"l": "逗弄龟头",
+"h": "逗弄阴茎的龟头。"
+},
+"o:pose.preset:masturbation_pillow_hump": {
+"l": "蹭枕头",
+"h": "在枕头上磨蹭。"
+},
+"o:pose.preset:masturbation_shower_hand": {
+"l": "淋浴手伸内裤",
+"h": "在淋浴下,手伸进内裤里。"
+},
+"o:pose.preset:masturbation_shower_jet": {
+"l": "花洒",
+"h": "在淋浴下,用花洒。"
+},
+"o:pose.preset:masturbation_side_finger": {
+"l": "侧卧抬腿",
+"h": "侧卧,一条腿抬起,用手指自慰。"
+},
+"o:pose.preset:masturbation_spread_open": {
+"l": "M 字腿掰开",
+"h": "M 形双腿,用手指掰开阴唇。"
+},
+"o:pose.preset:masturbation_squat_finger": {
+"l": "蹲姿手指",
+"h": "蹲着,用手指自慰。"
+},
+"o:pose.preset:masturbation_stomach_grind": {
+"l": "趴着磨蹭",
+"h": "俯卧,在床上磨蹭。"
+},
+"o:pose.preset:masturbation_through_panties": {
+"l": "隔着内裤",
+"h": "手隔着内裤揉搓。"
+},
+"o:pose.preset:masturbation_toy_dildo": {
+"l": "抽插假阳具",
+"h": "抽插假阳具。"
+},
+"o:pose.preset:masturbation_toy_double": {
+"l": "双头假阳具",
+"h": "使用双头假阳具。"
+},
+"o:pose.preset:masturbation_toy_egg": {
+"l": "遥控跳蛋",
+"h": "仅有姿势:周围没有场景。"
+},
+"o:pose.preset:masturbation_toy_rabbit": {
+"l": "兔子震动器拱背",
+"h": "兔子震动器,后背拱起。"
+},
+"o:pose.preset:masturbation_toy_suction": {
+"l": "骑吸盘假阳具",
+"h": "骑在带吸盘的假阳具上。"
+},
+"o:pose.preset:masturbation_toy_wand": {
+"l": "震动棒贴阴蒂",
+"h": "按摩棒按在阴蒂上。"
+},
+"o:pose.preset:natural_chin_table": {
+"l": "托腮",
+"h": "坐着,下巴搁在手上。"
+},
+"o:pose.preset:natural_coffee": {
+"l": "喝咖啡",
+"h": "小口喝着热饮。"
+},
+"o:pose.preset:natural_dancing": {
+"l": "随性舞动",
+"h": "无忧无虑的舞步。"
+},
+"o:pose.preset:natural_grass_lie": {
+"l": "躺在草地上",
+"h": "躺在草地里。"
+},
+"o:pose.preset:natural_hug_knees": {
+"l": "抱膝",
+"h": "坐着,双臂环抱着膝盖。"
+},
+"o:pose.preset:natural_laughing": {
+"l": "大笑",
+"h": "被抓拍到笑到一半。"
+},
+"o:pose.preset:natural_pillow_hug": {
+"l": "抱枕头",
+"h": "抱着枕头。"
+},
+"o:pose.preset:natural_railing": {
+"l": "靠栏杆",
+"h": "靠在栏杆上。"
+},
+"o:pose.preset:natural_reading": {
+"l": "看书",
+"h": "站着或坐着拿着一本书。"
+},
+"o:pose.preset:natural_relaxed": {
+"l": "放松站立",
+"h": "随意站着,手臂自然下垂。"
+},
+"o:pose.preset:natural_selfie": {
+"l": "自拍",
+"h": "伸出手拿着手机自拍。"
+},
+"o:pose.preset:natural_stairs_sit": {
+"l": "坐在台阶上",
+"h": "坐在台阶上。"
+},
+"o:pose.preset:natural_stretch_up": {
+"l": "伸懒腰",
+"h": "双臂高高举过头顶伸展。"
+},
+"o:pose.preset:natural_tying_hair": {
+"l": "扎头发",
+"h": "双手举起,正在扎头发。"
+},
+"o:pose.preset:natural_walking": {
+"l": "走路",
+"h": "自然地走着。"
+},
+"o:pose.preset:natural_waving": {
+"l": "挥手",
+"h": "挥着手。"
+},
+"o:pose.preset:photo_arms_crossed": {
+"l": "双臂交叉",
+"h": "站立,双臂抱在胸前。"
+},
+"o:pose.preset:photo_back_view": {
+"l": "背对镜头",
+"h": "站着,背对镜头。"
+},
+"o:pose.preset:photo_catwalk": {
+"l": "猫步",
+"h": "自信的 T 台步伐。"
+},
+"o:pose.preset:photo_chin_hand": {
+"l": "手托下巴",
+"h": "手放在下巴上,若有所思。"
+},
+"o:pose.preset:photo_contrapposto": {
+"l": "对立式站姿",
+"h": "重心落在一条腿上,髋部倾斜,放松的模特站姿。"
+},
+"o:pose.preset:photo_hair_flip": {
+"l": "甩头发",
+"h": "一甩头把头发甩开。"
+},
+"o:pose.preset:photo_hair_touch": {
+"l": "手拨头发",
+"h": "一只手从头发间穿过。"
+},
+"o:pose.preset:photo_hip_hand": {
+"l": "单手叉腰",
+"h": "站立,一只手放在髋部。"
+},
+"o:pose.preset:photo_hips_both": {
+"l": "双手叉腰",
+"h": "站立,双手叉在腰上。"
+},
+"o:pose.preset:photo_jacket_shoulder": {
+"l": "外套搭肩",
+"h": "请在 Outfit Builder 里添加一件外套。"
+},
+"o:pose.preset:photo_lean_toward": {
+"l": "倾身向镜头",
+"h": "身体前倾,靠近镜头。"
+},
+"o:pose.preset:photo_look_up": {
+"l": "仰望",
+"h": "脸抬起,看向镜头上方。"
+},
+"o:pose.preset:photo_over_shoulder": {
+"l": "回眸",
+"h": "转过身,越过肩膀回头看。"
+},
+"o:pose.preset:photo_peace": {
+"l": "比耶",
+"h": "站着比出胜利手势。"
+},
+"o:pose.preset:photo_pockets": {
+"l": "双手插兜",
+"h": "站立,双手插在口袋里。"
+},
+"o:pose.preset:photo_power": {
+"l": "强势站姿",
+"h": "双脚分开,挺胸,有力而自信的站姿。"
+},
+"o:pose.preset:photo_profile": {
+"l": "侧面",
+"h": "从侧面看。"
+},
+"o:pose.preset:photo_s_curve": {
+"l": "S 形曲线",
+"h": "站立,身体弯成 S 形。"
+},
+"o:pose.preset:photo_walking_cam": {
+"l": "走向镜头",
+"h": "迈着步子朝镜头走来。"
+},
+"o:pose.preset:photo_wall_lean": {
+"l": "靠墙",
+"h": "用肩膀或后背靠在墙上。"
+},
+"o:pose.preset:sensual_all_fours_look": {
+"l": "爬姿回头",
+"h": "四肢着地,回头看向镜头。"
+},
+"o:pose.preset:sensual_bath_leg": {
+"l": "浴缸里抬腿",
+"h": "在浴缸里,一条腿抬起。"
+},
+"o:pose.preset:sensual_bed_arch": {
+"l": "床上拱背",
+"h": "在床上拱起后背。"
+},
+"o:pose.preset:sensual_bra_unhook": {
+"l": "解开文胸",
+"h": "手伸到背后解开文胸。"
+},
+"o:pose.preset:sensual_chair_back": {
+"l": "反坐椅子",
+"h": "反着坐在椅子上。"
+},
+"o:pose.preset:sensual_covering": {
+"l": "用手遮挡",
+"h": "搭配上身裸露或全裸的服装效果最好。"
+},
+"o:pose.preset:sensual_finger_bite": {
+"l": "咬手指",
+"h": "咬着手指。"
+},
+"o:pose.preset:sensual_heels_arch": {
+"l": "坐脚跟拱背",
+"h": "坐在脚跟上,后背拱起。"
+},
+"o:pose.preset:sensual_kneel_hair": {
+"l": "跪姿手拨发",
+"h": "跪着,双手都在头发里。"
+},
+"o:pose.preset:sensual_look_back": {
+"l": "回头看",
+"h": "微微弯腰,越过肩膀回头看。"
+},
+"o:pose.preset:sensual_mirror_pose": {
+"l": "镜前摆姿势",
+"h": "在镜子前摆姿势。"
+},
+"o:pose.preset:sensual_pinup": {
+"l": "经典海报女郎",
+"h": "经典的 1950 年代海报女郎姿势。"
+},
+"o:pose.preset:sensual_pinup_kick": {
+"l": "踢起双腿",
+"h": "俏皮的海报女郎姿势,双腿在身后踢起。"
+},
+"o:pose.preset:sensual_pinup_side": {
+"l": "侧卧海报女郎",
+"h": "侧卧的海报女郎姿势。"
+},
+"o:pose.preset:sensual_pinup_stretch": {
+"l": "沙发上伸展",
+"h": "海报女郎风格,在沙发上伸展身体。"
+},
+"o:pose.preset:sensual_sheet": {
+"l": "裹着床单",
+"h": "请在提示词或“额外提示词”里加上床单。"
+},
+"o:pose.preset:sensual_shirt_pull": {
+"l": "掀起衬衫",
+"h": "把衬衫往上拉。"
+},
+"o:pose.preset:sensual_stocking": {
+"l": "卷下长袜",
+"h": "把长袜顺着腿卷下来。"
+},
+"o:pose.preset:sensual_twerk": {
+"l": "扭臀姿势",
+"h": "弯着腰,髋部向后撅起。"
+},
+"o:pose.preset:sensual_wall_knee": {
+"l": "靠墙屈膝",
+"h": "靠着墙站,一个膝盖抬起。"
+},
+"o:pose.preset:sensual_whisper": {
+"l": "对镜头耳语",
+"h": "向镜头靠近,像在低声说话。"
+},
+"o:pose.preset:sitting_armchair": {
+"l": "靠在扶手椅上",
+"h": "向后靠在扶手椅上。"
+},
+"o:pose.preset:sitting_bed_edge": {
+"l": "坐在床边",
+"h": "坐在床沿上。"
+},
+"o:pose.preset:sitting_chair_cross": {
+"l": "椅子上翘腿",
+"h": "坐在椅子上,一条腿搭在另一条腿上。"
+},
+"o:pose.preset:sitting_chair_straddle": {
+"l": "反坐椅子",
+"h": "跨坐在椅子上,面朝椅背。"
+},
+"o:pose.preset:sitting_cross_legged": {
+"l": "盘腿",
+"h": "坐在地上,双腿交叉。"
+},
+"o:pose.preset:sitting_desk_dangle": {
+"l": "坐在桌上晃腿",
+"h": "坐在桌子上,双腿垂着。"
+},
+"o:pose.preset:sitting_knees_up": {
+"l": "屈膝抱腿",
+"h": "膝盖收起,双臂环抱着它们。"
+},
+"o:pose.preset:sitting_lean_hands": {
+"l": "双手后撑",
+"h": "坐着,身体向后靠在双手上。"
+},
+"o:pose.preset:sitting_lotus": {
+"l": "莲花坐",
+"h": "以莲花坐姿坐着。"
+},
+"o:pose.preset:sitting_seiza": {
+"l": "正坐",
+"h": "跪着,双腿折在身下,坐在脚跟上。"
+},
+"o:pose.preset:sitting_side_sit": {
+"l": "侧坐",
+"h": "坐着,双腿都折向一侧。"
+},
+"o:pose.preset:sitting_stairs_elbows": {
+"l": "手肘撑膝",
+"h": "坐在台阶上,手肘撑在膝盖上。"
+},
+"o:pose.preset:sitting_stool": {
+"l": "坐在凳子上",
+"h": "轻坐在凳子上。"
+},
+"o:pose.preset:sitting_wsit": {
+"l": "W 形坐姿",
+"h": "坐在两脚之间,膝盖朝前,呈 W 形。"
+},
+"o:posture.base:all_fours": {
+"l": "四肢着地",
+"h": "手和膝盖撑地。"
+},
+"o:posture.base:bending": {
+"l": "弯腰",
+"h": "腰部向前弯。"
+},
+"o:posture.base:bridge": {
+"l": "后弯桥式",
+"h": "后背拱起,肚子朝上,用手和脚撑着。"
+},
+"o:posture.base:crouching": {
+"l": "蹲伏",
+"h": "蹲低身子,随时准备行动。"
+},
+"o:posture.base:downdog": {
+"l": "下犬式",
+"h": "瑜伽姿势:髋部抬高,身体呈倒 V 形。"
+},
+"o:posture.base:hips_up": {
+"l": "抬高髋部",
+"h": "躺着,髋部抬起。"
+},
+"o:posture.base:jumping": {
+"l": "跳跃",
+"h": "在半空中。"
+},
+"o:posture.base:kneeling": {
+"l": "跪姿",
+"h": "双膝跪地。"
+},
+"o:posture.base:kneeling_one": {
+"l": "单膝跪",
+"h": "单膝跪地。"
+},
+"o:posture.base:lying_back": {
+"l": "仰卧",
+"h": "躺在背上。"
+},
+"o:posture.base:lying_side": {
+"l": "侧卧",
+"h": "躺在一侧。"
+},
+"o:posture.base:lying_stomach": {
+"l": "俯卧",
+"h": "躺在肚子上。"
+},
+"o:posture.base:reclining": {
+"l": "半躺",
+"h": "半躺着,用手肘撑起。"
+},
+"o:posture.base:running": {
+"l": "奔跑",
+"h": "在跑。"
+},
+"o:posture.base:sitting": {
+"l": "坐",
+"h": "坐着。"
+},
+"o:posture.base:sitting_cross": {
+"l": "盘腿",
+"h": "双腿交叉坐着。"
+},
+"o:posture.base:sitting_heels": {
+"l": "坐在脚跟上",
+"h": "坐回到脚跟上。"
+},
+"o:posture.base:sitting_side": {
+"l": "双腿向一侧",
+"h": "坐着,双腿都折向一侧。"
+},
+"o:posture.base:squatting": {
+"l": "蹲姿",
+"h": "深蹲,双脚平放。"
+},
+"o:posture.base:standing": {
+"l": "站立",
+"h": "笔直地站着。"
+},
+"o:posture.base:straddle_chair": {
+"l": "反坐椅子",
+"h": "跨坐在椅子上,面朝椅背。"
+},
+"o:posture.base:stretching": {
+"l": "伸展",
+"h": "伸展身体。"
+},
+"o:posture.base:walking": {
+"l": "行走",
+"h": "迈步的瞬间。"
+},
+"o:posture.facing:back": {
+"l": "背对镜头",
+"h": "背朝镜头。"
+},
+"o:posture.facing:camera": {
+"l": "面向镜头",
+"h": "正对镜头。"
+},
+"o:posture.facing:profile": {
+"l": "侧面",
+"h": "从侧面看。"
+},
+"o:posture.facing:three_q": {
+"l": "四分之三侧",
+"h": "相对镜头转约 45 度。"
+},
+"o:posture.surface:armchair": {
+"l": "在扶手椅上",
+"h": "在扶手椅里。"
+},
+"o:posture.surface:bathtub": {
+"l": "在浴缸里",
+"h": "在浴缸里。"
+},
+"o:posture.surface:bed": {
+"l": "在床上",
+"h": "在床上。"
+},
+"o:posture.surface:bed_edge": {
+"l": "床边",
+"h": "在床沿上。"
+},
+"o:posture.surface:chair": {
+"l": "在椅子上",
+"h": "在椅子上。"
+},
+"o:posture.surface:counter": {
+"l": "在台面上",
+"h": "在厨房台面上。"
+},
+"o:posture.surface:desk": {
+"l": "在桌上",
+"h": "在书桌上。"
+},
+"o:posture.surface:floor": {
+"l": "在地上",
+"h": "在地板上。"
+},
+"o:posture.surface:grass": {
+"l": "在草地上",
+"h": "在草地上。"
+},
+"o:posture.surface:mirror": {
+"l": "镜前",
+"h": "在镜子前。"
+},
+"o:posture.surface:pole": {
+"l": "钢管旁",
+"h": "在舞蹈钢管旁。"
+},
+"o:posture.surface:sand": {
+"l": "在沙滩上",
+"h": "在沙子上。"
+},
+"o:posture.surface:shower": {
+"l": "在淋浴间",
+"h": "在淋浴间里。"
+},
+"o:posture.surface:sofa": {
+"l": "在沙发上",
+"h": "在沙发上。"
+},
+"o:posture.surface:stairs": {
+"l": "在楼梯上",
+"h": "在楼梯上。"
+},
+"o:posture.surface:wall": {
+"l": "靠墙",
+"h": "靠着墙。"
+},
+"o:posture.surface:window": {
+"l": "窗边",
+"h": "在窗户旁。"
+},
+"o:posture.surface:yoga_mat": {
+"l": "在瑜伽垫上",
+"h": "在瑜伽垫上。"
+},
+"o:subject.sex:female": {
+"l": "女性",
+"h": "一位女性。"
+},
+"o:subject.sex:futa": {
+"l": "扶她",
+"h": "有阴茎的女性。"
+},
+"o:subject.sex:male": {
+"l": "男性",
+"h": "一位男性。"
+},
+"o:subject.sex:neutral": {
+"l": "中性",
+"h": "不指定性别。"
+},
+"o:torso.shape:arched": {
+"l": "拱背",
+"h": "后背拱起。"
+},
+"o:torso.shape:butt_out": {
+"l": "翘臀",
+"h": "臀部向后撅。"
+},
+"o:torso.shape:chest_out": {
+"l": "挺胸",
+"h": "胸部向前挺。"
+},
+"o:torso.shape:curled": {
+"l": "蜷缩",
+"h": "身体蜷成一团。"
+},
+"o:torso.shape:hip_cock": {
+"l": "顶胯",
+"h": "髋部朝一侧顶出。"
+},
+"o:torso.shape:lean_back": {
+"l": "后仰",
+"h": "身体向后仰。"
+},
+"o:torso.shape:lean_fwd": {
+"l": "前倾",
+"h": "身体向前倾。"
+},
+"o:torso.shape:stretched": {
+"l": "舒展",
+"h": "身体向长处伸展。"
+},
+"o:torso.shape:twist": {
+"l": "扭转",
+"h": "肩膀和髋部朝相反方向扭转。"
+},
+"o:toys.color:black": {
+"l": "黑色",
+"h": "黑色的玩具。"
+},
+"o:toys.color:blue": {
+"l": "蓝色",
+"h": "蓝色的玩具。"
+},
+"o:toys.color:chrome": {
+"l": "镀铬",
+"h": "闪亮的金属玩具。"
+},
+"o:toys.color:clear": {
+"l": "透明",
+"h": "透明的玩具。"
+},
+"o:toys.color:flesh": {
+"l": "肉色",
+"h": "肤色的玩具。"
+},
+"o:toys.color:neon": {
+"l": "荧光绿",
+"h": "发光的荧光绿玩具。"
+},
+"o:toys.color:pink": {
+"l": "粉色",
+"h": "粉色的玩具。"
+},
+"o:toys.color:purple": {
+"l": "紫色",
+"h": "紫色的玩具。"
+},
+"o:toys.color:red": {
+"l": "红色",
+"h": "红色的玩具。"
+},
+"o:toys.color:white": {
+"l": "白色",
+"h": "白色的玩具。"
+},
+"o:toys.items:beads": {
+"l": "拉珠",
+"h": "一串肛门拉珠。"
+},
+"o:toys.items:bullet": {
+"l": "子弹震动器",
+"h": "一颗小巧的震动子弹。"
+},
+"o:toys.items:clamps": {
+"l": "乳夹",
+"h": "夹在乳头上的夹子。"
+},
+"o:toys.items:dildo": {
+"l": "假阳具",
+"h": "拟真的假阳具。"
+},
+"o:toys.items:double": {
+"l": "双头假阳具",
+"h": "两端都能用的长假阳具。"
+},
+"o:toys.items:egg": {
+"l": "遥控跳蛋",
+"h": "带遥控器的震动蛋。"
+},
+"o:toys.items:glass": {
+"l": "玻璃假阳具",
+"h": "光滑的玻璃假阳具。"
+},
+"o:toys.items:plug": {
+"l": "肛塞",
+"h": "一个肛塞。"
+},
+"o:toys.items:rabbit": {
+"l": "兔子震动器",
+"h": "带小耳朵刺激阴蒂的震动器。"
+},
+"o:toys.items:ring": {
+"l": "锁精环",
+"h": "戴在阴茎根部的环。"
+},
+"o:toys.items:stroker": {
+"l": "飞机杯",
+"h": "阴茎可以滑入的套筒。"
+},
+"o:toys.items:suction": {
+"l": "吸盘假阳具",
+"h": "底部带吸盘的假阳具。"
+},
+"o:toys.items:wand": {
+"l": "按摩棒",
+"h": "带圆形头部的大号按摩器。"
+},
+"p:arms.both": {
+"l": "双臂",
+"h": "双臂的姿势。会关闭“手 1”和“手 2”。"
+},
+"p:arms.hand1": {
+"l": "手 1",
+"h": "一只手在做什么。文本里会写“一只手……另一只手”,不分左右。"
+},
+"p:arms.hand2": {
+"l": "手 2",
+"h": "另一只手在做什么。"
+},
+"p:arms.prop": {
+"l": "手持物",
+"h": "手里拿着的东西。"
+},
+"p:fluids.items": {
+"l": "体液",
+"h": "湿润、汗水、油、精液等。在每一项下面选择多少、在哪里。露骨的需要开启“露骨内容”开关。"
+},
+"p:head.expression": {
+"l": "表情",
+"h": "摆姿势时脸上的表情。脸本身来自 Character Builder。"
+},
+"p:head.gaze": {
+"l": "视线",
+"h": "角色看向哪里。"
+},
+"p:head.tilt": {
+"l": "头部",
+"h": "头部的姿势。"
+},
+"p:legs.feet": {
+"l": "脚",
+"h": "脚的姿势。"
+},
+"p:legs.pose": {
+"l": "腿",
+"h": "腿的姿势。“随机”只会选符合姿态的腿部姿势。"
+},
+"p:pleasure.act1": {
+"l": "手部动作 1",
+"h": "一只手对身体做什么。仅限虚构的成年(18+)角色。"
+},
+"p:pleasure.act2": {
+"l": "手部动作 2",
+"h": "另一只手在做什么。"
+},
+"p:pleasure.body": {
+"l": "身体动作",
+"h": "不用手的快感:磨蹭、顶蹭。"
+},
+"p:pleasure.clothes": {
+"l": "隔着衣服",
+"h": "未设置表示“自动”:当 Character Builder 说明该部位穿着衣服时,手会伸进衣服里。"
+},
+"p:pleasure.intensity": {
+"l": "强度",
+"h": "从挑逗到高潮再到余韵。会写进同一句话里。"
+},
+"p:pose.preset": {
+"l": "姿势",
+"h": "现成的姿势:会填好其他区块的参数(姿态、手臂、腿、头部、视角……)。之后改动其中任何一项,姿势就变成“已修改”。再次点击可清除。"
+},
+"p:posture.base": {
+"l": "姿态",
+"h": "身体的主要姿态。"
+},
+"p:posture.facing": {
+"l": "朝向",
+"h": "身体相对镜头的转向。"
+},
+"p:posture.surface": {
+"l": "地点",
+"h": "所在的地方或家具。“随机”只会选符合姿态的地点。"
+},
+"p:subject.sex": {
+"l": "对象",
+"h": "谁在摆姿势:决定使用“她 / 他 / 它们”的措辞,以及随机可以选哪些姿势和动作。接入 Character Builder 时,会改用它的性别和生殖器。未设置时按女性处理。"
+},
+"p:torso.shape": {
+"l": "躯干",
+"h": "后背和身体的线条。最多两个。"
+},
+"p:toys.color": {
+"l": "玩具颜色",
+"h": "玩具的颜色。"
+},
+"p:toys.items": {
+"l": "玩具",
+"h": "最多两件情趣玩具。在所选玩具下面选择怎么使用。"
+},
+"s:hand_poses:cast": {
+"l": "施法",
+"h": "手在施展魔法。"
+},
+"s:hand_poses:chest": {
+"l": "在胸口",
+"h": "手放在胸口。"
+},
+"s:hand_poses:chin": {
+"l": "托下巴",
+"h": "手托着下巴。"
+},
+"s:hand_poses:face": {
+"l": "在脸上",
+"h": "手碰着脸。"
+},
+"s:hand_poses:fist": {
+"l": "握拳",
+"h": "手握成拳头。"
+},
+"s:hand_poses:forward": {
+"l": "向前伸直",
+"h": "手向前伸直。"
+},
+"s:hand_poses:ground": {
+"l": "按在地上",
+"h": "手放在地面上。"
+},
+"s:hand_poses:hair": {
+"l": "在头发里",
+"h": "手放在头发里。"
+},
+"s:hand_poses:hem": {
+"l": "拉着衣摆",
+"h": "手拉着衣服的下摆。"
+},
+"s:hand_poses:hilt": {
+"l": "按在剑柄上",
+"h": "手放在剑柄上。"
+},
+"s:hand_poses:hip": {
+"l": "放在髋上",
+"h": "手放在髋部。"
+},
+"s:hand_poses:kiss": {
+"l": "飞吻",
+"h": "手送出一个飞吻。"
+},
+"s:hand_poses:knee": {
+"l": "在膝盖上",
+"h": "手放在膝盖上。"
+},
+"s:hand_poses:lips": {
+"l": "手指贴唇",
+"h": "一根手指放在嘴唇上。"
+},
+"s:hand_poses:mouth": {
+"l": "捂嘴",
+"h": "手捂着嘴。"
+},
+"s:hand_poses:neck": {
+"l": "在脖子上",
+"h": "手放在脖子上。"
+},
+"s:hand_poses:peace": {
+"l": "比耶",
+"h": "手比出胜利手势。"
+},
+"s:hand_poses:pocket": {
+"l": "插口袋",
+"h": "手插在口袋里。"
+},
+"s:hand_poses:point": {
+"l": "指向",
+"h": "手在指着什么。"
+},
+"s:hand_poses:reach": {
+"l": "伸手",
+"h": "手向前伸出。"
+},
+"s:hand_poses:sheets": {
+"l": "抓床单",
+"h": "手抓着床单。"
+},
+"s:hand_poses:surface": {
+"l": "撑着",
+"h": "手撑在某个表面上。"
+},
+"s:hand_poses:thigh": {
+"l": "在大腿上",
+"h": "手放在大腿上。"
+},
+"s:hand_poses:up": {
+"l": "高举",
+"h": "手高高举起。"
+},
+"s:hand_poses:wave": {
+"l": "挥手",
+"h": "手在挥动。"
+},
+"t:arms": {
+"l": "手臂与手"
+},
+"t:fluids": {
+"l": "体液"
+},
+"t:head": {
+"l": "头与脸"
+},
+"t:legs": {
+"l": "腿"
+},
+"t:pleasure": {
+"l": "快感"
+},
+"t:pose": {
+"l": "现成姿势"
+},
+"t:posture": {
+"l": "姿态"
+},
+"t:subject": {
+"l": "对象"
+},
+"t:torso": {
+"l": "躯干"
+},
+"t:toys": {
+"l": "玩具"
+},
+"v:fluids.items:cum:belly": {
+"l": "射在肚子上",
+"h": "落在肚子上。"
+},
+"v:fluids.items:cum:breasts": {
+"l": "射在乳房上",
+"h": "落在乳房上。"
+},
+"v:fluids.items:cum:covered": {
+"l": "满身都是",
+"h": "覆盖了整个身体。"
+},
+"v:fluids.items:cum:face": {
+"l": "射在脸上",
+"h": "落在脸上。"
+},
+"v:fluids.items:cum:hand": {
+"l": "射在手上",
+"h": "落在手上。"
+},
+"v:fluids.items:cum:mid": {
+"l": "正在射出",
+"h": "定格在半空中喷射的瞬间。"
+},
+"v:fluids.items:cum:thighs": {
+"l": "射在大腿上",
+"h": "落在大腿上。"
+},
+"v:fluids.items:juice:drip": {
+"l": "滴落",
+"h": "往下滴着。"
+},
+"v:fluids.items:juice:soaked": {
+"l": "湿透",
+"h": "把一切都浸湿。"
+},
+"v:fluids.items:juice:wet": {
+"l": "湿润",
+"h": "明显湿了。"
+},
+"v:fluids.items:lube:drip": {
+"l": "滴落",
+"h": "往下滴着。"
+},
+"v:fluids.items:lube:shiny": {
+"l": "一层光泽",
+"h": "闪亮的涂层。"
+},
+"v:fluids.items:oil:glisten": {
+"l": "油亮",
+"h": "皮肤被油涂得发亮。"
+},
+"v:fluids.items:oil:light": {
+"l": "薄薄一层油",
+"h": "一层薄薄的油。"
+},
+"v:fluids.items:precum:bead": {
+"l": "一滴",
+"h": "顶端有一滴。"
+},
+"v:fluids.items:precum:drip": {
+"l": "滴落",
+"h": "一滴往下滴。"
+},
+"v:fluids.items:precum:strings": {
+"l": "拉丝",
+"h": "黏黏的丝线。"
+},
+"v:fluids.items:saliva:chin": {
+"l": "下巴上",
+"h": "下巴上有一滴。"
+},
+"v:fluids.items:saliva:strings": {
+"l": "拉丝",
+"h": "黏黏的丝线。"
+},
+"v:fluids.items:squirt:arc": {
+"l": "强力弧线",
+"h": "一道有力的液体弧线。"
+},
+"v:fluids.items:squirt:puddle": {
+"l": "一滩水",
+"h": "下面有一滩。"
+},
+"v:fluids.items:squirt:squirt": {
+"l": "喷水",
+"h": "在喷水。"
+},
+"v:fluids.items:sweat:drip": {
+"l": "滴落",
+"h": "汗珠往下流。"
+},
+"v:fluids.items:sweat:sheen": {
+"l": "微微发亮",
+"h": "皮肤上有一层淡淡的光泽。"
+},
+"v:toys.items:beads:half": {
+"l": "插入一半",
+"h": "一半的珠子在里面。"
+},
+"v:toys.items:beads:pull": {
+"l": "正在拉出",
+"h": "正被拉出来。"
+},
+"v:toys.items:bullet:clit": {
+"l": "贴在阴蒂上",
+"h": "按在阴蒂上。"
+},
+"v:toys.items:bullet:head": {
+"l": "贴在龟头上",
+"h": "按在阴茎的龟头上。"
+},
+"v:toys.items:bullet:nipple": {
+"l": "贴在乳头上",
+"h": "按在乳头上。"
+},
+"v:toys.items:clamps:both": {
+"l": "夹住双乳头",
+"h": "两个乳头都被夹住。"
+},
+"v:toys.items:dildo:anal": {
+"l": "插入肛门",
+"h": "插进肛门。"
+},
+"v:toys.items:dildo:lick": {
+"l": "舔它",
+"h": "正被舔着。"
+},
+"v:toys.items:dildo:lips": {
+"l": "在嘴边",
+"h": "举在嘴边,即将含住。"
+},
+"v:toys.items:dildo:pussy": {
+"l": "插入阴道",
+"h": "插进阴道。"
+},
+"v:toys.items:double:both": {
+"l": "阴道和肛门",
+"h": "一端在阴道里,另一端在肛门里。"
+},
+"v:toys.items:egg:inside": {
+"l": "插入",
+"h": "在阴道里面。"
+},
+"v:toys.items:glass:anal": {
+"l": "插入肛门",
+"h": "插进肛门。"
+},
+"v:toys.items:glass:pussy": {
+"l": "插入阴道",
+"h": "插进阴道。"
+},
+"v:toys.items:plug:in": {
+"l": "已插入",
+"h": "已经插进去了。"
+},
+"v:toys.items:plug:pushing": {
+"l": "正在插入",
+"h": "正被推进去。"
+},
+"v:toys.items:rabbit:inside": {
+"l": "插入",
+"h": "插在里面,小耳朵贴着阴蒂。"
+},
+"v:toys.items:ring:base": {
+"l": "在根部",
+"h": "套在阴茎根部。"
+},
+"v:toys.items:stroker:slide": {
+"l": "滑动",
+"h": "在阴茎上上下滑动。"
+},
+"v:toys.items:suction:floor": {
+"l": "在地上骑乘",
+"h": "吸在地上,被骑着。"
+},
+"v:toys.items:suction:wall": {
+"l": "吸在墙上",
+"h": "吸在墙上。"
+},
+"v:toys.items:wand:clit": {
+"l": "贴在阴蒂上",
+"h": "按在阴蒂上。"
+},
+"v:toys.items:wand:penis": {
+"l": "贴在阴茎上",
+"h": "按在阴茎上。"
+},
+"v:toys.items:wand:through": {
+"l": "隔着内裤",
+"h": "按在内裤上。"
+},
+"z:action": {
+"l": "英雄与动作",
+"h": "英雄、战斗和运动的姿势。"
+},
+"z:arms": {
+"l": "手臂与手",
+"h": "手臂和手在做什么,以及拿着什么。"
+},
+"z:dance": {
+"l": "舞蹈与健身",
+"h": "舞蹈、瑜伽和健身的姿势。"
+},
+"z:explicit": {
+"l": "露骨",
+"h": "敞开、袒露的姿势。"
+},
+"z:fluids": {
+"l": "体液",
+"h": "身体上的湿润和体液。"
+},
+"z:general": {
+"l": "基本信息",
+"h": "谁在摆姿势,以及可以作为起点的现成姿势。"
+},
+"z:head": {
+"l": "头与脸",
+"h": "她看向哪里、头怎么倾斜,以及脸上的表情。"
+},
+"z:legs": {
+"l": "腿",
+"h": "腿和脚的姿势。"
+},
+"z:lying": {
+"l": "躺姿",
+"h": "仰卧、俯卧或侧卧的姿势。"
+},
+"z:masturbation": {
+"l": "自慰",
+"h": "自慰的姿势,用手和玩具。"
+},
+"z:natural": {
+"l": "自然",
+"h": "随意的日常姿势。"
+},
+"z:photo": {
+"l": "摄影",
+"h": "适合人像和时尚照的模特姿势。"
+},
+"z:pleasure": {
+"l": "快感",
+"h": "手部动作、身体动作及其强度。"
+},
+"z:posture": {
+"l": "姿态",
+"h": "身体的基本姿态、所在地点以及朝向。"
+},
+"z:presets": {
+"l": "姿势",
+"h": "现成的姿势:选一个,其他字段会自动填好。"
+},
+"z:quick": {
+"l": "快速",
+"h": "一次填好多个字段的快速预设。"
+},
+"z:sensual": {
+"l": "性感",
+"h": "复古海报女郎和闺房风格的姿势。"
+},
+"z:sitting": {
+"l": "坐姿",
+"h": "坐在椅子、凳子、地上和其他座位上的姿势。"
+},
+"z:torso": {
+"l": "躯干",
+"h": "身体如何弯曲、扭转或后仰。"
+},
+"z:toys": {
+"l": "玩具",
+"h": "成人玩具及其使用方式。"
+}
+},
+"composition": {
+"g:Cinema": {
+"l": "电影"
+},
+"g:Close-ups": {
+"l": "特写"
+},
+"g:Dramatic": {
+"l": "戏剧感"
+},
+"g:Fashion": {
+"l": "时装"
+},
+"g:From above": {
+"l": "俯视"
+},
+"g:Phone": {
+"l": "手机"
+},
+"g:Portrait": {
+"l": "肖像"
+},
+"g:Voyeur": {
+"l": "偷窥"
+},
+"o:camera.distance:close": {
+"l": "近",
+"h": "靠近主体。"
+},
+"o:camera.distance:extreme_close": {
+"l": "极近",
+"h": "非常近,细节占满画面。"
+},
+"o:camera.distance:extreme_far": {
+"l": "极远",
+"h": "非常远:主体在广阔空间里很小。"
+},
+"o:camera.distance:far": {
+"l": "远",
+"h": "远:主体只是场景的一部分。"
+},
+"o:camera.distance:medium": {
+"l": "中等距离",
+"h": "正常距离。"
+},
+"o:camera.height:chest": {
+"l": "胸部高度",
+"h": "在胸部高度,略低于视线。"
+},
+"o:camera.height:eye": {
+"l": "平视",
+"h": "与视线齐平:中性自然。"
+},
+"o:camera.height:ground": {
+"l": "地面高度",
+"h": "相机放在地上,向上拍。"
+},
+"o:camera.height:high": {
+"l": "高角度",
+"h": "在主体上方向下拍。"
+},
+"o:camera.height:low": {
+"l": "低角度",
+"h": "在主体下方向上拍:她显得高大有力。"
+},
+"o:camera.height:overhead": {
+"l": "正上方",
+"h": "在正上方向下拍。"
+},
+"o:camera.height:waist": {
+"l": "腰部高度",
+"h": "在腰部高度:平静、真实的视角。"
+},
+"o:camera.orbit:back": {
+"l": "背面",
+"h": "从背后拍。"
+},
+"o:camera.orbit:back34_l": {
+"l": "后 3/4,朝左",
+"h": "在后方,转向画面左侧。"
+},
+"o:camera.orbit:back34_r": {
+"l": "后 3/4,朝右",
+"h": "在后方,转向画面右侧。"
+},
+"o:camera.orbit:front": {
+"l": "正面",
+"h": "正对主体。"
+},
+"o:camera.orbit:front34_l": {
+"l": "前 3/4,朝左",
+"h": "在前方,转向画面左侧(观看者看到的方向)。"
+},
+"o:camera.orbit:front34_r": {
+"l": "前 3/4,朝右",
+"h": "在前方,转向画面右侧(观看者看到的方向)。"
+},
+"o:camera.orbit:side_l": {
+"l": "侧面,朝左",
+"h": "从侧面拍,主体朝向画面左侧。"
+},
+"o:camera.orbit:side_r": {
+"l": "侧面,朝右",
+"h": "从侧面拍,主体朝向画面右侧。"
+},
+"o:camera.roll:left": {
+"l": "向左倾斜",
+"h": "地平线向左倾斜。模型常常分不清左右。"
+},
+"o:camera.roll:right": {
+"l": "向右倾斜",
+"h": "地平线向右倾斜。模型常常分不清左右。"
+},
+"o:framing.focus:breasts": {
+"l": "胸部",
+"h": "画面以胸部为主。"
+},
+"o:framing.focus:butt": {
+"l": "臀部",
+"h": "画面以臀部为主。"
+},
+"o:framing.focus:crotch": {
+"l": "下身",
+"h": "画面以下身为主。"
+},
+"o:framing.focus:eyes": {
+"l": "眼睛",
+"h": "画面以眼睛为主。"
+},
+"o:framing.focus:face": {
+"l": "脸",
+"h": "画面以脸为主。"
+},
+"o:framing.focus:feet": {
+"l": "脚",
+"h": "画面以脚为主。"
+},
+"o:framing.focus:hands": {
+"l": "手",
+"h": "画面以手为主。"
+},
+"o:framing.focus:lips": {
+"l": "嘴唇",
+"h": "画面以嘴唇为主。"
+},
+"o:framing.focus:outfit": {
+"l": "服装",
+"h": "画面以服装为主。"
+},
+"o:framing.shot:breasts": {
+"l": "乳房特写",
+"h": "乳房的特写。"
+},
+"o:framing.shot:cowboy": {
+"l": "膝上",
+"h": "从头到膝盖。"
+},
+"o:framing.shot:crotch": {
+"l": "下身特写",
+"h": "下身的特写。"
+},
+"o:framing.shot:face": {
+"l": "脸部特写",
+"h": "只有脸。"
+},
+"o:framing.shot:feet": {
+"l": "脚部特写",
+"h": "只有双脚。"
+},
+"o:framing.shot:full": {
+"l": "全身",
+"h": "整个身体,从头到脚。"
+},
+"o:framing.shot:portrait": {
+"l": "肖像",
+"h": "头部和肩膀。"
+},
+"o:framing.shot:waist": {
+"l": "腰上",
+"h": "从头到腰部。"
+},
+"o:lens.camera:cctv": {
+"l": "监控摄像头",
+"h": "低画质监控画面。"
+},
+"o:lens.camera:cinema": {
+"l": "电影摄影机",
+"h": "电影摄影机质感,宽银幕画面。"
+},
+"o:lens.camera:disposable": {
+"l": "一次性相机",
+"h": "廉价胶片相机:闪光灯、颗粒、偏暖。"
+},
+"o:lens.camera:dslr": {
+"l": "单反",
+"h": "干净的数码质感。"
+},
+"o:lens.camera:film35": {
+"l": "35 mm 胶片",
+"h": "35 mm 胶片的颗粒和色彩。"
+},
+"o:lens.camera:medium_format": {
+"l": "中画幅",
+"h": "细节丰富,影调平滑。"
+},
+"o:lens.camera:mirrorless": {
+"l": "无反",
+"h": "锐利的现代数码质感。"
+},
+"o:lens.camera:phone": {
+"l": "智能手机",
+"h": "手机照片:广、锐、平。"
+},
+"o:lens.camera:polaroid": {
+"l": "拍立得",
+"h": "即时成像质感:柔和、褪色、白边。"
+},
+"o:lens.camera:webcam": {
+"l": "网络摄像头",
+"h": "低分辨率网络摄像头画面。"
+},
+"o:lens.dof:deep": {
+"l": "深景深",
+"h": "从近到远全部清晰。"
+},
+"o:lens.dof:shallow": {
+"l": "浅景深",
+"h": "主体清晰,背景柔和。"
+},
+"o:lens.dof:very_shallow": {
+"l": "极浅景深",
+"h": "只有薄薄一层清晰,其余都化开。"
+},
+"o:lens.effects:bokeh": {
+"l": "焦外光斑",
+"h": "虚化背景里圆形柔和的光点。"
+},
+"o:lens.effects:chromatic": {
+"l": "色差",
+"h": "高对比线条周围的彩色边缘。"
+},
+"o:lens.effects:flare": {
+"l": "镜头光晕",
+"h": "亮光源产生的光线条纹。"
+},
+"o:lens.effects:grain": {
+"l": "胶片颗粒",
+"h": "明显的胶片颗粒。"
+},
+"o:lens.effects:light_leak": {
+"l": "漏光",
+"h": "暖色光条,像漏光的胶片相机。"
+},
+"o:lens.effects:long_exposure": {
+"l": "长曝光",
+"h": "光的拖尾和柔和的动感。"
+},
+"o:lens.effects:motion_blur": {
+"l": "动态模糊",
+"h": "运动的拖影。"
+},
+"o:lens.effects:tilt_shift": {
+"l": "移轴",
+"h": "微缩模型效果:只有一条带是清晰的。"
+},
+"o:lens.effects:vignette": {
+"l": "暗角",
+"h": "四角变暗。"
+},
+"o:lens.exposure:backlit": {
+"l": "逆光",
+"h": "光从背后来:边缘发光,脸偏暗。"
+},
+"o:lens.exposure:bright": {
+"l": "明亮",
+"h": "明亮通透的画面。"
+},
+"o:lens.exposure:dark": {
+"l": "昏暗",
+"h": "昏暗、有情绪的画面。"
+},
+"o:lens.exposure:normal": {
+"l": "均匀",
+"h": "均匀、平衡的光线。"
+},
+"o:lens.focal:fisheye": {
+"l": "鱼眼",
+"h": "超广角镜头,边缘弯曲。"
+},
+"o:lens.focal:macro": {
+"l": "微距",
+"h": "极近距离拍摄细小细节。"
+},
+"o:lens.focal:normal": {
+"l": "标准 (50 mm)",
+"h": "接近人眼:没有拉伸。"
+},
+"o:lens.focal:portrait": {
+"l": "人像 (85 mm)",
+"h": "显瘦的人像镜头,背景柔和。"
+},
+"o:lens.focal:tele": {
+"l": "长焦 (200 mm)",
+"h": "长镜头:透视扁平,背景强烈虚化。"
+},
+"o:lens.focal:ultra_wide": {
+"l": "超广角 (14 mm)",
+"h": "非常广:透视强烈,近处物体被拉伸。"
+},
+"o:lens.focal:wide": {
+"l": "广角 (24 mm)",
+"h": "广角:空间开阔,边缘略有拉伸。"
+},
+"o:lens.focus:background": {
+"l": "背景",
+"h": "背景清晰,主体柔和。"
+},
+"o:lens.focus:eyes": {
+"l": "对焦眼睛",
+"h": "眼睛清晰。"
+},
+"o:lens.focus:face": {
+"l": "对焦脸部",
+"h": "脸部清晰。"
+},
+"o:lens.focus:foreground": {
+"l": "前景",
+"h": "对焦在靠近相机的物体上。"
+},
+"o:lens.focus:soft": {
+"l": "柔焦",
+"h": "整个画面柔和梦幻的焦点。"
+},
+"o:lens.focus:subject": {
+"l": "对焦主体",
+"h": "整个主体清晰。"
+},
+"o:placement.pos:bottom": {
+"l": "偏下",
+"h": "在画面下部。"
+},
+"o:placement.pos:bottom_left": {
+"l": "左下",
+"h": "在左下角。"
+},
+"o:placement.pos:bottom_right": {
+"l": "右下",
+"h": "在右下角。"
+},
+"o:placement.pos:center": {
+"l": "居中",
+"h": "在画面中央。"
+},
+"o:placement.pos:left": {
+"l": "偏左",
+"h": "在画面左侧。"
+},
+"o:placement.pos:right": {
+"l": "偏右",
+"h": "在画面右侧。"
+},
+"o:placement.pos:top": {
+"l": "偏上",
+"h": "在画面上部。"
+},
+"o:placement.pos:top_left": {
+"l": "左上",
+"h": "在左上角。"
+},
+"o:placement.pos:top_right": {
+"l": "右上",
+"h": "在右上角。"
+},
+"o:placement.rule:lead_room": {
+"l": "视线留白",
+"h": "她面前留出空白,在她看向的一侧。"
+},
+"o:placement.rule:negative": {
+"l": "留白",
+"h": "主体周围大量空白。"
+},
+"o:placement.rule:symmetric": {
+"l": "对称",
+"h": "对称的居中画面。"
+},
+"o:placement.rule:thirds": {
+"l": "三分法",
+"h": "主体站在画面的三分线上。"
+},
+"o:placement.size:fill": {
+"l": "占满画面",
+"h": "主体占满整个画面。"
+},
+"o:placement.size:large": {
+"l": "大",
+"h": "主体占画面的大部分。"
+},
+"o:placement.size:medium": {
+"l": "中",
+"h": "主体约占画面的一半。"
+},
+"o:placement.size:small": {
+"l": "小",
+"h": "主体只占画面的一小部分。"
+},
+"o:placement.size:tiny": {
+"l": "很小",
+"h": "主体在画面里非常小。"
+},
+"o:pose.facing:back": {
+"l": "背对相机",
+"h": "背部朝向相机。"
+},
+"o:pose.facing:camera": {
+"l": "朝向相机",
+"h": "身体正对相机。"
+},
+"o:pose.facing:profile": {
+"l": "侧身",
+"h": "身体侧对相机。"
+},
+"o:pose.facing:three_q": {
+"l": "四分之三",
+"h": "身体转向相机四分之三。"
+},
+"o:preset.camera:bed_above": {
+"l": "垂直俯拍",
+"h": "从正上方垂直向下拍。"
+},
+"o:preset.camera:candid_phone": {
+"l": "手机随手拍",
+"h": "不摆拍的手机抓拍,略歪,自然光。"
+},
+"o:preset.camera:candid_street": {
+"l": "街头抓拍",
+"h": "远处拍的街头照,仿佛她没有发现镜头。"
+},
+"o:preset.camera:cctv": {
+"l": "监控摄像头",
+"h": "高处广角监控摄像头画面。"
+},
+"o:preset.camera:cinematic_wide": {
+"l": "电影感广角",
+"h": "宽银幕画面,主体在大空间里显得很小。"
+},
+"o:preset.camera:close_face": {
+"l": "脸部特写",
+"h": "浅景深的脸部特写。"
+},
+"o:preset.camera:doorway": {
+"l": "门缝窥视",
+"h": "透过门洞看进去,像在偷看。"
+},
+"o:preset.camera:drone_top": {
+"l": "无人机俯视",
+"h": "高空航拍视角。"
+},
+"o:preset.camera:dutch_action": {
+"l": "倾斜动作镜头",
+"h": "倾斜的地平线,营造紧张和动感。"
+},
+"o:preset.camera:fashion_full": {
+"l": "时装全身",
+"h": "时装全身照,正面,50 mm。"
+},
+"o:preset.camera:feet_close": {
+"l": "脚部特写",
+"h": "双脚的特写。"
+},
+"o:preset.camera:fisheye_fun": {
+"l": "鱼眼趣味",
+"h": "近距离鱼眼镜头:边缘弯曲,俏皮有趣。"
+},
+"o:preset.camera:glamour_portrait": {
+"l": "魅力肖像",
+"h": "经典肖像:85 mm,柔和景深,平视。"
+},
+"o:preset.camera:hero_below": {
+"l": "英雄仰拍",
+"h": "低角度,让她显得高大有力。"
+},
+"o:preset.camera:low_back": {
+"l": "背后低角度",
+"h": "从背后下方拍。"
+},
+"o:preset.camera:mirror_selfie": {
+"l": "镜子自拍",
+"h": "拍镜中的倒影,手机入镜。"
+},
+"o:preset.camera:negative_space": {
+"l": "留白构图",
+"h": "主体很小,周围大量空白。"
+},
+"o:preset.camera:over_shoulder": {
+"l": "过肩镜头",
+"h": "从她肩后望向她看的方向。"
+},
+"o:preset.camera:paparazzi": {
+"l": "狗仔偷拍",
+"h": "远处用长焦偷拍的感觉。"
+},
+"o:preset.camera:pinup_above": {
+"l": "俯拍海报风",
+"h": "从前上方拍:经典海报女郎风格。"
+},
+"o:preset.camera:polaroid": {
+"l": "拍立得快照",
+"h": "方形即时成像快照,带闪光灯效果。"
+},
+"o:preset.camera:selfie": {
+"l": "自拍",
+"h": "手臂伸直,稍微从上方拍,手机广角镜头。"
+},
+"o:preset.camera:tele_compress": {
+"l": "长焦压缩",
+"h": "远距离长焦:画面扁平压缩,背景虚化。"
+},
+"o:sheet.background:each_own": {
+"l": "各自背景",
+"h": "每个面板有自己的背景。"
+},
+"o:sheet.background:plain_dark": {
+"l": "纯黑",
+"h": "纯深色背景。"
+},
+"o:sheet.background:plain_gray": {
+"l": "纯灰",
+"h": "纯浅灰色背景。"
+},
+"o:sheet.background:plain_white": {
+"l": "纯白",
+"h": "纯白色背景。"
+},
+"o:sheet.background:same_scene": {
+"l": "同一场景",
+"h": "所有面板在同一个场景里。"
+},
+"o:sheet.borders:gutters": {
+"l": "宽间隙",
+"h": "面板之间有宽的空白间隙。"
+},
+"o:sheet.borders:none": {
+"l": "无边框",
+"h": "面板之间没有线条。"
+},
+"o:sheet.borders:rounded": {
+"l": "圆角边框",
+"h": "圆角的面板。"
+},
+"o:sheet.borders:thin": {
+"l": "细线",
+"h": "面板之间有细线。"
+},
+"o:sheet.style:character_sheet": {
+"l": "角色设定图",
+"h": "角色设计图:同一个角色的多个视角。"
+},
+"o:sheet.style:collage": {
+"l": "拼贴",
+"h": "照片拼贴。"
+},
+"o:sheet.style:comic_page": {
+"l": "漫画页",
+"h": "带分格的漫画页。"
+},
+"o:sheet.style:contact_sheet": {
+"l": "接触印相",
+"h": "像胶卷一样的帧缩略图页。"
+},
+"o:sheet.style:photo_grid": {
+"l": "照片网格",
+"h": "整齐的照片网格。"
+},
+"o:sheet.style:reference_sheet": {
+"l": "参考图",
+"h": "给画师用的简单参考图。"
+},
+"o:sheet.style:turnaround": {
+"l": "三视图",
+"h": "围绕角色的一排视图(正面、侧面、背面)。"
+},
+"o:viewpoint.special:between": {
+"l": "腿间视角",
+"h": "从双腿之间向上拍。"
+},
+"o:viewpoint.special:cctv": {
+"l": "监控摄像头",
+"h": "从高处角落拍,像监控摄像头。"
+},
+"o:viewpoint.special:doorway": {
+"l": "透过门洞",
+"h": "透过门洞拍,周围是门框。"
+},
+"o:viewpoint.special:drone": {
+"l": "无人机拍摄",
+"h": "从空中高处拍。"
+},
+"o:viewpoint.special:mirror": {
+"l": "镜中倒影",
+"h": "镜子里映出主体;相机或手机可能入镜。"
+},
+"o:viewpoint.special:phone_photo": {
+"l": "手机随手拍",
+"h": "别人用手机随意拍的照片。"
+},
+"o:viewpoint.special:pov": {
+"l": "第一人称 (POV)",
+"h": "观看者自己的眼睛:看到的就是观看者看到的,没有人拿着相机。"
+},
+"o:viewpoint.special:selfie": {
+"l": "自拍",
+"h": "主体伸直手臂自拍。不使用围绕主体的视角。"
+},
+"o:viewpoint.special:window": {
+"l": "透过窗户",
+"h": "从外面透过窗户拍。"
+},
+"p:camera.distance": {
+"l": "距离",
+"h": "相机离主体有多远。它对感觉的影响比取景更大。"
+},
+"p:camera.height": {
+"l": "高度",
+"h": "相机的高度。未设置时,姿势可以给出建议(相机取自姿势)。"
+},
+"p:camera.orbit": {
+"l": "围绕主体",
+"h": "相机从主体的哪一侧拍。左右以相机为准,即画面里看到的方向。姿势朝向相机的方式会限制可选项。模型常常分不清左右。"
+},
+"p:camera.roll": {
+"l": "倾斜",
+"h": "让地平线倾斜。模型常常分不清左右。"
+},
+"p:framing.focus": {
+"l": "画面重点",
+"h": "画面的主题(最多两个)。强调某个细节,但不裁切到它。"
+},
+"p:framing.shot": {
+"l": "取景",
+"h": "主体有多少入镜。乳房和下身特写需要打开“露骨内容”开关。"
+},
+"p:lens.camera": {
+"l": "相机类型",
+"h": "相机的种类,决定画面质感(颗粒、色彩、锐度)。"
+},
+"p:lens.dof": {
+"l": "景深",
+"h": "画面有多少是清晰的。"
+},
+"p:lens.effects": {
+"l": "效果",
+"h": "光学效果,最多三个。"
+},
+"p:lens.exposure": {
+"l": "曝光",
+"h": "光线有多亮、多均匀。"
+},
+"p:lens.focal": {
+"l": "镜头",
+"h": "焦距:广角拉伸空间,长焦压平空间。"
+},
+"p:lens.focus": {
+"l": "对焦",
+"h": "画面里最清晰的是什么。"
+},
+"p:placement.offset_x": {
+"l": "横向偏移",
+"h": "按画面百分之一的步长把主体横向移动。设置后会取代位置。百分比只有强模型才能做到。"
+},
+"p:placement.offset_y": {
+"l": "纵向偏移",
+"h": "按画面百分之一的步长把主体上下移动。设置后会取代位置。百分比只有强模型才能做到。"
+},
+"p:placement.pos": {
+"l": "画面中的位置",
+"h": "主体在画面中的位置,按 3×3 九宫格。"
+},
+"p:placement.rule": {
+"l": "构图",
+"h": "画面的构图法则。"
+},
+"p:placement.size": {
+"l": "画面中的大小",
+"h": "主体占画面的多少。"
+},
+"p:pose.facing": {
+"l": "姿势朝向",
+"h": "姿势朝向相机的方式。它来自 Pose Builder,并限制主面板的视角。"
+},
+"p:preset.camera": {
+"l": "相机预设",
+"h": "现成的相机设置。选择后会填入其他相机字段;改动其中任何一项,预设会显示为已修改。"
+},
+"p:sheet.background": {
+"l": "背景",
+"h": "面板后面的背景,或每个面板内部的背景。"
+},
+"p:sheet.borders": {
+"l": "面板边框",
+"h": "面板之间怎样分隔。"
+},
+"p:sheet.style": {
+"l": "版面类型",
+"h": "拼贴是哪一种版面。它告诉模型怎样排布各个面板。"
+},
+"p:viewpoint.special": {
+"l": "特殊视点",
+"h": "特殊的拍摄视点。它会取代围绕主体的视角(有些会排除它)。"
+},
+"sg:placement.offset_x:-10": {
+"l": "居中"
+},
+"sg:placement.offset_x:-30": {
+"l": "偏左"
+},
+"sg:placement.offset_x:-50": {
+"l": "远偏左"
+},
+"sg:placement.offset_x:11": {
+"l": "偏右"
+},
+"sg:placement.offset_x:31": {
+"l": "远偏右"
+},
+"sg:placement.offset_y:-10": {
+"l": "居中"
+},
+"sg:placement.offset_y:-30": {
+"l": "偏上"
+},
+"sg:placement.offset_y:-50": {
+"l": "远偏上"
+},
+"sg:placement.offset_y:11": {
+"l": "偏下"
+},
+"sg:placement.offset_y:31": {
+"l": "远偏下"
+},
+"t:camera": {
+"l": "相机"
+},
+"t:framing": {
+"l": "取景"
+},
+"t:lens": {
+"l": "光学"
+},
+"t:placement": {
+"l": "位置"
+},
+"t:pose": {
+"l": "姿势"
+},
+"t:preset": {
+"l": "预设"
+},
+"t:sheet": {
+"l": "版面"
+},
+"t:viewpoint": {
+"l": "视点"
+},
+"v:camera.roll:left:dutch": {
+"l": "荷兰角",
+"h": "强烈、戏剧性的倾斜。"
+},
+"v:camera.roll:left:slight": {
+"l": "轻微",
+"h": "小幅倾斜。"
+},
+"v:camera.roll:right:dutch": {
+"l": "荷兰角",
+"h": "强烈、戏剧性的倾斜。"
+},
+"v:camera.roll:right:slight": {
+"l": "轻微",
+"h": "小幅倾斜。"
+},
+"z:camera": {
+"l": "相机",
+"h": "相机的位置:多高、在主体哪一侧、倾斜多少、离多远。"
+},
+"z:framing": {
+"l": "取景",
+"h": "主体有多少入镜,以及画面的主题。"
+},
+"z:layout": {
+"l": "布局",
+"h": "拼贴的画布:可移动和缩放的面板、图片尺寸、每个面板的姿势。"
+},
+"z:lens": {
+"l": "光学",
+"h": "镜头、景深、相机类型、效果和曝光。"
+},
+"z:placement": {
+"l": "位置",
+"h": "主体在画面里的位置和大小。"
+},
+"z:presets": {
+"l": "预设",
+"h": "现成的相机:选一个,高度、视角、取景和镜头会自动填好。"
+},
+"z:quick": {
+"l": "镜头",
+"h": "最常用的相机设置集中在一处。"
+},
+"z:sheet": {
+"l": "版面",
+"h": "整个拼贴的外观:版面类型、背景和边框。所有面板相同。"
+},
+"z:viewpoint": {
+"l": "视点",
+"h": "特殊视点:第一人称、自拍、镜子、监控摄像头……"
+}
+}
+}

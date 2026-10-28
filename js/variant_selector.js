@@ -29,7 +29,11 @@ let lastSnapshot = null; // prompt of the last normal Run
 
 /* ------------------------------------------------------------------ helpers */
 
-const clone = (o) => (typeof structuredClone === "function" ? structuredClone(o) : JSON.parse(JSON.stringify(o)));
+const clone = (o) => {
+    // structuredClone refuses what other extensions put into a prompt (proxies, functions): the JSON copy is enough here
+    try { if (typeof structuredClone === "function") return structuredClone(o); } catch {}
+    return JSON.parse(JSON.stringify(o));
+};
 const isLink = (v) =>
     Array.isArray(v) && v.length === 2 && (typeof v[0] === "string" || typeof v[0] === "number") && typeof v[1] === "number";
 
@@ -50,14 +54,59 @@ function addArrowHandler(node, root, step) {
     return () => window.removeEventListener("keydown", h, true);
 }
 
-function viewUrl(info) {
+// Dragging an image out of the node: into an ND Load Images block (the file reference
+// travels as JSON under this type) or out of the browser onto the desktop (Chrome / Edge,
+// via "DownloadURL"). The browser's own URL / HTML data is dropped, so a drop elsewhere on
+// the canvas does not load the picture's workflow.
+const ND_IMAGE_MIME = "application/x-nd-image";
+function makeDraggable(elm, getInfo) {
+    elm.draggable = true;
+    elm.addEventListener("dragstart", (e) => {
+        const info = getInfo();
+        const dt = e.dataTransfer;
+        if (!info?.filename || !dt) { e.preventDefault(); return; }
+        try { dt.clearData(); } catch {}
+        dt.setData(ND_IMAGE_MIME, JSON.stringify({ filename: info.filename, subfolder: info.subfolder || "", type: info.type || "temp" }));
+        // Dropping outside the browser (desktop, a file manager, another app): Chrome / Edge save
+        // the file from this "DownloadURL" entry. It points at the original file (no preview
+        // format, no cache-busting) and is not read by the ComfyUI canvas, so a drop on the
+        // canvas still does nothing.
+        try {
+            const q = new URLSearchParams({ filename: info.filename, type: info.type || "temp", subfolder: info.subfolder || "" });
+            const url = new URL(api.apiURL(`/view?${q.toString()}`), window.location.href).href;
+            const ext = (/\.([a-z0-9]+)$/i.exec(info.filename) || [])[1]?.toLowerCase() || "png";
+            const mime = { jpg: "image/jpeg", jpeg: "image/jpeg", webp: "image/webp", gif: "image/gif", bmp: "image/bmp" }[ext] || "image/png";
+            dt.setData("DownloadURL", `${mime}:${String(info.filename).replace(/[:\\/]/g, "_")}:${url}`);
+        } catch {}
+        dt.effectAllowed = "copy";
+        // a small picture under the cursor instead of the full-size image
+        const img = elm.tagName === "IMG" ? elm : elm.querySelector("img");
+        if (img?.naturalWidth) {
+            const k = Math.min(1, 120 / Math.max(img.naturalWidth, img.naturalHeight));
+            const c = document.createElement("canvas");
+            c.width = Math.max(1, Math.round(img.naturalWidth * k));
+            c.height = Math.max(1, Math.round(img.naturalHeight * k));
+            try {
+                c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+                Object.assign(c.style, { position: "fixed", left: "-1000px", top: "-1000px" });
+                document.body.append(c);
+                dt.setDragImage(c, c.width / 2, c.height / 2);
+                setTimeout(() => c.remove(), 0);
+            } catch { c.remove(); }
+        }
+    });
+}
+
+// original: the file as it is (with its metadata); otherwise the frontend's preview format
+// setting may turn it into a smaller webp / jpeg without metadata
+function viewUrl(info, original = false) {
     const q = new URLSearchParams({
         filename: info.filename,
         type: info.type || "temp",
         subfolder: info.subfolder || "",
     });
     let extra = "";
-    try { extra = app.getPreviewFormatParam?.() || ""; } catch {}
+    if (!original) { try { extra = app.getPreviewFormatParam?.() || ""; } catch {} }
     return api.apiURL(`/view?${q.toString()}${extra}&r=${Date.now()}${Math.floor(Math.random() * 1000)}`);
 }
 
@@ -580,6 +629,8 @@ function setupPreview(node) {
     const wVariant = hideWidget(node, "variant_suffix");
     const wUpName = hideWidget(node, "upscaled_suffix");
     const wUpOn = hideWidget(node, "upscale_button");
+    const wMeta = hideWidget(node, "preview_metadata");
+    const metaOn = () => !!wMeta?.value;
     if (wUp) wUp.value = false;
     const upscaleOn = () => wUpOn?.value !== false;
 
@@ -590,7 +641,7 @@ function setupPreview(node) {
     const thumbs = el("div", "nd-vs-thumbs");
     const main = el("div", "nd-vs-main");
     const mainImg = el("img", "nd-vs-mainimg");
-    mainImg.draggable = false;
+    mainImg.title = "Drag the image into an ND Load Images block to use it there";
     const empty = el("div", "nd-vs-empty", "Press Run to generate variants");
 
     // before / after comparison overlay
@@ -651,10 +702,11 @@ function setupPreview(node) {
     const fUpName = textRow("Upscaled name", DEFAULT_UPSCALED, "Added after the file name for the upscaled result: ND_Image_upscaled.");
     const cUpOn = checkRow("Upscale button", "Show the Upscale button. Without it every batch of variants is saved.");
     const cSave = checkRow("Save variants", "Save each batch of variants to the output folder.");
+    const cMeta = checkRow("Preview with Metadata", "Put the prompt and workflow into the preview images, like the saved files have. Then a preview dragged out of the node or opened in a new tab can be loaded back in ComfyUI. Applies to the next Run. Previews are shown unconverted.");
     const nameHint = el("div", "nd-vs-hint");
     const cLive = checkRow("Live preview", "Show the sampler's preview frames in the node while the variants (and the Upscale pass) are generated. ComfyUI's live previews must be on. For a batch, ComfyUI previews its first image only.");
     const liveHint = el("div", "nd-vs-hint nd-vs-warn", LIVE_OFF_HINT);
-    pop.append(fToggle.row, fName.row, fVariant.row, fUpName.row, cUpOn.row, cSave.row, nameHint, cLive.row, liveHint);
+    pop.append(fToggle.row, fName.row, fVariant.row, fUpName.row, cUpOn.row, cSave.row, cMeta.row, nameHint, cLive.row, liveHint);
 
     root.append(main, info, thumbs, upBtn, bottom, pop);
 
@@ -667,7 +719,9 @@ function setupPreview(node) {
         st.sel = v;
         if (wIdx) wIdx.value = v;
     };
-    const withUrl = (i) => (i ? { ...i, url: viewUrl(i) } : null);
+    const withUrl = (i) => (i ? { ...i, url: viewUrl(i, metaOn()) } : null);
+    // the image shown in the main view
+    makeDraggable(mainImg, () => (st.viewFinal && st.final ? st.final : st.images[idx()]) || null);
     // Only the Compare preference is saved with the workflow. Image references are
     // never stored: they point to temp files that are gone after a restart.
     // The shown images are kept in memory only (VIEW_CACHE), for switching workflow tabs.
@@ -696,6 +750,7 @@ function setupPreview(node) {
         img.onerror = () => t.classList.add("broken");
         t.append(img, el("span", null, label));
         t.addEventListener("click", onClick);
+        makeDraggable(t, () => info);
         return t;
     }
 
@@ -932,6 +987,7 @@ function setupPreview(node) {
             return `${base}${sfx ? "_" + sfx : ""}_00001_.png`;
         };
         nameHint.textContent = `Saved to the ComfyUI output folder: ${name(wVariant?.value)}` + (on ? `, ${name(wUpName?.value)}` : "");
+        cMeta.input.checked = metaOn();
         cLive.input.checked = liveOn();
         liveHint.style.display = liveOn() && lv.noFrames ? "" : "none";
     }
@@ -970,6 +1026,15 @@ function setupPreview(node) {
         syncSettings(); render(); dirty();
     });
     cSave.input.addEventListener("change", () => { if (wSave) wSave.value = cSave.input.checked; syncSettings(); dirty(); });
+    cMeta.input.addEventListener("change", () => {
+        if (wMeta) wMeta.value = cMeta.input.checked;
+        // the images shown are re-addressed: unconverted files with the option on
+        const re = (i) => (i ? { ...i, url: viewUrl(i, metaOn()) } : i);
+        st.images = st.images.map(re);
+        st.final = re(st.final);
+        st.source = re(st.source);
+        syncSettings(); buildThumbs(); saveView(); render(); dirty();
+    });
     cLive.input.addEventListener("change", () => {
         node.properties.nd_live = cLive.input.checked;
         if (!cLive.input.checked) { clearLive(); lv.noFrames = false; }
@@ -1249,7 +1314,7 @@ const STYLE = `
 .nd-vs-thumb span{position:absolute;left:3px;bottom:2px;font-size:10px;line-height:14px;background:#000b;color:#fff;padding:0 4px;border-radius:3px}
 .nd-vs-thumb.final span{background:var(--nd-accent)}
 .nd-vs-main{position:relative;flex:1 1 auto;min-height:120px;background:#0004;border-radius:6px;overflow:hidden;display:flex;align-items:center;justify-content:center}
-.nd-vs-mainimg{max-width:100%;max-height:100%;object-fit:contain;display:block}
+.nd-vs-mainimg{max-width:100%;max-height:100%;object-fit:contain;display:block;cursor:grab}
 .nd-vs-empty{position:absolute;opacity:.5;text-align:center;padding:0 10px}
 .nd-vs-badge{position:absolute;right:6px;bottom:6px;background:#000b;color:#fff;padding:1px 7px;border-radius:4px;font-size:11px;line-height:16px}
 .nd-vs-btn{flex:0 0 auto;height:30px;border:none;border-radius:6px;background:var(--nd-accent);color:#fff;font-weight:600;font-size:13px;cursor:pointer;letter-spacing:.3px}

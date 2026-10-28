@@ -4,6 +4,15 @@ import { el, dirty, chain, bindCanvasNavigation, injectStyleOnce } from "./nd_co
 
 const NODE = "NDShowAnyAsText";
 
+const svg = (body, size = 14) =>
+    `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${body}</svg>`;
+const ICON = {
+    left: svg('<path d="M15 6l-6 6 6 6"/>', 13),
+    right: svg('<path d="M9 6l6 6-6 6"/>', 13),
+    copy: svg('<rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>', 14),
+    check: svg('<path d="M20 6L9 17l-5-5"/>', 14),
+};
+
 const nextNoteTitle = (notes) => {
     let n = 0;
     for (const t of notes) {
@@ -25,7 +34,18 @@ function setupShowAny(node) {
     addBtn.type = "button";
     addBtn.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
     addBtn.title = "Add a note tab";
-    bar.append(tabs, addBtn);
+    // with many tabs the strip scrolls: arrows (hold to keep going), the wheel, Shift+wheel,
+    // and the active tab is always brought into view
+    const mkNav = (cls, icon, title) => {
+        const b = el("button", "nd-st-nav " + cls);
+        b.type = "button";
+        b.title = title;
+        b.innerHTML = icon;
+        return b;
+    };
+    const navL = mkNav("l", ICON.left, "Scroll the tabs left");
+    const navR = mkNav("r", ICON.right, "Scroll the tabs right");
+    bar.append(navL, tabs, navR, addBtn);
 
     const body = el("div", "nd-st-body");
     const preview = el("textarea", "nd-st-text nd-st-preview");
@@ -33,7 +53,12 @@ function setupShowAny(node) {
     preview.spellcheck = false;
     preview.placeholder = "Run the workflow to see the value";
     preview.dataset.ndScroll = "";
-    body.append(preview);
+    // copy the Preview text: shown only while the Preview tab has some text
+    const copyBtn = el("button", "nd-st-copy");
+    copyBtn.type = "button";
+    copyBtn.innerHTML = ICON.copy;
+    copyBtn.title = "Copy the text";
+    body.append(preview, copyBtn);
     root.append(bar, body);
 
     const editors = []; // one textarea per note, so each keeps its own undo history
@@ -131,12 +156,68 @@ function setupShowAny(node) {
             tabs.append(t);
         });
         const act = tabs.querySelector(".nd-st-tab.active");
-        act?.scrollIntoView?.({ block: "nearest", inline: "nearest" });
+        if (act) {
+            const a = act.getBoundingClientRect(), t = tabs.getBoundingClientRect();
+            const left = a.left - t.left + tabs.scrollLeft, right = left + a.width;
+            if (left < tabs.scrollLeft) tabs.scrollLeft = Math.max(0, left - 6);
+            else if (right > tabs.scrollLeft + tabs.clientWidth) tabs.scrollLeft = right - tabs.clientWidth + 6;
+        }
+        updateNav();
     }
+
+    // arrows only while the strip does not fit; one is dimmed at its end
+    function updateNav() {
+        const over = tabs.scrollWidth > tabs.clientWidth + 1;
+        navL.style.display = navR.style.display = over ? "" : "none";
+        navL.disabled = tabs.scrollLeft <= 0;
+        navR.disabled = tabs.scrollLeft + tabs.clientWidth >= tabs.scrollWidth - 1;
+    }
+    tabs.addEventListener("scroll", updateNav);
+    const holdScroll = (btn, dir) => {
+        let t1 = 0, t2 = 0;
+        const step = () => { tabs.scrollBy({ left: dir * 140, behavior: "smooth" }); };
+        const stop = () => { clearTimeout(t1); clearInterval(t2); t1 = t2 = 0; };
+        btn.addEventListener("pointerdown", (e) => {
+            if (e.button !== 0 || btn.disabled) return;
+            e.preventDefault();
+            e.stopPropagation();
+            step();
+            t1 = setTimeout(() => { t2 = setInterval(step, 140); }, 380);
+        });
+        for (const ev of ["pointerup", "pointerleave", "pointercancel"]) btn.addEventListener(ev, stop);
+    };
+    holdScroll(navL, -1);
+    holdScroll(navR, 1);
+    const ro = new ResizeObserver(() => updateNav());
+    ro.observe(tabs);
+
+    // Copy button
+    const syncCopy = () => {
+        copyBtn.style.display = st.active === -1 && preview.value.length > 0 ? "" : "none";
+    };
+    let copiedTimer = 0;
+    copyBtn.addEventListener("click", async () => {
+        const text = preview.value;
+        let ok = false;
+        try { await navigator.clipboard.writeText(text); ok = true; } catch {}
+        if (!ok) {
+            try { preview.select(); ok = document.execCommand("copy"); preview.setSelectionRange(0, 0); } catch {}
+        }
+        copyBtn.innerHTML = ok ? ICON.check : ICON.copy;
+        copyBtn.classList.toggle("done", ok);
+        copyBtn.title = ok ? "Copied" : "Copy failed: select the text and press Ctrl+C";
+        clearTimeout(copiedTimer);
+        copiedTimer = setTimeout(() => {
+            copyBtn.innerHTML = ICON.copy;
+            copyBtn.classList.remove("done");
+            copyBtn.title = "Copy the text";
+        }, 1400);
+    });
 
     function renderBody() {
         preview.style.display = st.active === -1 ? "" : "none";
         editors.forEach((ta, i) => { ta.style.display = st.active === i ? "" : "none"; });
+        syncCopy();
     }
 
     function activate(i) {
@@ -159,10 +240,10 @@ function setupShowAny(node) {
         ta.focus();
     });
 
-    // tab strip: a horizontal swipe or Shift+wheel scrolls it, a plain wheel zooms the canvas
+    // over the tab strip the wheel scrolls the tabs while they do not fit (Ctrl+wheel still
+    // zooms the canvas); when they all fit, the wheel zooms the canvas as everywhere else
     tabs.addEventListener("wheel", (e) => {
-        const horizontal = e.shiftKey || Math.abs(e.deltaX) > Math.abs(e.deltaY);
-        if (!horizontal || e.ctrlKey || tabs.scrollWidth <= tabs.clientWidth) return;
+        if (e.ctrlKey || tabs.scrollWidth <= tabs.clientWidth) return;
         tabs.scrollLeft += Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
         e.preventDefault();
         e.stopPropagation();
@@ -185,8 +266,10 @@ function setupShowAny(node) {
             preview.value = t;
             node.properties ||= {};
             node.properties.nd_preview_text = t;
+            syncCopy();
             dirty();
         },
+        dispose() { ro.disconnect(); clearTimeout(copiedTimer); },
         restore() {
             const saved = node.properties?.nd_notes;
             st.notes = Array.isArray(saved)
@@ -217,6 +300,15 @@ const STYLE = `
 .nd-st-close{display:inline-flex;align-items:center;justify-content:center;height:16px;min-width:16px;padding:0 3px;border:none;border-radius:3px;background:transparent;color:inherit;font-size:13px;line-height:1;cursor:pointer;opacity:.7}
 .nd-st-close:hover{opacity:1;background:#fff2}
 .nd-st-close.armed{display:inline-flex;opacity:1;background:#c0392b;color:#fff;font-size:10px;padding:0 5px}
+.nd-st-nav{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;width:18px;height:22px;margin-bottom:3px;padding:0;border:1px solid var(--border-color,#444);border-radius:4px;background:var(--comfy-input-bg,#222);color:var(--input-text,#ddd);line-height:0;cursor:pointer;user-select:none}
+.nd-st-nav svg{display:block;pointer-events:none}
+.nd-st-nav:hover:not(:disabled){border-color:var(--nd-accent);color:var(--nd-accent)}
+.nd-st-nav:disabled{opacity:.3;cursor:default}
+.nd-st-copy{position:absolute;top:6px;right:16px;z-index:2;display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;box-sizing:border-box;padding:0;margin:0;border:1px solid rgba(255,255,255,.18);border-radius:6px;background:rgba(0,0,0,.45);color:#fff;cursor:pointer;line-height:0;opacity:0;pointer-events:none;transition:opacity .12s,border-color .12s}
+.nd-st-body:hover .nd-st-copy,.nd-st-copy:focus-visible,.nd-st-copy.done{opacity:.6;pointer-events:auto}
+.nd-st-copy svg{display:block;pointer-events:none}
+.nd-st-body:hover .nd-st-copy:hover{opacity:1;border-color:var(--nd-accent)}
+.nd-st-copy.done{opacity:1;border-color:#3fb950;color:#3fb950}
 .nd-st-add{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;width:24px;height:22px;margin-bottom:3px;padding:0;border:1px solid var(--border-color,#444);border-radius:4px;background:var(--comfy-input-bg,#222);color:var(--input-text,#ddd);line-height:0;cursor:pointer}
 .nd-st-add svg{display:block;pointer-events:none}
 .nd-st-add:hover{border-color:var(--nd-accent);color:var(--nd-accent)}
@@ -254,6 +346,9 @@ app.registerExtension({
         });
         chain(proto, "onExecuted", function (msg) {
             if (msg?.nd_text) this.ndApi?.setText?.(msg.nd_text[0]);
+        });
+        chain(proto, "onRemoved", function () {
+            this.ndApi?.dispose?.();
         });
     },
 });

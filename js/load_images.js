@@ -2,11 +2,22 @@
 //
 // The whole node state lives in the hidden `state` widget (JSON), so it is saved
 // with the workflow. The Python side reads the same JSON (nd_nodes/load_images.py).
+//
+// Per-pin caching: when a prompt is queued, every node fed by this node through
+// Unpack Parameters is re-pointed to an internal NDLoadImagesPart that gets only the
+// data of that one value (see splitIntoParts), so a value re-runs only when it changes.
 import { app } from "../../scripts/app.js";
 import { api } from "../../scripts/api.js";
 import { el, dirty, toast, hideWidget, chain, bindCanvasNavigation, injectStyleOnce, blankSlots, ND_REG, nativeTrackCss, setRangeFill } from "./nd_common.js";
 
 const NODE = "NDLoadImages";
+const PART = "NDLoadImagesPart";
+const PACK = "NDPack";
+const UNPACK = "NDUnpack";
+const SLIDER = "NDValueSlider";
+const BLOCK_FIELD = "*"; // a part that returns the whole "Image N Parameters" bundle
+// images dragged from other nodes of the pack (ND Variant Preview Selector)
+export const ND_IMAGE_MIME = "application/x-nd-image";
 const MAX_BLOCKS = 20;
 const DEFAULT_IMAGE = "example.png";
 const KEEP_MODES = ["crop", "pad white", "pad black", "pad edge", "pad edge color", "stretch"];
@@ -44,6 +55,8 @@ const ICON = {
     close: svg('<path d="M18 6L6 18"/><path d="M6 6l12 12"/>', 12),
     lock: svg('<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>', 13),
     reset: svg('<path d="M3 12a9 9 0 1 0 2.64-6.36L3 8"/><path d="M3 3v5h5"/>', 14),
+    eye: svg('<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>', 15),
+    eyeOff: svg('<path d="M9.9 4.24A9.1 9.1 0 0 1 12 4c6.5 0 10 7 10 7a18.5 18.5 0 0 1-2.16 3.19"/><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-6.5 0-10-7-10-7a18.4 18.4 0 0 1 5.06-5.94"/><path d="M2 2l20 20"/>', 15),
 };
 
 /* -------------------------------------------------------------------- state */
@@ -131,13 +144,14 @@ function viewUrl(ref) {
 }
 
 const imgCache = new Map();
+const imgReady = new Map(); // url -> loaded image (for synchronous size checks)
 function loadImg(ref) {
     const url = viewUrl(ref);
     if (!imgCache.has(url)) {
         imgCache.set(url, new Promise((resolve, reject) => {
             const img = new Image();
             img.crossOrigin = "anonymous";
-            img.onload = () => resolve(img);
+            img.onload = () => { imgReady.set(url, img); resolve(img); };
             img.onerror = () => { imgCache.delete(url); reject(new Error(`Cannot load ${ref}`)); };
             img.src = url;
         }));
@@ -155,6 +169,245 @@ async function uploadFile(file) {
     return d.subfolder ? `${d.subfolder}/${d.name}` : d.name;
 }
 
+// An image of another node (ND Variant Preview Selector) or a /view URL: files of the
+// input folder are used as they are, temp / output files are copied into it.
+function refOfInfo(info) {
+    const filename = String(info?.filename || "");
+    if (!filename) return null;
+    const sub = String(info.subfolder || "");
+    return sub ? `${sub}/${filename}` : filename;
+}
+
+async function importInfo(info) {
+    if ((info.type || "input") === "input") return refOfInfo(info);
+    const q = new URLSearchParams({ filename: info.filename, type: info.type || "temp", subfolder: info.subfolder || "" });
+    const res = await api.fetchApi(`/view?${q.toString()}`);
+    if (!res.ok) throw new Error(`Cannot read ${info.filename} (${res.status})`);
+    const blob = await res.blob();
+    return uploadFile(new File([blob], info.filename, { type: blob.type || "image/png" }));
+}
+
+function infoOfUrl(uri) {
+    try {
+        const u = new URL(uri, window.location.href);
+        if (u.origin === window.location.origin && /\/view$/.test(u.pathname) && u.searchParams.get("filename")) {
+            return { filename: u.searchParams.get("filename"), subfolder: u.searchParams.get("subfolder") || "", type: u.searchParams.get("type") || "output" };
+        }
+    } catch {}
+    return null;
+}
+
+async function fileOfUrl(uri) {
+    const res = await fetch(uri);
+    if (!res.ok) throw new Error(`Cannot read the dropped image (${res.status})`);
+    const blob = await res.blob();
+    if (!/^image\//.test(blob.type)) throw new Error("The dropped item is not an image.");
+    let name = "image.png";
+    try { name = decodeURIComponent(new URL(uri).pathname.split("/").pop()) || name; } catch {}
+    if (!/\.[a-z0-9]+$/i.test(name)) name += "." + (blob.type.split("/")[1] || "png");
+    return new File([blob], name, { type: blob.type });
+}
+
+const dropKinds = (dt) => {
+    const t = [...(dt?.types || [])];
+    return { nd: t.includes(ND_IMAGE_MIME), files: t.includes("Files"), uri: t.includes("text/uri-list") };
+};
+
+/* ------------------------------------------------------------------ prompt */
+// ComfyUI caches a node by the inputs of its whole ancestry, so any change in the state of
+// Load Images (a slider, say) would re-run everything after it. In the queued prompt, every
+// node fed by Load Images through Unpack Parameters is re-pointed to an internal
+// NDLoadImagesPart that gets only the data of that one value; the nodes of the graph stay
+// as they are, and the values are the same.
+
+const isWire = (v) => Array.isArray(v) && v.length === 2 && (typeof v[0] === "string" || typeof v[0] === "number") && typeof v[1] === "number";
+const jsonList = (t) => { try { const d = JSON.parse(t || "[]"); return Array.isArray(d) ? d : []; } catch { return []; } };
+const safeId = (t) => String(t).replace(/[^\w]/g, "_");
+
+// Does the parameters wire carry width and height (a Pack with both fields wired or set)?
+function packHasSize(output, wire) {
+    const n = isWire(wire) ? output[String(wire[0])] : null;
+    if (n?.class_type !== PACK) return false;
+    const names = jsonList(n.inputs?.names);
+    return ["width", "height"].every((f) => names.some((e) => e?.name === f && e.slot in (n.inputs || {})));
+}
+
+// The block reduced to what one value depends on.
+function partInputs(output, loadId, st, block, field) {
+    const s = block.settings;
+    if (field === "image" || field === "mask" || field === BLOCK_FIELD) {
+        const keepOn = !!(s.keepEnabled && s.keepApply);
+        let mini;
+        if (field === BLOCK_FIELD) {
+            const { id, ...rest } = block;
+            mini = rest;
+        } else {
+            mini = { image: block.image, masked: block.masked, edit: block.edit, settings: { keepEnabled: keepOn, keepApply: keepOn } };
+            if (keepOn) { mini.keep = block.keep; mini.settings.scaleMethod = s.scaleMethod; }
+        }
+        const inputs = { block: JSON.stringify(mini), field };
+        if (keepOn) {
+            const L = output[loadId];
+            if (isWire(L.inputs?.params)) inputs.params = L.inputs.params;
+            if (!packHasSize(output, L.inputs?.params)) {
+                const first = st.blocks.find((b) => b.enabled);
+                if (first) inputs.size_ref = JSON.stringify({ image: first.image, masked: first.masked, edit: first.edit });
+            }
+            inputs.owner = String(loadId);
+        }
+        return inputs;
+    }
+    let mini;
+    if (field === "keep_proportion") mini = { keep: block.keep, settings: { keepEnabled: !!s.keepEnabled } };
+    else if (field === "enabled") mini = { enabled: !!block.enabled };
+    else if (s.sliderEnabled && sliderKey(s) === field) mini = { slider: block.slider, settings: { sliderEnabled: true, sliderName: s.sliderName } };
+    else mini = { settings: { keepEnabled: false, sliderEnabled: false } }; // not in the bundle: None
+    return { block: JSON.stringify(mini), field };
+}
+
+export function splitIntoParts(output) {
+    if (!output || typeof output !== "object") return output;
+    const loads = Object.keys(output).filter((id) => output[id]?.class_type === NODE && typeof output[id].inputs?.state === "string");
+    if (!loads.length) return output;
+
+    // [load id, "Image N Parameters", field?] for a wire coming out of Load Images / its Unpacks
+    const pathOf = (wire, depth = 0) => {
+        if (!isWire(wire) || depth > 32) return null;
+        const n = output[String(wire[0])];
+        if (!n) return null;
+        if (n.class_type === NODE) return wire[1] === 0 && loads.includes(String(wire[0])) ? { load: String(wire[0]), path: [] } : null;
+        if (n.class_type !== UNPACK) return null;
+        const name = jsonList(n.inputs?.names)[wire[1]];
+        if (name == null) return null;
+        const parent = pathOf(n.inputs?.params, depth + 1);
+        return parent ? { load: parent.load, path: [...parent.path, String(name)] } : null;
+    };
+
+    const states = new Map();
+    const made = new Map(); // inputs as JSON -> part id
+    const partFor = ({ load, path }) => {
+        if (!path.length || path.length > 2) return null;
+        const m = /^Image (\d+) Parameters$/.exec(path[0]);
+        if (!m) return null;
+        if (!states.has(load)) states.set(load, normalizeState(output[load].inputs.state));
+        const st = states.get(load);
+        const index = Number(m[1]) - 1;
+        const block = st.blocks[index];
+        if (!block) return null;
+        const field = path.length === 2 ? path[1] : BLOCK_FIELD;
+        const inputs = partInputs(output, load, st, block, field);
+        const key = JSON.stringify(inputs);
+        if (made.has(key)) return made.get(key);
+        const base = `nd_li_${safeId(load)}_${index + 1}_${field === BLOCK_FIELD ? "all" : safeId(field)}`;
+        let id = base;
+        for (let k = 2; output[id]; k++) id = `${base}_${k}`;
+        output[id] = { class_type: PART, inputs, _meta: { title: `ND Load Images Part (${path.join(" / ")})` } };
+        made.set(key, id);
+        return id;
+    };
+
+    for (const [id, n] of Object.entries(output)) {
+        if (!n?.inputs || n.class_type === UNPACK || n.class_type === PART) continue;
+        if (made.size && [...made.values()].includes(id)) continue;
+        for (const [key, v] of Object.entries(n.inputs)) {
+            const p = pathOf(v);
+            if (!p) continue;
+            const part = partFor(p);
+            if (part) n.inputs[key] = [part, 0];
+        }
+    }
+    return output;
+}
+
+function installQueueHook() {
+    if (api.__ndLoadImagesHook) return;
+    api.__ndLoadImagesHook = true;
+    const orig = api.queuePrompt.bind(api);
+    api.queuePrompt = async function (number, data, ...rest) {
+        try {
+            if (data?.output) splitIntoParts(data.output);
+        } catch (e) {
+            console.warn("[Neural Dreamer] Load Images: prompt split failed", e);
+        }
+        return orig(number, data, ...rest);
+    };
+}
+
+/* ------------------------------------------------------------- target size */
+// The size Keep Proportion resizes to, for the eye preview: the width and height wired
+// into the input when they can be read in the graph, the size of the first enabled image
+// without them, otherwise the size the last Run used.
+
+function originOf(node, inputIndex, depth = 0) {
+    const inp = node?.inputs?.[inputIndex];
+    if (!inp || inp.link == null || depth > 32) return null;
+    const link = getLink(node.graph, inp.link);
+    const src = link ? node.graph?.getNodeById?.(link.origin_id) : null;
+    if (!src) return null;
+    if ((src.comfyClass || src.type) === "Reroute") return originOf(src, 0, depth + 1);
+    return { node: src, slot: link.origin_slot };
+}
+
+function getLink(graph, id) {
+    if (id == null || !graph) return null;
+    return graph.getLink?.(id) ?? graph.links?.get?.(id) ?? graph.links?.[id] ?? graph._links?.get?.(id) ?? null;
+}
+
+// A number set in the graph (ND Slider, a primitive, ND Resolution, a widget named like the output).
+function numberAt(src) {
+    const n = src?.node;
+    if (!n) return null;
+    const cls = n.comfyClass || n.type;
+    let v = null;
+    if (cls === UNPACK) {
+        // width / height unpacked from an ND Resolution
+        const field = jsonList(n.widgets?.find((w) => w.name === "names")?.value)[src.slot];
+        const pi = n.inputs?.findIndex((x) => x.name === "params") ?? -1;
+        const from = pi >= 0 ? originOf(n, pi) : null;
+        const size = from?.node?.ndRes?.size?.();
+        if (!size || (field !== "width" && field !== "height")) return null;
+        return field === "width" ? size[0] : size[1];
+    }
+    if (cls === SLIDER) {
+        try { v = JSON.parse(n.widgets?.find((w) => w.name === "state")?.value || "{}").value; } catch {}
+    } else if (cls === "PrimitiveNode") {
+        v = n.widgets?.[0]?.value;
+    } else {
+        const out = n.outputs?.[src.slot]?.name;
+        v = (n.widgets?.find((w) => w.name === "value") ?? n.widgets?.find((w) => w.name === out))?.value;
+    }
+    v = Number(v);
+    return Number.isFinite(v) ? Math.round(v) : null;
+}
+
+// {kind: "size", size} | {kind: "first"} (no width/height) | {kind: "unknown"}
+function inputSize(node) {
+    const i = node.inputs?.findIndex((x) => x.name === "params") ?? -1;
+    const src = i >= 0 ? originOf(node, i) : null;
+    if (!src) return { kind: "first" };
+    if ((src.node.comfyClass || src.node.type) !== PACK) return { kind: "unknown" };
+    const names = jsonList(src.node.widgets?.find((w) => w.name === "names")?.value);
+    const val = (f) => {
+        const e = names.find((x) => x?.name === f);
+        if (!e) return undefined;
+        const k = src.node.inputs?.findIndex((x) => x.name === e.slot) ?? -1;
+        return k >= 0 ? numberAt(originOf(src.node, k)) : undefined;
+    };
+    const w = val("width"), h = val("height");
+    if (w === undefined || h === undefined) return { kind: "first" };
+    if (w == null || h == null) return { kind: "unknown" };
+    return w > 0 && h > 0 ? { kind: "size", size: [w, h] } : { kind: "first" };
+}
+
+// Prompt ids of nodes inside subgraphs look like "12:5" (subgraph node 12 -> node 5).
+function nodeOfApiId(id) {
+    const parts = String(id).split(":");
+    const get = (g, k) => g?.getNodeById?.(Number(k)) ?? g?.getNodeById?.(k) ?? null;
+    let g = app.graph;
+    for (let i = 0; i < parts.length - 1 && g; i++) g = get(g, parts[i])?.subgraph ?? null;
+    return get(g, parts[parts.length - 1]);
+}
+
 // Geometry of the edited image: rotate (clockwise) -> flip -> crop, as on the server.
 function editedGeometry(img, edit) {
     const w = img.naturalWidth, h = img.naturalHeight;
@@ -164,13 +417,12 @@ function editedGeometry(img, edit) {
     return { w, h, k, rw, rh, cx: c[0] * rw, cy: c[1] * rh, cw: Math.max(1, c[2] * rw), ch: Math.max(1, c[3] * rh) };
 }
 
-// Draws the edited image into `canvas`, fitted into maxW x maxH (CSS px).
-function paintEdited(canvas, img, edit, maxW, maxH, ignoreCrop = false) {
-    const e = ignoreCrop ? { ...edit, crop: null } : edit;
-    const g = editedGeometry(img, e);
-    const s = Math.max(0.0001, Math.min(maxW / g.cw, maxH / g.ch));
+// Sizes `canvas` for a picture of w x h (image px) fitted into maxW x maxH (CSS px);
+// returns the context and the scale from image px to canvas px.
+function fitCanvas(canvas, w, h, maxW, maxH) {
+    const s = Math.max(0.0001, Math.min(maxW / w, maxH / h));
     const dpr = Math.min(2, window.devicePixelRatio || 1);
-    const W = Math.max(1, Math.round(g.cw * s)), H = Math.max(1, Math.round(g.ch * s));
+    const W = Math.max(1, Math.round(w * s)), H = Math.max(1, Math.round(h * s));
     canvas.style.width = `${W}px`;
     canvas.style.height = `${H}px`;
     canvas.width = Math.max(1, Math.round(W * dpr));
@@ -178,15 +430,110 @@ function paintEdited(canvas, img, edit, maxW, maxH, ignoreCrop = false) {
     const ctx = canvas.getContext("2d");
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    const k = s * dpr;
+    return { ctx, k: s * dpr, W, H };
+}
+
+// Draws the edited image (geometry g) with `k` canvas px per image px.
+function drawEdited(ctx, img, edit, g, k) {
     ctx.setTransform(k, 0, 0, k, -g.cx * k, -g.cy * k);
     ctx.translate(g.rw / 2, g.rh / 2);
-    ctx.scale(e.flipH ? -1 : 1, e.flipV ? -1 : 1);
+    ctx.scale(edit.flipH ? -1 : 1, edit.flipV ? -1 : 1);
     ctx.rotate((g.k * Math.PI) / 2);
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = "high";
     ctx.drawImage(img, -g.w / 2, -g.h / 2);
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+}
+
+// Draws the edited image into `canvas`, fitted into maxW x maxH (CSS px).
+function paintEdited(canvas, img, edit, maxW, maxH, ignoreCrop = false) {
+    const e = ignoreCrop ? { ...edit, crop: null } : edit;
+    const g = editedGeometry(img, e);
+    const { ctx, k, W, H } = fitCanvas(canvas, g.cw, g.ch, maxW, maxH);
+    drawEdited(ctx, img, e, g, k);
     return { W, H, g };
+}
+
+// Average colour of a row or column of `data` (RGBA), weighted by alpha.
+function edgeColor(data, w, h, side) {
+    let r = 0, gg = 0, b = 0, a = 0;
+    const n = side === "left" || side === "right" ? h : w;
+    for (let i = 0; i < n; i++) {
+        const x = side === "left" ? 0 : side === "right" ? w - 1 : i;
+        const y = side === "top" ? 0 : side === "bottom" ? h - 1 : i;
+        const o = (y * w + x) * 4, al = data[o + 3];
+        r += data[o] * al; gg += data[o + 1] * al; b += data[o + 2] * al; a += al;
+    }
+    if (!a) return "rgb(0,0,0)";
+    return `rgb(${Math.round(r / a)},${Math.round(gg / a)},${Math.round(b / a)})`;
+}
+
+// The block's final image as the server makes it: the edit, then Keep Proportion to
+// target = [w, h] (same maths as keep_proportion() in nd_nodes/load_images.py).
+// Without a target (or with Keep Proportion off) it is the edited image.
+function paintFinal(canvas, img, block, target, maxW, maxH) {
+    const g = editedGeometry(img, block.edit);
+    const s = block.settings;
+    if (!(s.keepEnabled && s.keepApply && target)) {
+        paintEdited(canvas, img, block.edit, maxW, maxH);
+        return [Math.round(g.cw), Math.round(g.ch)];
+    }
+    const [tw, th] = target;
+    const cw = Math.max(1, Math.round(g.cw)), ch = Math.max(1, Math.round(g.ch));
+    // the edited image, at most 1600 px on its long side
+    const s0 = Math.min(1, 1600 / Math.max(cw, ch));
+    const ed = document.createElement("canvas");
+    ed.width = Math.max(1, Math.round(cw * s0));
+    ed.height = Math.max(1, Math.round(ch * s0));
+    const ectx = ed.getContext("2d", { willReadFrequently: true });
+    drawEdited(ectx, img, block.edit, g, s0);
+
+    const { ctx, k } = fitCanvas(canvas, tw, th, maxW, maxH);
+    ctx.setTransform(k, 0, 0, k, 0, 0);
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = "high";
+    const mode = block.keep;
+    if (mode === "stretch") {
+        ctx.drawImage(ed, 0, 0, tw, th);
+    } else if (mode === "crop") {
+        const sc = Math.max(tw / cw, th / ch);
+        const nw = Math.max(tw, Math.round(cw * sc)), nh = Math.max(th, Math.round(ch * sc));
+        ctx.drawImage(ed, -Math.floor((nw - tw) / 2), -Math.floor((nh - th) / 2), nw, nh);
+    } else {
+        const sc = Math.min(tw / cw, th / ch);
+        const nw = Math.max(1, Math.min(tw, Math.round(cw * sc))), nh = Math.max(1, Math.min(th, Math.round(ch * sc)));
+        const left = Math.floor((tw - nw) / 2), top = Math.floor((th - nh) / 2);
+        const right = tw - nw - left, bottom = th - nh - top;
+        const EW = ed.width, EH = ed.height;
+        if (mode === "pad white" || mode === "pad black") {
+            ctx.fillStyle = mode === "pad white" ? "#fff" : "#000";
+            ctx.fillRect(0, 0, tw, th);
+        } else if (mode === "pad edge color") {
+            const data = ectx.getImageData(0, 0, EW, EH).data;
+            // same order as the server: the top and bottom bands cover the corners
+            const fill = (side, x, y, w, h) => { if (w > 0 && h > 0) { ctx.fillStyle = edgeColor(data, EW, EH, side); ctx.fillRect(x, y, w, h); } };
+            fill("left", 0, 0, left, th);
+            fill("right", left + nw, 0, right, th);
+            fill("top", 0, 0, tw, top);
+            fill("bottom", 0, top + nh, tw, bottom);
+        } else if (mode === "pad edge") {
+            // the edge pixels repeated outwards
+            ctx.imageSmoothingEnabled = false;
+            const strip = (sx, sy, sw, sh, x, y, w, h) => { if (w > 0 && h > 0) ctx.drawImage(ed, sx, sy, sw, sh, x, y, w, h); };
+            strip(0, 0, 1, EH, 0, top, left, nh);
+            strip(EW - 1, 0, 1, EH, left + nw, top, right, nh);
+            strip(0, 0, EW, 1, left, 0, nw, top);
+            strip(0, EH - 1, EW, 1, left, top + nh, nw, bottom);
+            strip(0, 0, 1, 1, 0, 0, left, top);
+            strip(EW - 1, 0, 1, 1, left + nw, 0, right, top);
+            strip(0, EH - 1, 1, 1, 0, top + nh, left, bottom);
+            strip(EW - 1, EH - 1, 1, 1, left + nw, top + nh, right, bottom);
+            ctx.imageSmoothingEnabled = true;
+        }
+        ctx.drawImage(ed, left, top, nw, nh);
+    }
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    return [tw, th];
 }
 
 /* ------------------------------------------------------------- mask editor */
@@ -576,16 +923,59 @@ function setupLoadImages(node) {
 
     node.ndLI = { get state() { return st; } };
 
+    // subscribers of node.ndApi (other UIs over the same state): called once per change burst
+    const subs = new Set();
+    let notifyPending = false;
+    const notify = () => {
+        if (notifyPending) return;
+        notifyPending = true;
+        queueMicrotask(() => {
+            notifyPending = false;
+            for (const fn of [...subs]) { try { fn(); } catch (e) { console.warn("[ND Load Images] subscriber failed", e); } }
+        });
+    };
+
     // Block names are a UI-only label: kept in the node's properties (saved with the workflow,
     // never sent to the server, so renaming a block does not re-run anything), keyed by block id.
     const titles = () => ((node.properties ||= {}).nd_titles ||= {});
     const blockTitle = (b, i) => String(titles()[b.id] ?? "").trim() || `Image ${i + 1}`;
+    // The eye (final result preview) of each block: UI only, like the names.
+    const eyes = () => ((node.properties ||= {}).nd_eye ||= {});
+    const eyeOn = (b) => !!node.properties?.nd_eye?.[b.id];
+    let runSize = null; // the target size the last Run used (sent by the server)
+
+    // Target size for the eye preview: [w, h], or null; `known` is false when it cannot be read.
+    function targetSize() {
+        const r = inputSize(node);
+        if (r.kind === "size") return { size: r.size, from: "input" };
+        if (r.kind === "unknown") return { size: runSize, from: runSize ? "last run" : "unknown" };
+        const first = st.blocks.find((b) => b.enabled);
+        if (!first) return { size: null, from: "none" };
+        const img = imgReady.get(viewUrl(first.masked || first.image));
+        if (!img) {
+            loadImg(first.masked || first.image).then(() => repaintEyes(true)).catch(() => {});
+            return { size: null, from: "loading" };
+        }
+        const g = editedGeometry(img, first.edit);
+        return { size: [Math.round(g.cw), Math.round(g.ch)], from: "first image" };
+    }
+    let lastTarget = "";
+    function repaintEyes(force = false) {
+        if (!st.blocks.some(eyeOn)) return;
+        const t = JSON.stringify(targetSize());
+        if (!force && t === lastTarget) return;
+        lastTarget = t;
+        for (const b of st.blocks) if (eyeOn(b)) { const v = views.get(b.id); if (v) paintBlock(v); }
+    }
 
     function commit(structural = false) {
         if (wState) wState.value = JSON.stringify(st);
         if (structural) REG.refresh?.();
         app.graph?.change?.();
         dirty();
+        // a change in one block can move the target size of the others
+        setTimeout(() => repaintEyes(), 0);
+        notify();
     }
 
     gear.onclick = () => openNodeSettings(st, ({ count: n, hideBlockSettings }) => {
@@ -594,6 +984,7 @@ function setupLoadImages(node) {
         st.hideBlockSettings = hideBlockSettings;
         const ids = new Set(st.blocks.map((x) => x.id));
         for (const id of Object.keys(titles())) if (!ids.has(id)) delete titles()[id];
+        for (const id of Object.keys(eyes())) if (!ids.has(id)) delete eyes()[id];
         commit(true);
         growNodeFor(n);
         renderAll();
@@ -644,7 +1035,10 @@ function setupLoadImages(node) {
         resetBtn.type = "button";
         resetBtn.title = "Reset to example.png (removes the mask, rotation, flip and crop)";
         resetBtn.innerHTML = ICON.reset;
-        view.append(canvas, missing, fname, resetBtn);
+        const eyeBtn = el("button", "nd-li-eye");
+        eyeBtn.type = "button";
+        const dims = el("div", "nd-li-dims");
+        view.append(canvas, missing, fname, resetBtn, eyeBtn, dims);
 
         const tools = el("div", "nd-li-tools");
         const maskBtn = el("button", "nd-li-btn tool");
@@ -674,13 +1068,16 @@ function setupLoadImages(node) {
         sliderRow.append(sTop, range);
 
         b.append(head, upload, view, tools, sliderRow, file);
-        Object.assign(v, { el: b, on, title, bgear, grip, lock, view, canvas, missing, fname, resetBtn, tools, maskBtn, keep, editBtn, sliderRow, sLabel, sValue, range, upload });
+        Object.assign(v, { el: b, on, title, bgear, grip, lock, view, canvas, missing, fname, resetBtn, eyeBtn, dims, tools, maskBtn, keep, editBtn, sliderRow, sLabel, sValue, range, upload });
 
+        // a new image for the block: a File (upload / drop) or a function giving its ref
         const setImage = async (f) => {
-            if (!f || !/^image\//.test(f.type || "image/")) return;
+            if (!f) return;
+            if (f instanceof Blob && !/^image\//.test(f.type || "image/")) return;
             try {
                 view.classList.add("busy");
-                const ref = await uploadFile(f);
+                const ref = typeof f === "function" ? await f() : await uploadFile(f);
+                if (!ref) return;
                 block.image = ref;
                 block.masked = null;
                 block.edit = defaultEdit();
@@ -705,9 +1102,11 @@ function setupLoadImages(node) {
         }, String(titles()[block.id] ?? "").trim());
         upload.onclick = () => file.click();
         file.onchange = () => { setImage(file.files?.[0]); file.value = ""; };
+        // drop: image files, an image dragged from ND Variant Preview Selector, or an image URL
         for (const t of ["dragenter", "dragover"]) {
             b.addEventListener(t, (e) => {
-                if (![...(e.dataTransfer?.types || [])].includes("Files")) return;
+                const k = dropKinds(e.dataTransfer);
+                if (!k.nd && !k.files && !k.uri) return;
                 e.preventDefault();
                 e.stopPropagation();
                 e.dataTransfer.dropEffect = "copy";
@@ -716,12 +1115,32 @@ function setupLoadImages(node) {
         }
         b.addEventListener("dragleave", (e) => { if (!b.contains(e.relatedTarget)) view.classList.remove("drop"); });
         b.addEventListener("drop", (e) => {
-            if (!e.dataTransfer?.files?.length) return;
+            const dt = e.dataTransfer;
+            const k = dropKinds(dt);
+            if (!k.nd && !k.files && !k.uri) return;
             e.preventDefault();
             e.stopPropagation();
             view.classList.remove("drop");
-            setImage([...e.dataTransfer.files].find((f) => /^image\//.test(f.type)));
+            if (k.nd) {
+                let info = null;
+                try { info = JSON.parse(dt.getData(ND_IMAGE_MIME)); } catch {}
+                if (info?.filename) { setImage(() => importInfo(info)); return; }
+            }
+            const file = [...(dt.files || [])].find((f) => /^image\//.test(f.type));
+            if (file) { setImage(file); return; }
+            const uri = (dt.getData("text/uri-list") || "").split(/\r?\n/).find((l) => l && !l.startsWith("#"));
+            if (!uri) return;
+            const info = infoOfUrl(uri);
+            setImage(info ? () => importInfo(info) : async () => uploadFile(await fileOfUrl(uri)));
         });
+
+        eyeBtn.onclick = () => {
+            if (eyeOn(block)) delete eyes()[block.id];
+            else eyes()[block.id] = true;
+            app.graph?.change?.();
+            updateBlock(v);
+            notify();
+        };
 
         resetBtn.onclick = () => {
             block.image = DEFAULT_IMAGE;
@@ -743,7 +1162,7 @@ function setupLoadImages(node) {
                 updateBlock(v);
             });
         };
-        keep.onchange = () => { block.keep = keep.value; commit(); };
+        keep.onchange = () => { block.keep = keep.value; commit(); if (eyeOn(block)) paintBlock(v); };
         editBtn.onclick = async () => {
             let img;
             try { img = await loadImg(block.masked || block.image); } catch (err) { toast("error", "Load Images", err.message); return; }
@@ -832,6 +1251,13 @@ function setupLoadImages(node) {
         v.sLabel.textContent = String(s.sliderName ?? "").trim() || "Slider";
         v.sValue.textContent = b.slider.toFixed(decimalsOf(s.sliderStep));
         v.fname.textContent = splitRef(b.image).filename + (b.masked ? "  ·  mask" : "");
+        const eye = eyeOn(b);
+        v.eyeBtn.classList.toggle("on", eye);
+        v.eyeBtn.innerHTML = eye ? ICON.eye : ICON.eyeOff;
+        v.eyeBtn.title = eye
+            ? "Showing the final image (edit + Keep Proportion). Click to show the source image"
+            : "Show the final image: after crop / rotate / flip and Keep Proportion, as it leaves the node";
+        v.dims.style.display = eye ? "" : "none";
         paintBlock(v);
     }
 
@@ -852,7 +1278,18 @@ function setupLoadImages(node) {
         const w = v.view.clientWidth - 4, h = v.view.clientHeight - 4;
         if (w < 4 || h < 4) return;
         v.canvas.style.display = "";
-        paintEdited(v.canvas, img, b.edit, w, h);
+        if (!eyeOn(b)) { paintEdited(v.canvas, img, b.edit, w, h); return; }
+        const t = targetSize();
+        const s = b.settings;
+        const keepOn = s.keepEnabled && s.keepApply;
+        const [fw, fh] = paintFinal(v.canvas, img, b, keepOn ? t.size : null, w, h);
+        let note = "";
+        if (keepOn) note = t.size ? `${b.keep} · ${t.from}` : t.from === "loading" ? "…" : "target size unknown";
+        else note = "no Keep Proportion";
+        v.dims.textContent = `${fw} × ${fh}` + (note ? `  ·  ${note}` : "");
+        v.dims.title = keepOn && !t.size
+            ? "The width and height of the input cannot be read in the graph; they are known after a Run."
+            : "Size of the image this block outputs";
     }
 
     /* ---------- grid */
@@ -920,8 +1357,196 @@ function setupLoadImages(node) {
         views.clear();
         renderAll();
         REG.refresh?.();
+        notify();
     };
-    node.ndLI.dispose = () => ro.disconnect();
+    node.ndLI.dispose = () => { ro.disconnect(); subs.clear(); };
+    node.ndLI.setRunSize = (size) => { runSize = size; repaintEyes(true); };
+    node.ndLI.checkEyes = () => repaintEyes();
+
+    /* ---------- node.ndApi: the contract other UIs (ND UI Builder widgets) use.
+       The node's own UI above is one more user of the same state; nothing here
+       changes how it works. version 1 / kind "load-images". */
+    const blockOf = (id) => st.blocks.find((b) => b.id === id) || null;
+    const refresh = (b) => { const v = views.get(b.id); if (v) updateBlock(v); };
+    const sourceToRef = async (src) => {
+        if (!src) return null;
+        if (src instanceof Blob) {
+            if (!/^image\//.test(src.type || "image/")) throw new Error("The file is not an image.");
+            return uploadFile(src);
+        }
+        if (typeof src === "function") return src();
+        if (typeof src === "object" && src.filename) return importInfo(src);
+        if (typeof src === "string") {
+            const info = infoOfUrl(src);
+            if (info) return importInfo(info);
+            if (/^(https?:|blob:|data:)/.test(src)) return uploadFile(await fileOfUrl(src));
+            return src; // a ref of the input folder: "folder/name.png"
+        }
+        return null;
+    };
+    node.ndApi = {
+        kind: "load-images",
+        version: 1,
+        getState: () => JSON.parse(JSON.stringify(st)),
+        setState(raw) {
+            st = normalizeState(raw);
+            commit(true);
+            for (const v of views.values()) v.el.remove();
+            views.clear();
+            renderAll();
+        },
+        subscribe(fn) { subs.add(fn); return () => subs.delete(fn); },
+        meta() {
+            return {
+                maxBlocks: MAX_BLOCKS,
+                keepModes: [...KEEP_MODES],
+                defaultImage: DEFAULT_IMAGE,
+                titles: Object.fromEntries(st.blocks.map((b, i) => [b.id, blockTitle(b, i)])),
+                eyes: Object.fromEntries(st.blocks.map((b) => [b.id, eyeOn(b)])),
+                target: targetSize(),
+            };
+        },
+        viewUrl: (ref) => viewUrl(ref),
+        // paint a block into a canvas: the source (with the mask) or, final = true, as the node outputs it
+        async paint(id, canvas, w, h, final = false) {
+            const b = blockOf(id);
+            if (!b) return false;
+            const img = await loadImg(b.masked || b.image);
+            if (final) {
+                const t = targetSize(), s = b.settings;
+                paintFinal(canvas, img, b, s.keepEnabled && s.keepApply ? t.size : null, w, h);
+            } else paintEdited(canvas, img, b.edit, w, h);
+            return true;
+        },
+        actions: {
+            addBlock() {
+                if (st.blocks.length >= MAX_BLOCKS) return null;
+                const b = defaultBlock();
+                st.blocks.push(b);
+                commit(true);
+                renderAll();
+                return b.id;
+            },
+            removeBlock(id) {
+                const b = blockOf(id);
+                if (!b || st.blocks.length <= 1) return false;
+                st.blocks.splice(st.blocks.indexOf(b), 1);
+                delete titles()[id];
+                delete eyes()[id];
+                commit(true);
+                renderAll();
+                return true;
+            },
+            moveBlock(id, targetId) {
+                const b = blockOf(id);
+                if (!b || !moveBlock(b, targetId)) return false;
+                commit(true);
+                renderAll();
+                return true;
+            },
+            // a File / Blob (uploaded), a {filename, subfolder, type} info, a /view URL or a ref
+            async setFile(id, src) {
+                const b = blockOf(id);
+                if (!b) return false;
+                const ref = await sourceToRef(src);
+                if (!ref) return false;
+                b.image = ref;
+                b.masked = null;
+                b.edit = defaultEdit();
+                commit();
+                refresh(b);
+                return true;
+            },
+            reset(id) {
+                const b = blockOf(id);
+                if (!b) return false;
+                b.image = DEFAULT_IMAGE;
+                b.masked = null;
+                b.edit = defaultEdit();
+                commit();
+                refresh(b);
+                return true;
+            },
+            clearMask(id) {
+                const b = blockOf(id);
+                if (!b) return false;
+                b.masked = null;
+                commit();
+                refresh(b);
+                return true;
+            },
+            setEnabled(id, on) {
+                const b = blockOf(id);
+                if (!b) return false;
+                b.enabled = !!on;
+                commit();
+                refresh(b);
+                return true;
+            },
+            setKeep(id, mode) {
+                const b = blockOf(id);
+                if (!b || !KEEP_MODES.includes(mode)) return false;
+                b.keep = mode;
+                commit();
+                refresh(b);
+                return true;
+            },
+            setSlider(id, value) {
+                const b = blockOf(id);
+                if (!b) return false;
+                b.slider = snap(value, b.settings);
+                commit();
+                refresh(b);
+                return true;
+            },
+            setTitle(id, name) {
+                const b = blockOf(id);
+                if (!b) return false;
+                const t = String(name ?? "").trim();
+                if (t) titles()[id] = t; else delete titles()[id];
+                commit();
+                refresh(b);
+                return true;
+            },
+            setEye(id, on) {
+                const b = blockOf(id);
+                if (!b) return false;
+                if (on) eyes()[id] = true; else delete eyes()[id];
+                app.graph?.change?.();
+                refresh(b);
+                notify();
+                return true;
+            },
+            // heavy dialogs stay in the node: the crop / rotate editor, the mask editor, block settings
+            async openEditor(id) {
+                const b = blockOf(id);
+                if (!b) return false;
+                const img = await loadImg(b.masked || b.image);
+                openEditor(img, b.edit, (edit) => { b.edit = edit; commit(); refresh(b); });
+                return true;
+            },
+            openMask(id) {
+                const b = blockOf(id);
+                if (!b) return false;
+                openMaskEditor(node, b, (ref) => { b.masked = ref; commit(); refresh(b); });
+                return true;
+            },
+            openSettings(id) {
+                const b = blockOf(id);
+                if (!b) return false;
+                openBlockSettings(b, st.blocks.indexOf(b), ({ blockTitle: name, ...s }) => {
+                    if (name) titles()[id] = name; else delete titles()[id];
+                    b.settings = { ...b.settings, ...s };
+                    b.slider = snap(b.slider, b.settings);
+                    commit(true);
+                    refresh(b);
+                    layout();
+                }, String(titles()[id] ?? "").trim());
+                return true;
+            },
+        },
+        dispose() { subs.clear(); },
+    };
     renderAll();
     if (wState) wState.value = JSON.stringify(st);
 }
@@ -975,6 +1600,12 @@ const STYLE = `
 .nd-li-reset svg{display:block;pointer-events:none}
 .nd-li-reset.dirty{opacity:.85}
 .nd-li-reset:hover{opacity:1;border-color:var(--nd-accent);color:#fff;background:rgba(0,0,0,.75)}
+.nd-li-eye{position:absolute;top:6px;left:6px;z-index:2;display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;box-sizing:border-box;padding:0;margin:0;border:1px solid rgba(255,255,255,.18);border-radius:6px;background:rgba(0,0,0,.55);color:#fff;cursor:pointer;line-height:0;opacity:.45;transition:opacity .12s,border-color .12s}
+.nd-li-eye svg{display:block;pointer-events:none}
+.nd-li-eye:hover{opacity:1;border-color:var(--nd-accent);background:rgba(0,0,0,.75)}
+.nd-li-eye.on{opacity:1;border-color:var(--nd-accent);background:var(--nd-accent)}
+.nd-li-dims{position:absolute;right:4px;bottom:4px;max-width:calc(100% - 8px);padding:1px 6px;border-radius:3px;background:#000b;color:#fff;font-size:10px;line-height:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-variant-numeric:tabular-nums}
+.nd-li-view:hover .nd-li-dims{opacity:.25}
 .nd-li-tools{display:flex;align-items:center;gap:5px;flex:0 0 auto;min-width:0}
 .nd-li-btn.tool{flex:0 1 auto}
 .nd-li-keep{flex:1 1 auto;min-width:0;height:24px;box-sizing:border-box;padding:0 4px;border:1px solid var(--border-color,#444);border-radius:5px;background:var(--comfy-input-bg,#222);color:var(--input-text,#ddd);font-size:12px;cursor:pointer}
@@ -1020,6 +1651,16 @@ ${nativeTrackCss(".nd-li-slider input[type=range]")}
 app.registerExtension({
     name: "NeuralDreamer.Nodes.LoadImages",
 
+    setup() {
+        installQueueHook();
+        api.addEventListener("nd_load_images_size", (e) => {
+            const d = e.detail || {};
+            const n = nodeOfApiId(d.node);
+            const w = Number(d.width), h = Number(d.height);
+            if (n?.ndLI?.setRunSize && w > 0 && h > 0) n.ndLI.setRunSize([w, h]);
+        });
+    },
+
     async beforeRegisterNodeDef(nodeType, nodeData) {
         const proto = nodeType.prototype;
         if (nodeData.name !== NODE) return;
@@ -1035,6 +1676,11 @@ app.registerExtension({
         });
         chain(proto, "onRemoved", function () {
             this.ndLI?.dispose?.();
+        });
+        // the canvas redraws after any change in the graph: the eye previews follow the
+        // width / height wired into the node
+        chain(proto, "onDrawForeground", function () {
+            try { this.ndLI?.checkEyes?.(); } catch {}
         });
     },
 });

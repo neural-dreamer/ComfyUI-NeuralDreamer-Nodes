@@ -69,10 +69,11 @@ def _write_images(images, prefix, out_dir, img_type, compress_level, metadata=No
     return results
 
 
-def _save_temp_images(images, prefix="ND_preview"):
-    """Saves the batch to the ComfyUI temp folder (used for previews only)."""
+def _save_temp_images(images, prefix="ND_preview", metadata=None):
+    """Saves the batch to the ComfyUI temp folder (used for previews only). The files carry
+    no prompt / workflow unless `metadata` is given (the "Preview with Metadata" option)."""
     suffix = "_" + "".join(random.choice("abcdefghijklmnopqrstuvwxyz") for _ in range(6))
-    return _write_images(images, prefix + suffix, folder_paths.get_temp_directory(), "temp", 1)
+    return _write_images(images, prefix + suffix, folder_paths.get_temp_directory(), "temp", 1, metadata)
 
 
 def _clean_prefix(prefix):
@@ -124,8 +125,9 @@ class NDVariantPreviewSelector:
         "and optionally 'image' (the upscaled result) - connect a Pack Parameters and it creates "
         "these inputs. Output: one parameters wire with 'multi_variant', 'selected_index' (0-based) "
         "and 'upscale' (True only for a run started by the Upscale button) - open it with Unpack "
-        "Parameters. The gear button sets the file names, the saving of the variants and whether the "
-        "Upscale button is shown; without it every batch is saved."
+        "Parameters. The gear button sets the file names, the saving of the variants, whether the "
+        "Upscale button is shown (without it every batch is saved) and Preview with Metadata (the "
+        "shown previews carry the prompt and workflow, like the saved files)."
     )
     RETURN_TYPES = (PARAMS,)
     RETURN_NAMES = ("params",)
@@ -145,6 +147,7 @@ class NDVariantPreviewSelector:
                 "variant_suffix": ("STRING", {"default": DEFAULT_VARIANT}),
                 "upscaled_suffix": ("STRING", {"default": DEFAULT_UPSCALED}),
                 "upscale_button": ("BOOLEAN", {"default": True}),
+                "preview_metadata": ("BOOLEAN", {"default": False}),
             },
             "hidden": {
                 "prompt": "PROMPT",
@@ -155,7 +158,7 @@ class NDVariantPreviewSelector:
     def run(self, params, multi_variant, selected_index, upscale_trigger,
             filename_prefix=DEFAULT_PREFIX, save_previews=False,
             variant_suffix=DEFAULT_VARIANT, upscaled_suffix=DEFAULT_UPSCALED, upscale_button=True,
-            prompt=None, extra_pnginfo=None):
+            preview_metadata=False, prompt=None, extra_pnginfo=None):
         images = params.get("images") if isinstance(params, dict) else None
         if images is None:
             raise ValueError(
@@ -164,7 +167,9 @@ class NDVariantPreviewSelector:
             )
         count = int(images.shape[0])
         idx = max(0, min(int(selected_index), max(0, count - 1)))
-        previews = _save_temp_images(images)
+        # the previews are temp files: without the option they hold no prompt / workflow,
+        # so dragging one out or opening it in a tab gives a plain picture
+        previews = _save_temp_images(images, metadata=_build_metadata(prompt, extra_pnginfo) if preview_metadata else None)
 
         # Only a normal Run saves the batch; an Upscale run reuses the same batch.
         # Without the Upscale button every batch is saved.

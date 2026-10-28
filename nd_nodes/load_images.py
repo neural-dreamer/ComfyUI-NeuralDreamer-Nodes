@@ -17,6 +17,13 @@ Input: one optional ND_PARAMS wire with the fields "width" and "height" (from a 
 Parameters, which creates these pins when connected).
 Output: one ND_PARAMS wire {"Image N Parameters": {image, mask, keep_proportion,
 <slider name>, enabled}} — open it with Unpack Parameters.
+
+Per-pin caching: ComfyUI caches a node by the inputs of its whole ancestry, so a
+change anywhere in the `state` JSON (a slider, say) would re-run everything after
+this node. When a prompt is queued, the browser (js/load_images.js) therefore
+re-points every node fed through Unpack Parameters to an internal
+NDLoadImagesPart that gets only the data of that one value (one block's image,
+its slider value, ...). Each output then re-runs only when its own data changes.
 """
 
 import hashlib
@@ -30,7 +37,12 @@ from PIL import Image, ImageOps
 
 import folder_paths
 
-from .params import PARAMS, NDParams
+try:
+    from server import PromptServer
+except Exception:  # noqa: BLE001
+    PromptServer = None
+
+from .params import ANY, PARAMS, NDParams
 
 MAX_BLOCKS = 20
 DEFAULT_IMAGE = "example.png"
@@ -279,6 +291,18 @@ def target_size(resolution, blocks, prepared):
     return None
 
 
+def block_scalars(block):
+    """The block's fields that need no image: keep_proportion, the slider value, enabled."""
+    s = block["settings"]
+    out = NDParams()
+    if s.get("keepEnabled"):
+        out["keep_proportion"] = block.get("keep", "crop")
+    if s.get("sliderEnabled"):
+        out[slider_key(s)] = float(block.get("slider", 0.0))
+    out["enabled"] = bool(block.get("enabled", True))
+    return out
+
+
 def process_block(block, resolution, prepared=None):
     s = block["settings"]
     image, mask = prepared if prepared is not None else prepare_block(block)
@@ -289,12 +313,28 @@ def process_block(block, resolution, prepared=None):
     out = NDParams()
     out["image"] = image.unsqueeze(0)
     out["mask"] = mask.unsqueeze(0)
-    if s.get("keepEnabled"):
-        out["keep_proportion"] = keep
-    if s.get("sliderEnabled"):
-        out[slider_key(s)] = float(block.get("slider", 0.0))
-    out["enabled"] = bool(block.get("enabled", True))
+    out.update(block_scalars(block))
     return out
+
+
+def report_size(owner, resolution):
+    """Tells the browser the target size used, for the eye preview of the blocks."""
+    if PromptServer is None or not owner or not resolution:
+        return
+    try:
+        PromptServer.instance.send_sync(
+            "nd_load_images_size", {"node": str(owner), "width": int(resolution[0]), "height": int(resolution[1])}
+        )
+    except Exception:  # noqa: BLE001
+        pass
+
+
+def _files_signature(h, blocks):
+    for b in blocks:
+        p = _image_path(_source_name(b))
+        if p:
+            st = os.stat(p)
+            h.update(f"{p}:{st.st_mtime_ns}:{st.st_size}".encode("utf-8"))
 
 
 # -------------------------------------------------------------------- nodes
@@ -319,16 +359,13 @@ class NDLoadImages:
         return {
             "required": {"state": ("STRING", {"default": DEFAULT_STATE})},
             "optional": {"params": (PARAMS,)},
+            "hidden": {"unique_id": "UNIQUE_ID"},
         }
 
     @classmethod
-    def IS_CHANGED(cls, state, params=None):
+    def IS_CHANGED(cls, state, params=None, unique_id=None):
         h = hashlib.sha256(str(state).encode("utf-8"))
-        for b in parse_state(state)["blocks"]:
-            p = _image_path(_source_name(b))
-            if p:
-                st = os.stat(p)
-                h.update(f"{p}:{st.st_mtime_ns}:{st.st_size}".encode("utf-8"))
+        _files_signature(h, parse_state(state)["blocks"])
         return h.hexdigest()
 
     @classmethod
@@ -339,20 +376,108 @@ class NDLoadImages:
                 return f"Load Images, block {i}: file not found in the input folder: {name}"
         return True
 
-    def load(self, state, params=None):
+    def load(self, state, params=None, unique_id=None):
         blocks = parse_state(state)["blocks"]
         prepared = [prepare_block(b) for b in blocks]
         res = target_size(_resolution(params), blocks, prepared)
+        report_size(unique_id, res)
         out = NDParams()
         for i, (b, p) in enumerate(zip(blocks, prepared), start=1):
             out[f"Image {i} Parameters"] = process_block(b, res, p)
         return (out,)
 
 
+BLOCK_FIELD = "*"  # NDLoadImagesPart field for the whole "Image N Parameters" bundle
+IMAGE_FIELDS = {"image", "mask", BLOCK_FIELD}
+
+
+def _parse_block(text):
+    try:
+        data = json.loads(text or "")
+    except (TypeError, ValueError):
+        data = None
+    return parse_state(json.dumps({"blocks": [data if isinstance(data, dict) else {}]}))["blocks"][0]
+
+
+class NDLoadImagesPart:
+    """
+    Internal node. When a prompt is queued, the browser re-points every node fed by an
+    ND Load Images (through Unpack Parameters) to one of these. It gets only the data
+    of that one value — one block (only the settings that value depends on) and, for
+    the image and the mask, what sets the target size — so it re-runs only when that
+    data changes. The values are the same as those of ND Load Images.
+    """
+
+    CATEGORY = "Neural Dreamer/internal"
+    DEV_ONLY = True  # hidden from the node search; added to the prompt by the frontend
+    DESCRIPTION = "Internal helper added automatically by ND Load Images. Do not place it manually."
+    RETURN_TYPES = (ANY,)
+    RETURN_NAMES = ("value",)
+    FUNCTION = "run"
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                # the block as JSON, reduced to what `field` depends on
+                "block": ("STRING", {"default": "{}"}),
+                # "image", "mask", "keep_proportion", "enabled", the slider name, or "*" (the whole block)
+                "field": ("STRING", {"default": BLOCK_FIELD}),
+            },
+            "optional": {
+                # the image/edit of the first enabled block: the target size without width/height
+                "size_ref": ("STRING", {"default": ""}),
+                "params": (PARAMS,),
+                # prompt id of the ND Load Images, to report the target size to its UI
+                "owner": ("STRING", {"default": ""}),
+            },
+        }
+
+    @classmethod
+    def _sources(cls, block, field, size_ref):
+        if field not in IMAGE_FIELDS:
+            return []
+        blocks = [_parse_block(block)]
+        if size_ref:
+            blocks.append(_parse_block(size_ref))
+        return blocks
+
+    @classmethod
+    def IS_CHANGED(cls, block, field, size_ref="", params=None, owner=""):
+        h = hashlib.sha256(f"{block}|{field}|{size_ref}".encode("utf-8"))
+        _files_signature(h, cls._sources(block, field, size_ref))
+        return h.hexdigest()
+
+    @classmethod
+    def VALIDATE_INPUTS(cls, block, field, size_ref=""):
+        for b in cls._sources(block, field, size_ref):
+            name = _source_name(b)
+            if _image_path(name) is None and os.path.basename(str(name)) != DEFAULT_IMAGE:
+                return f"Load Images: file not found in the input folder: {name}"
+        return True
+
+    def run(self, block, field, size_ref="", params=None, owner=""):
+        b = _parse_block(block)
+        if field not in IMAGE_FIELDS:
+            return (block_scalars(b).get(field),)
+        prepared = prepare_block(b)
+        res = _resolution(params)
+        if not res and size_ref:
+            ref = _parse_block(size_ref)
+            same = all(ref.get(k) == b.get(k) for k in ("image", "masked", "edit"))
+            image = prepared[0] if same else prepare_block(ref)[0]
+            res = (int(image.shape[1]), int(image.shape[0]))
+        report_size(owner, res)
+        out = process_block(b, res, prepared)
+        return (out if field == BLOCK_FIELD else out.get(field),)
+
+
 NODE_CLASS_MAPPINGS = {
     "NDLoadImages": NDLoadImages,
+    "NDLoadImagesPart": NDLoadImagesPart,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "NDLoadImages": "ND Load Images",
+    "NDLoadImagesPart": "ND Load Images Part (internal)",
 }

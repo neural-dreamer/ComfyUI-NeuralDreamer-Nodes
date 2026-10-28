@@ -5,7 +5,7 @@ https://github.com/neural-dreamer/ComfyUI-NeuralDreamer-Nodes
 
 from .nd_nodes import NODE_CLASS_MAPPINGS, NODE_DISPLAY_NAME_MAPPINGS
 
-__version__ = "1.1.0"
+__version__ = "1.2.0"
 
 WEB_DIRECTORY = "./js"
 
