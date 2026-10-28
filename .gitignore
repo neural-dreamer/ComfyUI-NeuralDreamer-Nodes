@@ -2,5 +2,8 @@ __pycache__/
 *.py[cod]
 .DS_Store
 Thumbs.db
+*.zip
+*.rar
+*.7zip
 .vscode/
 .idea/
