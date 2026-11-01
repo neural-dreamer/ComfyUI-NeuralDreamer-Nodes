@@ -76,6 +76,8 @@ function main() {
     const ui = new Set();
     scan("character_builder.js", ui);
     scan("composition_settings.js", ui);
+    scan("lora_stack.js", ui);
+    scan("lora_gallery.js", ui);
     // the configuration of each builder: toggle texts, notes, titles, pin labels
     for (const f of ["character_builder.js", "outfit_builder.js", "pose_builder.js", "composition_settings.js"]) {
         walk(parse(f), (n) => {

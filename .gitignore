@@ -7,3 +7,5 @@ Thumbs.db
 *.7zip
 .vscode/
 .idea/
+tools/bench/
+tools/tests/

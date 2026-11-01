@@ -22,7 +22,7 @@ LANGS = ("ru", "zh")
 SECTIONS = ("character", "outfit", "pose", "composition")
 LETTERS = re.compile(r"[^\W\d_]", re.U)
 PLACEHOLDER = re.compile(r"\{(\w+)\}")
-NAMES = {"Character Builder", "Outfit Builder", "Pose Builder", "Composition Settings"}  # product names stay as they are
+NAMES = {"Character Builder", "Outfit Builder", "Pose Builder", "Composition Settings", "LoRA"}  # product names stay as they are
 SWATCH = set()  # (section, key) of the colours: named by their label, no hint needed
 
 

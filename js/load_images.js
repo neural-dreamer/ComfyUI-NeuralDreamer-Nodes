@@ -1363,7 +1363,7 @@ function setupLoadImages(node) {
     node.ndLI.setRunSize = (size) => { runSize = size; repaintEyes(true); };
     node.ndLI.checkEyes = () => repaintEyes();
 
-    /* ---------- node.ndApi: the contract other UIs (ND UI Builder widgets) use.
+    /* ---------- node.ndApi: the contract other UIs (widgets of other interfaces) use.
        The node's own UI above is one more user of the same state; nothing here
        changes how it works. version 1 / kind "load-images". */
     const blockOf = (id) => st.blocks.find((b) => b.id === id) || null;

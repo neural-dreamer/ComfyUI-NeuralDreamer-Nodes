@@ -27,6 +27,8 @@ MODULES = [
     "switches",
     "resolution",
     "batch_images",
+    "lora_stack",
+    "lora_catalog",
 ]
 
 NODE_CLASS_MAPPINGS = {}

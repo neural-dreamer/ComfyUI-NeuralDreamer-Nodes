@@ -124,6 +124,69 @@ function setupShowAny(node) {
         renderBody();
     }
 
+    // Drag a note tab with the pointer to change the order (the Preview tab stays first). The others make room while it moves.
+    let dragEndedAt = 0;
+    function attachDrag(t, i) {
+        t.addEventListener("pointerdown", (e) => {
+            if (e.button !== 0 || e.target.closest(".nd-st-close, .nd-st-rename")) return;
+            const els = [...tabs.querySelectorAll(".nd-st-tab:not(.nd-st-tab-preview)")];
+            const rects = els.map((x) => x.getBoundingClientRect());
+            const sx = e.clientX, scroll0 = tabs.scrollLeft, gap = 2;
+            let drag = false, to = i, last = e.clientX;
+            const place = () => {
+                const dx = last - sx + (tabs.scrollLeft - scroll0), me = rects[i];
+                const cx = me.left + me.width / 2 + dx;
+                to = i;
+                rects.forEach((r, j) => {
+                    const c = r.left + r.width / 2;
+                    if (j < i && cx < c) to = Math.min(to, j);
+                    if (j > i && cx > c) to = Math.max(to, j);
+                });
+                els.forEach((x, j) => {
+                    if (j === i) { x.style.transform = `translateX(${dx}px)`; return; }
+                    const shift = to < i && j >= to && j < i ? me.width + gap : to > i && j > i && j <= to ? -(me.width + gap) : 0;
+                    x.style.transform = shift ? `translateX(${shift}px)` : "";
+                });
+            };
+            const move = (ev) => {
+                last = ev.clientX;
+                if (!drag) {
+                    if (Math.abs(ev.clientX - sx) < 5) return;
+                    drag = true;
+                    t.classList.add("dragging");
+                    tabs.classList.add("sorting");
+                    try { t.setPointerCapture(e.pointerId); } catch {}
+                }
+                const tr = tabs.getBoundingClientRect();
+                if (ev.clientX < tr.left + 24) tabs.scrollLeft -= 14;
+                else if (ev.clientX > tr.right - 24) tabs.scrollLeft += 14;
+                place();
+            };
+            const end = () => {
+                t.removeEventListener("pointermove", move);
+                t.removeEventListener("pointerup", end);
+                t.removeEventListener("pointercancel", end);
+                if (!drag) return;
+                dragEndedAt = Date.now();
+                for (const x of els) x.style.transform = "";
+                t.classList.remove("dragging");
+                tabs.classList.remove("sorting");
+                if (to === i) return;
+                const [n] = st.notes.splice(i, 1); st.notes.splice(to, 0, n);
+                const [ed] = editors.splice(i, 1); editors.splice(to, 0, ed);
+                if (st.active === i) st.active = to;
+                else if (i < st.active && to >= st.active) st.active -= 1;
+                else if (i > st.active && to <= st.active) st.active += 1;
+                persist();
+                renderTabs();
+                renderBody();
+            };
+            t.addEventListener("pointermove", move);
+            t.addEventListener("pointerup", end);
+            t.addEventListener("pointercancel", end);
+        });
+    }
+
     function renderTabs() {
         // the panel's top-left corner is square only under the leftmost (Preview) tab
         root.classList.toggle("nd-st-first-active", st.active === -1);
@@ -136,7 +199,7 @@ function setupShowAny(node) {
         st.notes.forEach((note, i) => {
             const t = el("div", "nd-st-tab" + (st.active === i ? " active" : ""));
             const label = el("span", "nd-st-label", note.title);
-            label.title = "Double-click to rename";
+            label.title = "Double-click to rename. Drag the tab to change the order";
             const close = el("button", "nd-st-close", "×");
             close.type = "button";
             close.title = "Delete tab";
@@ -151,7 +214,8 @@ function setupShowAny(node) {
                 armTimer = setTimeout(() => { close.classList.remove("armed"); close.textContent = "×"; }, 2500);
             });
             t.append(label, close);
-            t.addEventListener("click", () => activate(i));
+            t.addEventListener("click", () => { if (Date.now() - dragEndedAt < 80) return; activate(i); });
+            attachDrag(t, i);
             label.addEventListener("dblclick", (e) => { e.stopPropagation(); startRename(i, label); });
             tabs.append(t);
         });
@@ -292,6 +356,9 @@ const STYLE = `
 .nd-st-tabs{display:flex;align-items:flex-end;gap:2px;overflow-x:auto;overflow-y:hidden;min-width:0;flex:0 1 auto;scrollbar-width:none}
 .nd-st-tabs::-webkit-scrollbar{display:none}
 .nd-st-tab{display:flex;align-items:center;gap:4px;flex:0 0 auto;box-sizing:border-box;height:26px;padding:0 10px 1px;border:1px solid transparent;border-bottom:none;border-radius:6px 6px 0 0;cursor:pointer;opacity:.65;user-select:none;white-space:nowrap}
+.nd-st-tab{user-select:none;-webkit-user-select:none}
+.nd-st-tabs.sorting .nd-st-tab:not(.dragging){transition:transform .12s}
+.nd-st-tab.dragging{position:relative;z-index:3;cursor:grabbing;box-shadow:0 4px 12px rgba(0,0,0,.45);opacity:1}
 .nd-st-tab:hover{opacity:.9}
 .nd-st-tab:not(.active):hover{background:#ffffff0d}
 .nd-st-tab.active{opacity:1;background:var(--comfy-input-bg,#222);border-color:var(--border-color,#444);box-shadow:inset 0 2px 0 var(--nd-accent);cursor:default}

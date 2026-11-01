@@ -2,7 +2,7 @@
 
 Кастомные ноды для [ComfyUI](https://github.com/comfyanonymous/ComfyUI) от Neural Dreamer.
 
-![Version](https://img.shields.io/badge/version-1.2.0-2f7de1)
+![Version](https://img.shields.io/badge/version-1.3.0-2f7de1)
 [![License: MIT](https://img.shields.io/badge/license-MIT-2f7de1)](LICENSE)
 
 [English](README.md) · **Русский**
@@ -20,6 +20,7 @@
 | [ND Outfit Builder](#nd-outfit-builder) | `Neural Dreamer/Prompt` | Описание наряда по слотам и стилям; передаёт наряд в Character Builder |
 | [ND Pose Builder](#nd-pose-builder) | `Neural Dreamer/Prompt` | Описание позы: готовые позы (Simple) или каждая часть тела (Advanced) |
 | [ND Composition Settings](#nd-composition-settings) | `Neural Dreamer/Prompt` | Камера, объектив и размещение; один кадр или коллаж до 8 панелей |
+| [ND LoRA Stack](#nd-lora-stack) | `Neural Dreamer/Loaders` | Стек LoRA с превью (картинки и видео), галереей, NSFW-фильтром и кнопками ± для силы |
 | [ND Load Images](#nd-load-images) | `Neural Dreamer/Images` | 1–20 блоков изображений: загрузка, маска, кадрирование/поворот/отражение, Keep Proportion и слайдер |
 | [ND Resolution](#nd-resolution) | `Neural Dreamer/Images` | Размер изображения по соотношению сторон и одному числу |
 | [ND Batch Images](#nd-batch-images) | `Neural Dreamer/Images` | Собирает изображения в один батч, подгоняя под размер первого |
@@ -147,6 +148,7 @@ git clone https://github.com/neural-dreamer/ComfyUI-NeuralDreamer-Nodes.git
 - Кнопка × удаляет вкладку-заметку. Если в ней есть текст, нужен второй клик.
 - Заметки и последний текст превью сохраняются в workflow и не пропадают после перезагрузки workflow или ComfyUI. Превью меняется только при поступлении новых входных данных.
 - Навигация по canvas над нодой работает так же, как у Variant Selector. Колесо прокручивает текстовое поле, только если текст в нём не помещается; иначе, а также с Ctrl, оно масштабирует canvas.
+- Вкладку-заметку можно перетащить курсором и поменять порядок вкладок (Preview всегда остаётся первой).
 - Если вкладок много, полоса прокручивается: кнопки со стрелками (удерживайте для непрерывной прокрутки), колесо или Shift+колесо. Кнопка **Copy** над текстом Preview копирует его.
 
 ## ND Slider
@@ -296,6 +298,27 @@ Character Prompt Builder. Слева колонка кнопок раздело�
 
 Собирает изображения в один батч. Размер задаёт первое изображение; каждое следующее подгоняется под него теми же режимами, что Keep Proportion в ND Load Images (`crop`, `pad white`, `pad black`, `pad edge`, `pad edge color`, `stretch`). Сначала показано два входа, а новый пустой появляется, как только подключён последний (до 32). Вход может сам быть батчем: его изображения добавляются друг за другом в порядке пинов, пустые пины пропускаются. Выход: `images` (IMAGE).
 
+## ND LoRA Stack
+
+Применяет несколько LoRA по очереди. У каждой LoRA есть переключатель, сила для модели и для CLIP (или CLIP следует за моделью), порядок меняется перетаскиванием.
+
+- **Входы**: `model`, необязательный `clip`. **Выходы**: `model`, `clip`, `trigger_words` (триггер-слова включённых LoRA). Без `clip` меняется только модель.
+- **+ LoRA** открывает галерею с поиском (по имени, триггер-слову или базовой модели), фильтрами по папке и базовой модели, избранным и недавними. У каждой плитки есть кнопка *info* (триггер-слова с галочками и копированием, советы по использованию, заметки) и ссылка на страницу LoRA, если она есть в метаданных.
+- **Сила**: ползунок (диапазон по умолчанию от -1.5 до 1.5), поле, куда можно ввести любое число (введённое число не ограничивается) и кнопки-стрелки. Стрелки меняют значение на 0.05, с Shift на 0.25; при удержании повторяют.
+- **Превью**: картинка или видео рядом с файлом LoRA, без звука; пока курсор не на плитке, виден первый кадр (видео играет только при наведении).
+- **NSFW-фильтр**: превью взрослых LoRA размыты. Кнопка-глаз в галерее и под списком выключает размытие для всей страницы. LoRA помечается автоматически по метаданным (уровень R и выше), а любую LoRA можно пометить самому кнопкой-щитом на плитке: *Mark as NSFW*, *Mark as safe* или *Back to automatic*. Ваша пометка хранится рядом с LoRA в `имя.nd.json`; файлы других программ не изменяются.
+- Интерфейс этой ноды английский.
+
+Что читается рядом с файлом LoRA `имя.safetensors` (берётся первое найденное):
+
+| Данные | Файлы |
+|---|---|
+| Превью | файл из `preview_url` в `имя.metadata.json` (если он в той же папке), `имя.preview.mp4` / `.webm`, `имя.mp4` / `.webm`, `имя.preview.png` / `.jpg` / `.jpeg` / `.webp`, `имя.png` ..., обложка в заголовке safetensors |
+| Название, базовая модель, триггер-слова, заметки | `имя.metadata.json` (LoRA Manager), `имя.civitai.info` / `имя.info` (Civitai), `имя.txt`, заголовок safetensors |
+| NSFW | `preview_nsfw_level`, `nsfwLevel` первого изображения или `model.nsfw` в этих метаданных; ваша пометка в `имя.nd.json` |
+
+Файлы читаются только из папок LoRA самого ComfyUI. Воркфлоу, сохранённые со старой `ND LoRA Stack`, открываются как есть.
+
 ## ND Multi Switch
 
 Переключает сразу группы значений. Входы идут парами, `true N` и `false N`, на каждую пару один выход. Тумблер `condition` выбирает сторону, откуда берутся выходы: `out N` равен `true N` при включённом тумблере и `false N` при выключенном.
@@ -365,6 +388,7 @@ ComfyUI-NeuralDreamer-Nodes/
 │   ├── composition_settings.py
 │   ├── resolution.py
 │   ├── batch_images.py
+│   ├── lora_stack.py, lora_catalog.py  # ND LoRA Stack и каталог LoRA (превью, NSFW-пометки)
 │   └── params.py
 ├── js/
 │   ├── nd_common.js        # общие функции интерфейса (зум и перемещение canvas над нодой)
@@ -380,6 +404,7 @@ ComfyUI-NeuralDreamer-Nodes/
 │   ├── outfit_builder.js, pose_builder.js, composition_settings.js  # остальные билдеры (+ данные .json и *_icons.js)
 │   ├── nd_i18n.js, i18n/   # языки интерфейса (ru.json, zh.json)
 │   ├── resolution.js, batch_images.js
+│   ├── lora_stack.js, lora_gallery.js  # ND LoRA Stack: список в ноде и галерея
 │   ├── character_icons.js  # иконки Character Builder (создаются tools/make_character_icons.py)
 │   └── params.js
 ├── tools/  # скрипты для разработки, ComfyUI их не загружает
