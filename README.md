@@ -2,7 +2,7 @@
 
 Custom nodes for [ComfyUI](https://github.com/comfyanonymous/ComfyUI) by Neural Dreamer.
 
-![Version](https://img.shields.io/badge/version-1.3.0-2f7de1)
+![Version](https://img.shields.io/badge/version-1.3.1-2f7de1)
 [![License: MIT](https://img.shields.io/badge/license-MIT-2f7de1)](LICENSE)
 
 **English** · [Русский](README_RU.md)
@@ -83,6 +83,7 @@ Shows an image batch as thumbnails with a main preview. Select a variant with a 
 - **Live preview** (off by default, in the settings): while the variants or the Upscale pass are generated, the main preview shows the sampler frames, with a `LIVE 12/30` badge (sampler steps). The eye button at the bottom left of the preview hides or shows them in this node. It always shows the image being generated right now (with several samplers, the one running; with a batch, its first image); the thumbnails keep the last results until the new ones arrive. With an [ND Live Preview Bridge](#nd-live-preview-bridge) in front of the samplers the frames come from the bridge and ComfyUI's own sampler preview is turned off for that run, also while the eye hides the live preview. Without a bridge the node shows ComfyUI's own previews: they must be on (Settings → Comfy → Execution → Live preview method).
 - The mouse wheel over the node zooms the canvas, and dragging with the middle button pans it. If the thumbnails do not fit, scroll the strip with Shift+wheel or a horizontal trackpad swipe.
 - **Preview with Metadata** (settings, off by default): puts the prompt and workflow into the preview images, as in the saved files. A preview dragged out of the node or opened in a new tab then carries them. Images can be dragged out of the node, for example into an ND Load Images block.
+- **Interface for other panels**: the node exposes its state (variants, selection, toggle label, Upscale, live frames) so that other interfaces, such as the Variant Preview widget of ND UI Builder, can show it and drive it. Nothing changes in the node itself.
 
 **Saving**
 
