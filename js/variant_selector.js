@@ -846,6 +846,10 @@ function setupPreview(node) {
         },
     };
 
+    // other views of this node (the Variant Preview widget of ND UI) listen here; they are told after every redraw of the node
+    const subs = new Set();
+    const emit = () => { for (const f of [...subs]) { try { f(); } catch (e) { console.warn("[ND Variant] view", e); } } };
+
     function render() {
         const n = st.images.length;
         const i = idx();
@@ -908,6 +912,7 @@ function setupPreview(node) {
             if (l < thumbs.scrollLeft) thumbs.scrollLeft = l - 4;
             else if (r > thumbs.scrollLeft + thumbs.clientWidth) thumbs.scrollLeft = r - thumbs.clientWidth + 4;
         }
+        emit();
     }
 
     function select(i) {
@@ -1047,7 +1052,7 @@ function setupPreview(node) {
         render(); dirty();
     });
 
-    tg.input.addEventListener("change", () => { if (wMV) wMV.value = tg.input.checked; dirty(); });
+    tg.input.addEventListener("change", () => { if (wMV) wMV.value = tg.input.checked; dirty(); emit(); });
     bindUpscaleButton(upBtn, node, () => {
         if (!upscaleOn()) return false;
         if (!st.images.length) { toast("warn", "ND Upscale", "Run the workflow first to get variants."); return false; }
@@ -1062,7 +1067,45 @@ function setupPreview(node) {
     });
     node.setSize([Math.max(node.size[0], 440), Math.max(node.size[1], 560)]);
 
+    const plain = (i) => (i ? { url: i.url, width: i.width, height: i.height, filename: i.filename, subfolder: i.subfolder, type: i.type } : null);
     node.ndApi = {
+        // the contract of the Variant Preview widget of Neural Dreamer UI Builder (kind + version); the widget reads getState() and calls actions
+        kind: "variant-preview",
+        version: 1,
+        getState() {
+            const showFinal = !!(st.viewFinal && st.final);
+            return {
+                images: st.images.map(plain), sel: idx(), final: plain(st.final), source: plain(st.source), viewFinal: showFinal, compare: !!st.compare,
+                multi: !!tg.input.checked, label: toggleLabel(),
+                upscaleOn: upscaleOn(), canUpscale: upscaleOn() && st.images.length > 0 && !showFinal, busy: !!node.__ndBusy,
+                live: { on: liveOn(), shown: liveShown(), active: !!lv.active && !!lv.url, url: lv.url, step: lv.step ? [...lv.step] : null, noFrames: !!lv.noFrames },
+            };
+        },
+        subscribe(fn) { subs.add(fn); return () => subs.delete(fn); },
+        actions: {
+            select(i) { if (st.images.length) select(Math.round(Number(i)) || 0); },
+            selectFinal() { if (st.final) { st.viewFinal = true; saveView(); render(); } },
+            setMulti(v) { tg.input.checked = !!v; if (wMV) wMV.value = !!v; dirty(); emit(); },
+            setCompare(v) { st.compare = !!v; persist(); render(); },
+            // the node's own Live preview settings (the same as the checkbox and the eye of the node)
+            setLive(on) {
+                node.properties.nd_live = !!on;
+                if (!on) { clearLive(); lv.noFrames = false; }
+                syncSettings(); render(); dirty();
+            },
+            setLiveShown(v) {
+                node.properties.nd_live_hidden = !v;
+                if (!v) dropLiveUrls();
+                render(); dirty();
+            },
+            async upscale() {
+                if (!upscaleOn() || node.__ndBusy) return false;
+                if (!st.images.length) { toast("warn", "ND Upscale", "Run the workflow first to get variants."); return false; }
+                node.ndApi.markSource();
+                try { await runUpscale(node); } finally { emit(); }
+                return true;
+            },
+        },
         // values the node outputs, taken from what is shown in the node right now
         promptValues() {
             return { selected_index: idx(), multi_variant: !!tg.input.checked };
@@ -1164,6 +1207,7 @@ function setupPreview(node) {
             buildThumbs(); render(); dirty();
         },
         dispose() {
+            subs.clear();
             clearLive();
             removeKeys();
             document.removeEventListener("pointerdown", onDocDown, true);
