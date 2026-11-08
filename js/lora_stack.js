@@ -249,6 +249,18 @@ export function registerStack(cls, extName, opts = {}) {
             chain(proto, "onConfigure", function () { setTimeout(() => { hideWidget(this, "stack"); dropHiddenSockets(this); this.ndLoraApi?.view.update(); }, 0); });
             chain(proto, "onRemoved", function () { this.__ndLoraDispose?.(); });
         },
+        // the R key (Refresh Node Definitions): the folder of LoRAs may have changed, so the list of files is read again
+        async refreshComboInNodes() {
+            const walk = (g, seen = new Set()) => {
+                if (!g || seen.has(g)) return;
+                seen.add(g);
+                for (const n of g._nodes || g.nodes || []) {
+                    if ((n.comfyClass === cls || n.type === cls) && n.ndLoraApi) n.ndLoraApi.view.refresh();
+                    if (n.subgraph) walk(n.subgraph, seen);
+                }
+            };
+            walk(app.graph);
+        },
     });
 }
 
