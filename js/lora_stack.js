@@ -3,6 +3,7 @@
 // The list lives in the hidden text widget `stack` (JSON), which this view and other LoRA widgets both edit:
 //   [{"name": "style/foo.safetensors", "on": true, "sm": 0.8, "sc": 0.8, "link": true, "words": ["foo style"]}]
 // Other interfaces find the node by its class (NDLoraStack) and write the same text, so nothing here depends on it.
+// Fields this file does not know (for instance `t` of ND LoRA Stack H3 Temporal) are kept when the list is read and written.
 //
 // A row: the switch, the picture (a video plays while the pointer is over the row), the name, the strength with the arrows ◀ ▶
 // (step 0.05, Shift: 0.25, hold to repeat; a number typed by hand is never limited) and the button that removes the LoRA.
@@ -25,7 +26,7 @@ function normalize(raw) {
     try { a = JSON.parse(raw); } catch {}
     if (!Array.isArray(a)) return [];
     return a.filter((e) => e && typeof e.name === "string" && e.name).map((e) => ({
-        name: e.name, on: e.on !== false, sm: Number.isFinite(+e.sm) ? +e.sm : 1,
+        ...e, name: e.name, on: e.on !== false, sm: Number.isFinite(+e.sm) ? +e.sm : 1,
         sc: Number.isFinite(+e.sc) ? +e.sc : Number.isFinite(+e.sm) ? +e.sm : 1, link: e.link !== false,
         words: Array.isArray(e.words) ? e.words.map(String) : [],
     }));
@@ -35,7 +36,7 @@ const readStack = (node) => normalize(stackText(node));
 function writeStack(node, list) {
     const w = stackWidget(node);
     if (!w) return false;
-    const v = JSON.stringify(list.map((e) => ({ name: e.name, on: e.on, sm: +e.sm.toFixed(3), sc: e.link ? +e.sm.toFixed(3) : +e.sc.toFixed(3), link: e.link, words: e.words })));
+    const v = JSON.stringify(list.map((e) => ({ ...e, name: e.name, on: e.on, sm: +e.sm.toFixed(3), sc: e.link ? +e.sm.toFixed(3) : +e.sc.toFixed(3), link: e.link, words: e.words })));
     w.value = v;
     try { w.callback?.(v, null, node); } catch {}
     try {
@@ -93,7 +94,7 @@ export function strengthBox(value, onChange, { off = false } = {}) {
 
 /* ------------------------------------------------------------------ the view */
 
-function stackView(node) {
+export function stackView(node, opts = {}) {
     const root = el("div", "nd-lr-root");
     const listEl = el("div", "nd-lr-list"); listEl.dataset.ndScroll = "1";
     const bar = el("div", "nd-lr-bar");
@@ -118,7 +119,12 @@ function stackView(node) {
         const del = el("button", "nd-lr-del"); del.type = "button"; del.title = tr("Remove from the stack"); del.append(icon("x", 13));
         del.addEventListener("click", () => { list.splice(i, 1); commit(); });
         const st = strengthBox(e.sm, (v) => { e.sm = v; if (e.link) e.sc = v; commit(false); }, { off: !e.on });
-        c.append(grip, sw, pic, nm, st, del);
+        // extension points: buttons before «remove» and a panel under the row (used by ND LoRA Stack H3 Temporal)
+        const ctx = { node, entry: e, index: i, info: m, list, save: () => commit(false), redraw: () => commit(true), draw: () => draw() };
+        const tools = opts.rowTools ? opts.rowTools(e, i, ctx) || [] : [];
+        c.append(grip, sw, pic, nm, st, ...tools, del);
+        const panel = opts.rowPanel ? opts.rowPanel(e, i, ctx) : null;
+        if (panel) { c.classList.add("has-panel"); c.append(panel); }
         // the order: drag by the grip
         grip.draggable = true;
         grip.addEventListener("dragstart", (ev) => { ev.dataTransfer.setData("application/x-nd-lora", String(i)); ev.dataTransfer.effectAllowed = "move"; setTimeout(() => c.classList.add("drag"), 0); });
@@ -147,6 +153,7 @@ function stackView(node) {
         listEl.textContent = "";
         if (!list.length) listEl.append(el("div", "nd-lr-empty", tr("No LoRAs yet. Press + LoRA.")));
         list.forEach((e, i) => listEl.append(row(e, i)));
+        opts.onDraw?.(list);
         bar.textContent = "";
         const add = el("button", "nd-lr-btn nd-lr-add"); add.type = "button"; add.append(icon("plus", 14), el("span", "", tr("LoRA")));
         add.addEventListener("click", () => openGallery({ title: tr("Add a LoRA"), onPick: (name, m) => { list.push({ name, on: true, sm: 1, sc: 1, link: true, words: [...(m?.words || [])] }); commit(); } }));
@@ -179,6 +186,7 @@ ${GALLERY_CSS}
 .nd-lr-count{margin-left:auto;opacity:.55;font-size:11px}
 .nd-lr-row{position:relative;display:flex;align-items:center;gap:6px;flex:0 0 auto;padding:4px 6px 4px 2px;border:1px solid var(--border-color,#444);border-radius:8px;background:rgba(0,0,0,.18);transition:opacity .12s,border-color .12s}
 .nd-lr-row:hover{border-color:rgba(255,255,255,.28)}
+.nd-lr-row.has-panel{flex-wrap:wrap}
 .nd-lr-row.off{opacity:.55}
 .nd-lr-row.miss{border-color:#c0392b}
 .nd-lr-row.drag{opacity:.35}
@@ -209,11 +217,11 @@ ${GALLERY_CSS}
 .nd-lr-root .nd-lr-empty{grid-column:auto;padding:14px 8px}
 `;
 
-function setupNode(node) {
+export function setupNode(node, opts = {}) {
     injectStyleOnce("nd-lora-stack-style", STYLE);
     hideWidget(node, "stack");
     const root = el("div", "nd-lr-node");
-    const view = stackView(node);
+    const view = stackView(node, opts);
     root.append(view.el);
     bindCanvasNavigation(root, node);
     const dom = node.addDOMWidget("nd_lora_stack", "ND_LORA_STACK", root, { serialize: false, hideOnZoom: false, getMinHeight: () => 90 });
@@ -225,16 +233,23 @@ function setupNode(node) {
     ensureLang().then(() => view.redraw());
     node.__ndLoraDispose = () => { clearInterval(timer); window.removeEventListener(LANG_EVENT, onLang); };
     node.ndLoraApi = { view, dom, root, text: () => stackText(node) };
-    if (!node.size || node.size[0] < 330) node.setSize([360, 210]);
+    if (!node.size || node.size[0] < (opts.minWidth || 330)) node.setSize(opts.size || [360, 210]);
+    opts.onSetup?.(node, view);
+    return node.ndLoraApi;
 }
 
-app.registerExtension({
-    name: "NeuralDreamer.Nodes.LoraStack",
-    async beforeRegisterNodeDef(nodeType, nodeData) {
-        if (nodeData.name !== CLASS) return;
-        const proto = nodeType.prototype;
-        chain(proto, "onNodeCreated", function () { setupNode(this); });
-        chain(proto, "onConfigure", function () { setTimeout(() => { hideWidget(this, "stack"); dropHiddenSockets(this); this.ndLoraApi?.view.update(); }, 0); });
-        chain(proto, "onRemoved", function () { this.__ndLoraDispose?.(); });
-    },
-});
+// registers the extension of a node class that shows the stack (opts: see stackView / setupNode)
+export function registerStack(cls, extName, opts = {}) {
+    app.registerExtension({
+        name: extName,
+        async beforeRegisterNodeDef(nodeType, nodeData) {
+            if (nodeData.name !== cls) return;
+            const proto = nodeType.prototype;
+            chain(proto, "onNodeCreated", function () { setupNode(this, opts); });
+            chain(proto, "onConfigure", function () { setTimeout(() => { hideWidget(this, "stack"); dropHiddenSockets(this); this.ndLoraApi?.view.update(); }, 0); });
+            chain(proto, "onRemoved", function () { this.__ndLoraDispose?.(); });
+        },
+    });
+}
+
+registerStack(CLASS, "NeuralDreamer.Nodes.LoraStack");

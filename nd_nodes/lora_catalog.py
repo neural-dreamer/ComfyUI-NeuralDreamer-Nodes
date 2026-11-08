@@ -5,6 +5,7 @@ Neural Dreamer Nodes — the catalog of LoRAs for ND LoRA Stack (and for other i
   GET  /nd/loras/preview?name=…        a small picture of the LoRA (256 px; &big=1: up to 1024 px)
   GET  /nd/loras/video?name=…          the video preview as it lies on the disk (Range works, so the browser can seek)
   POST /nd/loras/nsfw {name, nsfw}     nsfw: true / false: the person's mark; null: back to automatic. Answers with the new entry.
+  GET  /nd/loras/h3info?name=…         what the LoRA changes in a MiniMax H3 model (read from the header of the file only, see h3_info)
 
 `preview` is null (nothing to show) or {kind: "image" | "video", v: <modification time>, image: <true when a still picture exists too>}.
 The names come from ComfyUI's own list of LoRAs (folder_paths), so nothing outside the model folders can be asked for.
@@ -480,6 +481,96 @@ def set_mark(name, value, fp=None):
     return entry(name, full)
 
 
+_H3_SUFFIXES = (".lora_down.weight", ".lora_up.weight", ".lora_A.weight", ".lora_B.weight", ".lora_A.default.weight",
+                ".lora_B.default.weight", ".alpha", ".dora_scale", ".diff", ".diff_b", ".lokr_w1", ".lokr_w2", ".lokr_w1_a",
+                ".lokr_w1_b", ".lokr_w2_a", ".lokr_w2_b", ".lokr_t2", ".hada_w1_a", ".hada_w1_b", ".hada_w2_a", ".hada_w2_b")
+_H3_GROUPS = (("adaln", "adaln_proj"), ("refiner", "token_refiner"), ("refiner", "condition_proj"), ("patch_proj", "patch_proj"),
+              ("final", "final_layer"), ("attn", "_attn_"), ("mlp", "_mlp_"))
+_h3_cache = {}  # (path, mtime) -> dict
+
+
+def read_safetensors_header(path, limit=64 * 1024 * 1024):
+    """The JSON header of a .safetensors file (the tensors are not read), or None."""
+    try:
+        with open(path, "rb") as f:
+            raw = f.read(8)
+            if len(raw) < 8:
+                return None
+            n = struct.unpack("<Q", raw)[0]
+            if n <= 0 or n > limit:
+                return None
+            head = json.loads(f.read(n).decode("utf-8"))
+        return head if isinstance(head, dict) else None
+    except (OSError, ValueError, UnicodeDecodeError):
+        return None
+
+
+def h3_group(base):
+    """The group of layers a LoRA module belongs to in MiniMax H3, by its name (any usual key style)."""
+    k = "_" + base.replace(".", "_") + "_"
+    for group, token in _H3_GROUPS:
+        if token in k:
+            return group
+    return "other"
+
+
+def h3_info_from_header(head):
+    """What a LoRA changes in MiniMax H3, from the header of its safetensors file."""
+    modules, ranks, dtypes, clip = {}, [], {}, False
+    for key, meta in head.items():
+        if key == "__metadata__" or not isinstance(meta, dict):
+            continue
+        low = key.lower()
+        if "lora_te" in low or "text_encoder" in low or low.startswith("te_") or "clip" in low:
+            clip = True
+            continue
+        base = key
+        for suf in _H3_SUFFIXES:
+            if key.endswith(suf):
+                base = key[:-len(suf)]
+                break
+        modules.setdefault(base, key)
+        shape = meta.get("shape") or []
+        if key.endswith((".lora_down.weight", ".lora_A.weight", ".lora_A.default.weight")) and len(shape) == 2:
+            ranks.append(int(shape[0]))
+        elif key.endswith((".lora_up.weight", ".lora_B.weight", ".lora_B.default.weight")) and len(shape) == 2:
+            ranks.append(int(shape[1]))
+        dt = meta.get("dtype")
+        if dt:
+            dtypes[dt] = dtypes.get(dt, 0) + 1
+    groups = {}
+    for base in modules:
+        g = h3_group(base)
+        groups[g] = groups.get(g, 0) + 1
+    total = len(modules)
+    known = total - groups.get("other", 0)
+    timeable = sum(groups.get(g, 0) for g in ("attn", "mlp", "patch_proj", "final"))
+    return {
+        "format": "safetensors", "modules": total, "rank": [min(ranks), max(ranks)] if ranks else None,
+        "groups": groups, "timeable": timeable, "fixed": groups.get("adaln", 0) + groups.get("refiner", 0),
+        "match": round(100.0 * known / total) if total else 0, "clip": clip,
+        "dtype": max(dtypes, key=dtypes.get) if dtypes else None,
+    }
+
+
+def h3_info(path):
+    """What the LoRA at `path` changes in MiniMax H3 (cached by the modification time)."""
+    try:
+        key = (path, os.path.getmtime(path))
+    except OSError:
+        return None
+    got = _h3_cache.get(key)
+    if got is None:
+        head = read_safetensors_header(path) if path.lower().endswith(".safetensors") else None
+        got = h3_info_from_header(head) if head is not None else {"format": "other"}
+        for k in [k for k in _h3_cache if k[0] == path]:
+            del _h3_cache[k]
+        _h3_cache[key] = got
+        while len(_h3_cache) > 200:
+            _h3_cache.pop(next(iter(_h3_cache)))
+    return got
+
+
 def register():
     try:
         from aiohttp import web
@@ -505,6 +596,14 @@ def register():
         if not path:
             return web.Response(status=404)
         return web.FileResponse(path, headers={"Cache-Control": "max-age=3600"})
+
+    @routes.get("/nd/loras/h3info")
+    async def nd_loras_h3info(request):
+        path = full_path(request.query.get("name", ""))
+        info = h3_info(path) if path else None
+        if info is None:
+            return web.Response(status=404)
+        return web.json_response(info)
 
     @routes.post("/nd/loras/nsfw")
     async def nd_loras_nsfw(request):

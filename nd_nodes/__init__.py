@@ -29,6 +29,8 @@ MODULES = [
     "batch_images",
     "lora_stack",
     "lora_catalog",
+    "lora_stack_h3_temporal",
+    "bypass_nodes",
 ]
 
 NODE_CLASS_MAPPINGS = {}

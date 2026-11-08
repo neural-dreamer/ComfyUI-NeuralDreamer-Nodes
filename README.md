@@ -2,7 +2,7 @@
 
 Custom nodes for [ComfyUI](https://github.com/comfyanonymous/ComfyUI) by Neural Dreamer.
 
-![Version](https://img.shields.io/badge/version-1.3.1-2f7de1)
+![Version](https://img.shields.io/badge/version-1.4.0-2f7de1)
 [![License: MIT](https://img.shields.io/badge/license-MIT-2f7de1)](LICENSE)
 
 **English** · [Русский](README_RU.md)
@@ -21,6 +21,7 @@ Custom nodes for [ComfyUI](https://github.com/comfyanonymous/ComfyUI) by Neural 
 | [ND Pose Builder](#nd-pose-builder) | `Neural Dreamer/Prompt` | Pose description: ready-made poses (Simple) or every part of the body (Advanced) |
 | [ND Composition Settings](#nd-composition-settings) | `Neural Dreamer/Prompt` | Camera, lens and placement; one shot or a collage of up to 8 panels |
 | [ND LoRA Stack](#nd-lora-stack) | `Neural Dreamer/Loaders` | A stack of LoRAs with previews (pictures and video), a gallery, an NSFW filter and ± buttons for the strength |
+| [ND LoRA Stack H3 Temporal](#nd-lora-stack-h3-temporal) | `Neural Dreamer/Loaders` | The same stack for MiniMax H3: every LoRA works only in the seconds you choose, in the video and in its sound |
 | [ND Load Images](#nd-load-images) | `Neural Dreamer/Images` | 1–20 image blocks with upload, mask, crop/rotate/flip, Keep Proportion and a slider |
 | [ND Resolution](#nd-resolution) | `Neural Dreamer/Images` | Image size from an aspect ratio and one number |
 | [ND Batch Images](#nd-batch-images) | `Neural Dreamer/Images` | Joins images into one batch, fitting them to the size of the first |
@@ -29,6 +30,9 @@ Custom nodes for [ComfyUI](https://github.com/comfyanonymous/ComfyUI) by Neural 
 | [ND Multi Switch](#nd-multi-switch) | `Neural Dreamer/Logic` | Switches whole groups of values at once: true / false pairs, one output per pair |
 | [ND Any Switch](#nd-any-switch) | `Neural Dreamer/Logic` | Passes on one of many inputs of any type, picked by an index; only that one runs |
 | [ND ON / OFF](#nd-on--off) | `Neural Dreamer/Logic` | Passes a value through or drops it, as if the wire did not exist |
+| [ND Bypass Upstream](#nd-bypass-upstream--nd-bypass-nodes--nd-bypass-groups) | `Neural Dreamer/Logic` | Bypasses the nodes that feed only this node, up to an optional border |
+| [ND Bypass Nodes](#nd-bypass-upstream--nd-bypass-nodes--nd-bypass-groups) | `Neural Dreamer/Logic` | Bypasses single nodes wired to its pins, each with its own switch |
+| [ND Bypass Groups](#nd-bypass-upstream--nd-bypass-nodes--nd-bypass-groups) | `Neural Dreamer/Logic` | Bypasses groups of nodes by their names |
 
 ## Installation
 
@@ -320,6 +324,20 @@ What is read next to a LoRA file `name.safetensors` (the first that exists wins)
 
 Files are read only from ComfyUI's own LoRA folders. Workflows saved with an older `ND LoRA Stack` open as they are.
 
+## ND LoRA Stack H3 Temporal
+
+The stack of [ND LoRA Stack](#nd-lora-stack) for **MiniMax H3**, where every LoRA works only in the seconds you choose: in the video and, if you wish, in its sound. Outside those seconds the LoRA does not change the video. Needs a ComfyUI with MiniMax H3 support.
+
+- **Inputs**: `model` (MiniMax H3), `length` (the frame count of the video at 24 fps; it only sets the time scale of the node, so use the same number as in your latent), optional `clip`. **Outputs**: `model`, `clip`, `trigger_words`.
+- The list, the gallery, the strength, the previews and the NSFW filter work as in ND LoRA Stack. The two nodes keep each other's data: a workflow saved with one opens in the other.
+- **Clock button** on a row opens the time settings inside the node. The timeline shows the ranges: drag a bar or its edges, double-click an empty place to add a range, hold Shift to snap to the frames of the model. Every range has *Start* and *End* in seconds (an empty end means the end of the video), *Fade in* and *Fade out* (seconds, 0 is a hard edge) and *Weight* (a multiplier of the strength). A LoRA can have several ranges. *Outside* is the share of the strength outside of the ranges (0 by default).
+- **Switches**: *Timed* (off: the LoRA works on the whole video, as in the plain stack), *Audio* (the same curve is applied to the sound of the video; off: the LoRA does not touch the sound), *Shared layers* (see below). The video is always affected.
+- **Info button** opens a window with the file, the trigger words (you can edit them) and what the LoRA changes in the model: the number of layers, the rank, how many layers can work in time and how many always work on the whole video. A notice appears when the LoRA does not look like a MiniMax H3 LoRA.
+
+**How it works.** A plain LoRA is merged into the weights of the model, so it acts on the whole video alike. A LoRA with time settings is not merged: it is computed next to each layer (the bypass mode of ComfyUI) and its weight is set for every moment of the video and of the sound separately. One sampling step is still one step, but such a LoRA makes the step somewhat slower than a merged one. LoRAs without time settings are merged exactly as in ND LoRA Stack.
+
+**What cannot be placed in time.** The text, the reference rows and the layers that depend on the sampling step have no time of their own. With *Shared layers* on they keep the full strength (the LoRA understands its trigger words, but may leak a little outside the ranges); with it off they work without the LoRA (stricter, but weaker). Parts of a LoRA that are not low-rank weights are applied to the whole video, and layers that cannot be handled in time are skipped with a warning in the console. On a model that is not MiniMax H3 every LoRA works on the whole video, with a warning in the console.
+
 ## ND Multi Switch
 
 Switches whole groups of values at once. The inputs come in pairs, `true N` and `false N`, with one output per pair. The `condition` toggle picks the side the outputs are taken from: `out N` is `true N` when it is on and `false N` when it is off.
@@ -345,6 +363,32 @@ Passes one value through. With the `condition` toggle on (true) the value goes t
 - One input and one output. The first wire connected, to the input or to the output, gives both pins its type and name.
 
 **How the two Logic switches empty a wire.** When the `index` or `condition` is set in the node (or comes from a Primitive Int / Primitive Boolean node), the browser removes the switch from the prompt it sends: the nodes after it are wired straight to the picked source, or lose that wire altogether. When it comes from any other computed value, the node stays in the prompt and outputs `None` for "nothing". A required input after an empty output is reported by ComfyUI as missing, as for any unconnected wire. Export (API) gives the same resolved prompt.
+
+## ND Bypass Upstream / ND Bypass Nodes / ND Bypass Groups
+
+Three nodes that put other nodes into Bypass (or Mute) with a switch. Bypass is a function of the browser: a node in Bypass is left out of the prompt that goes to the server. So these nodes are virtual: they never reach the server. They set the mode of the nodes they manage right before a run, and also when you click a switch, when a workflow is loaded and twice a second.
+
+- **Switch**: a BOOLEAN toggle (`active`, or `on_N` for every pin of ND Bypass Nodes). It can be wired: connect a widget of another node (a Boolean primitive, a widget of an interface builder) and its value is read when the run is queued. A value that another node computes on the server is not known before the run; then the toggle on the node is used, and a notice says so.
+- **`mode`**: *bypass* (the data passes through the nodes as in the Bypass of ComfyUI) or *mute* (the nodes give nothing).
+- A node you set to Bypass or Mute by hand is never changed. A node that two of these nodes manage stays off while at least one of them is off; Mute is stronger than Bypass. Deleting one of these nodes gives its nodes back, and so does setting it to Bypass or Mute itself.
+- Every node has a status line (for example `Bypassing 3 nodes`). While it is selected, the nodes it manages get a dashed outline, and a switched-off node has a bar at its top edge.
+- The switch changes the modes of the nodes in your workflow, so you can see which nodes are off.
+
+### ND Bypass Upstream
+
+Bypasses the logic wired before it. **Inputs**: `input` (the end of the chain that is switched off), `active`, `mode`, optional `start`. **Output**: `output`, the same type as `input`.
+
+- The nodes that feed only this node are bypassed together. A node that something else also uses stays on, and so does everything that feeds it. Reroutes are passed through.
+- A node wired to `start` and everything above it stay on. While the node is bypassed, `output` gives the value of `start` instead of `input`. This needs a recent ComfyUI frontend; an older one passes the data through the bypassed nodes as ComfyUI's Bypass does.
+- Without `start` the whole chain that feeds only this node is bypassed. In a simple line of nodes that includes the sampler, so the node shows a warning for a long chain: connect `start` to limit it.
+
+### ND Bypass Nodes
+
+Bypasses single nodes. Wire any output of a node to a pin: the node gets its own switch `on_N` (named after the node), and a new pin appears after it. A node is bypassed (or muted) while its switch is off. Free pins at the end disappear when their wires are removed.
+
+### ND Bypass Groups
+
+Bypasses the nodes inside groups. Write the names of the groups in `groups`, one per line. `*` stands for any text (`Upscale*` takes `Upscale Face` and `Upscale Body`), capital letters do not matter, and lines that start with `#` are ignored. Names that match no group are listed in red on the node. The groups of the workflow (or subgraph) the node is in are searched.
 
 ## ND Pack Parameters / ND Unpack Parameters
 
@@ -390,6 +434,8 @@ ComfyUI-NeuralDreamer-Nodes/
 │   ├── resolution.py
 │   ├── batch_images.py
 │   ├── lora_stack.py, lora_catalog.py  # ND LoRA Stack and the catalog of LoRAs (previews, NSFW marks)
+│   ├── lora_stack_h3_temporal.py, lora_temporal_core.py  # ND LoRA Stack H3 Temporal and its time maths
+│   ├── bypass_nodes.py     # the three Bypass nodes (virtual, they work in the browser)
 │   └── params.py
 ├── js/
 │   ├── nd_common.js        # shared UI helpers (canvas zoom/pan over node UIs)
@@ -406,6 +452,8 @@ ComfyUI-NeuralDreamer-Nodes/
 │   ├── nd_i18n.js, i18n/   # interface languages (ru.json, zh.json)
 │   ├── resolution.js, batch_images.js
 │   ├── lora_stack.js, lora_gallery.js  # ND LoRA Stack: the list in the node and the gallery
+│   ├── lora_stack_h3_temporal.js, lora_temporal.js  # ND LoRA Stack H3 Temporal: the time settings and the info window
+│   ├── bypass_nodes.js, nd_bypass_core.js  # the Bypass nodes and their rules
 │   ├── character_icons.js  # Character Builder icons (generated by tools/make_character_icons.py)
 │   └── params.js
 ├── tools/  # dev scripts, not loaded by ComfyUI
