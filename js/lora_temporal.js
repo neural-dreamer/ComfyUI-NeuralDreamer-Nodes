@@ -113,7 +113,7 @@ const CSS = `
 .nd-li-warn{padding:4px 7px;border-radius:6px;background:rgba(255,160,40,.14);border:1px solid rgba(255,160,40,.5);font-size:11.5px}
 .nd-li-chips{display:flex;flex-wrap:wrap;gap:4px}
 .nd-li-chip{padding:1px 7px;border:1px solid var(--border-color,#444);border-radius:999px;font-size:10.5px;opacity:.85}
-.nd-li-chip.fixed{border-style:dashed;opacity:.6}
+.nd-li-chip.whole{border-style:dashed;opacity:.6}
 .nd-li-words{width:100%;box-sizing:border-box;height:24px;padding:0 6px;border:1px solid var(--border-color,#444);border-radius:6px;background:var(--comfy-input-bg,#222);color:var(--input-text,#ddd);font:inherit;font-size:11.5px;outline:0}
 .nd-li-words:focus{border-color:var(--nd-accent,#2f7de1)}
 `;
@@ -376,7 +376,7 @@ export function infoPanel({ name, meta = null, words = [], onWords, fetchApi = n
             kvi(tr("Always on the whole video"), String(i.fixed));
             box.append(k);
             const chips = h("div", "nd-li-chips");
-            Object.entries(i.groups || {}).forEach(([g, n]) => { const c = h("span", `nd-li-chip${FIXED_GROUPS.has(g) ? " fixed" : ""}`, `${tr(GROUP_NAMES[g] || g)} · ${n}`); chips.append(c); });
+            Object.entries(i.groups || {}).forEach(([g, n]) => { const c = h("span", `nd-li-chip${FIXED_GROUPS.has(g) ? " whole" : ""}`, `${tr(GROUP_NAMES[g] || g)} · ${n}`); chips.append(c); });
             box.append(chips);
             if (i.match < 50) box.append(h("div", "nd-li-warn", tr("This LoRA does not look like a MiniMax H3 LoRA: most of its layers are not in the model.")));
             else if (i.fixed && i.fixed >= i.modules / 2) box.append(h("div", "nd-li-warn", tr("Most layers of this LoRA cannot be placed in time, so ranges will change it only a little.")));
