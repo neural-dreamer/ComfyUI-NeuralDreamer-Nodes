@@ -2,7 +2,7 @@
 
 Custom nodes for [ComfyUI](https://github.com/comfyanonymous/ComfyUI) by Neural Dreamer.
 
-![Version](https://img.shields.io/badge/version-1.4.1-2f7de1)
+![Version](https://img.shields.io/badge/version-1.4.2-2f7de1)
 [![License: MIT](https://img.shields.io/badge/license-MIT-2f7de1)](LICENSE)
 
 **English** · [Русский](README_RU.md)
@@ -257,7 +257,7 @@ The camera of the picture, in one of two modes.
 
 The four prompt builders (Character, Outfit, Pose, Composition Settings) share these.
 
-- **Language**: the interface can be English, Russian or Chinese (gear, *Language*). *All nodes* sets it for every builder, *This node* overrides it for one. By default it follows the language of ComfyUI. Hover texts are translated too and keep an `EN:` line with the English name. The text of the prompt itself is always English.
+- **Language**: the interface can be English, Russian or Chinese (gear, *Language*). *All nodes* sets it for every builder, *This node* overrides it for one. The language for all nodes is also set in the ComfyUI settings (*Neural Dreamer > Language*); *Auto* follows the language of ComfyUI. The messages of the Bypass and LoRA nodes use it too. Hover texts are translated too and keep an `EN:` line with the English name. The text of the prompt itself is always English.
 - **Themes, UI scale, Presets** are shared; presets of each node are kept in separate files in the ComfyUI user folder.
 - The nodes are meant for fictional adult (18+) characters only.
 
@@ -368,7 +368,7 @@ Passes one value through. With the `condition` toggle on (true) the value goes t
 
 Three nodes that put other nodes into Bypass (or Mute) with a switch. Bypass is a function of the browser: a node in Bypass is left out of the prompt that goes to the server. So these nodes are virtual: they never reach the server. They set the mode of the nodes they manage right before a run, and also when you click a switch, when a workflow is loaded and twice a second.
 
-- **Switch**: a BOOLEAN toggle (`active`, or `on_N` for every pin of ND Bypass Nodes). It can be wired: connect a widget of another node (a Boolean primitive, a widget of an interface builder) and its value is read when the run is queued. A value that another node computes on the server is not known before the run; then the toggle on the node is used, and a notice says so.
+- **Switch**: a BOOLEAN toggle (`active`, or `on_N` for every pin of ND Bypass Nodes). It can be wired: connect a widget of another node (a Boolean primitive, a widget of an interface builder) and its value is read when the run is queued. Values kept in the widgets of a node pack are read through that pack's reader; ValuePresets / Unbundle / Bundle of comfyui-obvpm are supported, so a switch of a Value Presets node can drive a Bypass. A value that another node computes on the server is not known before the run; then the toggle on the node is used, and a notice says so.
 - **`mode`**: *bypass* (the data passes through the nodes as in the Bypass of ComfyUI) or *mute* (the nodes give nothing).
 - A node you set to Bypass or Mute by hand is never changed. A node that two of these nodes manage stays off while at least one of them is off; Mute is stronger than Bypass. Deleting one of these nodes gives its nodes back, and so does setting it to Bypass or Mute itself.
 - Every node has a status line (for example `Bypassing 3 nodes`). While it is selected, the nodes it manages get a dashed outline, and a switched-off node has a bar at its top edge.

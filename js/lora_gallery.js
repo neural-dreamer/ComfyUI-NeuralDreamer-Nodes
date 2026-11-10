@@ -12,9 +12,8 @@ import { T, resolveLang, loadLang, LANG_EVENT } from "./nd_i18n.js";
 
 /* ------------------------------------------------------------------ language */
 
-// The language of this node and its menus is English. When an interface pack with a language setting is installed (it publishes window.ndUi),
-// the language chosen there (else the one of ComfyUI) applies here too.
-export const LANG = () => (window.ndUi ? resolveLang("auto") : "en");
+// The language of the messages and menus: the ComfyUI setting "Neural Dreamer > Language" (Auto = the language of ComfyUI).
+export const LANG = () => resolveLang("auto");
 export const tr = (s, v) => T(LANG(), s, v);
 export const ensureLang = () => loadLang(LANG());
 

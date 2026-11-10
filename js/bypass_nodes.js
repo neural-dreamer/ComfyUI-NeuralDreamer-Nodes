@@ -10,7 +10,8 @@
 // Every node has a status line and, while it is selected, a dashed outline around the nodes it manages.
 import { app } from "../../scripts/app.js";
 import { chain, toast, isSelected } from "./nd_common.js";
-import { tr } from "./lora_gallery.js";
+import { tr, ensureLang } from "./lora_gallery.js";
+import { LANG_EVENT } from "./nd_i18n.js";
 import * as core from "./nd_bypass_core.js";
 
 const ACCENT = "#2f7de1", WARN = "#e0a030", BAD = "#e05555", DIM = "#9aa0a8";
@@ -42,7 +43,7 @@ export function reconcileAll() {
         if (s !== n.__ndSig) { n.__ndSig = s; repaint = true; }
         if (n.__ndInfo?.unreadable && !n.__ndWarned) {
             n.__ndWarned = true;
-            toast("warn", tr("ND Bypass"), tr("The value of this switch is computed and is not known before the run. The switch on the node is used."));
+            ensureLang().then(() => toast("warn", tr("ND Bypass"), tr("The value of this switch cannot be read before the run (it is computed by the node that feeds it). The switch on the node is used.")));
         }
         if (!n.__ndInfo?.unreadable) n.__ndWarned = false;
         if (n.comfyClass === core.NODES) refreshPins(n);
@@ -50,6 +51,8 @@ export function reconcileAll() {
     if (repaint) dirty();
     return changed;
 }
+
+window.addEventListener(LANG_EVENT, () => dirty());
 
 let timer = null;
 function startTimer() {
@@ -82,7 +85,7 @@ function statusLines(node) {
         out.push([tr("{g} groups · {n} nodes", { g: i.groups || 0, n: i.targets.length }), DIM]);
         if (i.missing?.length) out.push([tr("Not found: {names}", { names: i.missing.join(", ") }), BAD]);
     }
-    if (i.unreadable) out.push([tr("The value is computed: using the switch"), WARN]);
+    if (i.unreadable) out.push([tr("The value cannot be read: using the switch"), WARN]);
     return out;
 }
 

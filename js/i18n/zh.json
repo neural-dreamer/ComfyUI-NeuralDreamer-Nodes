@@ -27,7 +27,6 @@
 "All": "全部",
 "All base models": "全部基础模型",
 "All folders": "全部文件夹",
-"All nodes": "所有节点",
 "All random": "全部随机",
 "All random is on (toolbar). Click the values to choose what random may pick.": "“全部随机”已开启（顶部工具栏）。点击各个值可选择随机可以从中挑选的范围。",
 "All random: about a third of the characters get 1–3 tattoos.": "全部随机：大约三分之一的角色会有 1–3 个纹身。",
@@ -322,8 +321,6 @@
 "The shape of the picture. Used when no Resolution is wired in.": "图片的形状。没有连接分辨率时使用。",
 "The size of everything in the node. The node grows when its content no longer fits.": "节点中所有内容的大小。内容放不下时，节点会自动变大。",
 "The text in the picture under this panel. Empty: it names the view (FRONT VIEW, SIDE VIEW...).": "图片中这个面板下方的文字。留空:使用视角名称(FRONT VIEW、SIDE VIEW……)。",
-"The value is computed: using the switch": "该值由计算得出：使用节点上的开关",
-"The value of this switch is computed and is not known before the run. The switch on the node is used.": "此开关的值由计算得出，运行前无法得知。将使用节点上的开关。",
 "There are no models in this folder": "此文件夹中没有模型",
 "There are no presets to export.": "没有可导出的预设。",
 "This LoRA does not look like a MiniMax H3 LoRA: most of its layers are not in the model.": "这似乎不是 MiniMax H3 的 LoRA：它的大多数层不在模型中。",
@@ -396,7 +393,10 @@
 "{n} random · run to pick": "{n} 项随机 · 运行后选出",
 "{n} random · seed {seed}": "{n} 项随机 · 种子 {seed}",
 "{n} skipped": "跳过 {n} 个",
-"{on} of {all} on": "已启用 {on} / {all}"
+"{on} of {all} on": "已启用 {on} / {all}",
+"The value of this switch cannot be read before the run (it is computed by the node that feeds it). The switch on the node is used.": "运行前无法读取此开关的值（它由连接到它的节点计算）。将使用节点上的开关。",
+"The value cannot be read: using the switch": "无法读取该值：使用节点上的开关",
+"The language for all nodes is set in the ComfyUI settings: Neural Dreamer > Language.": "所有节点的语言在 ComfyUI 设置中设定：Neural Dreamer > Language。"
 },
 "character": {
 "at:general.race:angel:halo": {

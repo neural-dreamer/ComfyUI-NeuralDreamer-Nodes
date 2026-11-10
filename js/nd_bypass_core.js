@@ -42,13 +42,67 @@ const isPass = (n) => !isController(n) && (n.type === "Reroute" || (n.isVirtualN
 
 const toBool = (v) => (typeof v === "string" ? !/^(false|0|off|no|)$/i.test(v.trim()) : !!v);
 
+// The origin of an input, also across the border of a subgraph: the wire from the input node of a subgraph (origin id -10) continues
+// in the parent graph, at the same-numbered input of the node that holds the subgraph.  -> {node, slot, g} (g: the graph of that node)
+const SUBGRAPH_INPUT = -10;
+function instanceOf(g) {
+    const root = g.rootGraph || g;
+    const subs = root.subgraphs ? [...(root.subgraphs.values ? root.subgraphs.values() : root.subgraphs)] : [];
+    for (const x of [root, ...subs]) for (const n of nodesOf(x)) if (n.subgraph === g) return n;
+    return null;
+}
+export function originAcross(g, node, slot, depth = 0) {
+    const l = linkOf(g, node.inputs?.[slot]?.link);
+    if (!l || depth > 8) return null;
+    if (l.origin_id === SUBGRAPH_INPUT || (g.inputNode && l.origin_id === g.inputNode.id)) {
+        const inst = instanceOf(g);
+        return inst ? originAcross(inst.graph || g.rootGraph, inst, l.origin_slot, depth + 1) : null;
+    }
+    const n = g.getNodeById(l.origin_id);
+    return n ? { node: n, slot: l.origin_slot, link: l, g } : null;
+}
+
+/* Readers: nodes that compute a value at the run, but whose value is already known in the browser (it is stored in widgets).
+   A reader gets (graph, node, outputSlot, depth, follow) and returns {value, ok}, or null when the value cannot be told (then the switch on the node is used).
+   Add a reader for another node pack here (READERS["Node type"] = fn). */
+const widgetLines = (n) => { const w = (n.widgets || []).find((x) => typeof x.value === "string" && x.value.includes("\n")) || (n.widgets || [])[0]; return String(w?.value ?? "").split("\n").map((x) => x.trim()).filter(Boolean); };
+const stateOf = (n, name) => { // the JSON {"name": value, ...} that ValuePresets keeps
+    const cands = [...(n.widgets || []).map((w) => w.value), ...(n.widgets_values || [])];
+    for (const v of cands) {
+        if (typeof v !== "string" || v[0] !== "{") continue;
+        try { const o = JSON.parse(v); if (o && typeof o === "object" && name in o) return o; } catch {}
+    }
+    return null;
+};
+// obvpm: ValuePresets -> (Bundle ->) Unbundle -> the wire.  Unbundle output N is the N-th name of its list.
+function obvpmValue(g, node, name, depth, follow) {
+    const o = originAcross(g, node, 0);
+    if (!o || depth > 8) return null;
+    const src = o.node;
+    if (src.type === "ValuePresets (obvpm)") { const st = stateOf(src, name); return st ? { value: toBool(st[name]), ok: true } : null; }
+    if (src.type === "Bundle (obvpm)") { // the names of the bundle: in_1 is the first line
+        const i = widgetLines(src).indexOf(name);
+        return i >= 0 && src.inputs?.[i]?.link != null ? follow(o.g, src, i, depth + 1) : null;
+    }
+    return null;
+}
+export const READERS = {
+    "Unbundle (obvpm)": (g, node, slot, depth, follow) => {
+        const name = widgetLines(node)[slot];
+        return name ? obvpmValue(g, node, name, depth, follow) : null;
+    },
+};
+
 // -> {value, ok}: ok false when the wire comes from something that is computed by the backend (its value cannot be known before the run)
 function followBool(g, node, slot, depth) {
     if (depth > 8) return { ok: false };
-    const o = originOf(g, node, slot);
+    const o = originAcross(g, node, slot);
     if (!o) return { ok: false };
     const src = o.node;
+    g = o.g;
     if (isPass(src)) return followBool(g, src, 0, depth + 1);
+    const reader = READERS[src.type];
+    if (reader) return reader(g, src, o.slot, depth, followBool) || { ok: false };
     const ws = src.widgets || [];
     const outName = src.outputs?.[o.slot]?.name;
     let w = ws.find((x) => x.name === outName);

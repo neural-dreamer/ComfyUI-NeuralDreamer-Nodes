@@ -9,3 +9,5 @@ Thumbs.db
 .idea/
 tools/bench/
 tools/tests/
+# files for the maintainer only (release notes, commit messages)
+release/

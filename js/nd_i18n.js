@@ -29,18 +29,21 @@ export function localeLang() {
     return "en";
 }
 
-// The language shared by every builder that follows "the common one".
+// The language shared by every node: the ComfyUI setting "Neural Dreamer > Language" (Auto = the language of ComfyUI).
+// Older versions kept the choice in the browser storage (the key is shared with ND UI Builder); it is moved into the setting once.
+export const SETTING_ID = "NeuralDreamer.Language";
+const settingValue = () => {
+    try { return String(app.extensionManager?.setting?.get?.(SETTING_ID) ?? app.ui?.settings?.getSettingValue?.(SETTING_ID) ?? "auto"); } catch { return "auto"; }
+};
 export function commonLang() {
-    try {
-        const v = localStorage.getItem(COMMON_KEY);
-        if (LANG_IDS.includes(v)) return v;
-    } catch {}
-    return localeLang();
+    const v = settingValue();
+    return LANG_IDS.includes(v) ? v : localeLang();
 }
 export function setCommonLang(id) {
     if (!LANG_IDS.includes(id)) return;
-    try { localStorage.setItem(COMMON_KEY, id); } catch {}
-    window.dispatchEvent(new CustomEvent(LANG_EVENT, { detail: { lang: id } }));
+    try { localStorage.setItem(COMMON_KEY, id); } catch {} // the interface builder pack reads the same key
+    try { app.extensionManager?.setting?.set?.(SETTING_ID, id); } catch {}
+    window.dispatchEvent(new CustomEvent(LANG_EVENT, { detail: { lang: commonLang() } }));
 }
 // a node keeps "auto" (the common language) or its own choice
 export const resolveLang = (own) => (LANG_IDS.includes(own) ? own : commonLang());
@@ -95,3 +98,32 @@ export function localizeRaw(raw, lang, section) {
     });
     return out;
 }
+
+
+/* ------------------------------------------------------------ the ComfyUI setting */
+
+app.registerExtension({
+    name: "NeuralDreamer.Language",
+    settings: [{
+        id: SETTING_ID,
+        name: "Language of Neural Dreamer nodes",
+        tooltip: "The language of the messages and the interface of the Neural Dreamer nodes. Auto follows the language of ComfyUI. A builder node can also be switched on its own.",
+        category: ["Neural Dreamer", "Language"],
+        type: "combo",
+        defaultValue: "auto",
+        options: [{ text: "Auto (language of ComfyUI)", value: "auto" }, ...LANGS.map((l) => ({ text: l.label, value: l.id }))],
+        onChange: () => {
+            loadLang(commonLang()).then(() => window.dispatchEvent(new CustomEvent(LANG_EVENT, { detail: { lang: commonLang() } })));
+        },
+    }],
+    async setup() {
+        // the choice made in an older version (browser storage) goes into the setting, once
+        try {
+            const old = localStorage.getItem(COMMON_KEY);
+            if (LANG_IDS.includes(old) && !localStorage.getItem("nd-lang-migrated") && !LANG_IDS.includes(settingValue())) app.extensionManager?.setting?.set?.(SETTING_ID, old);
+            localStorage.setItem("nd-lang-migrated", "1");
+        } catch {}
+        await loadLang(commonLang());
+        window.dispatchEvent(new CustomEvent(LANG_EVENT, { detail: { lang: commonLang() } }));
+    },
+});

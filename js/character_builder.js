@@ -1851,11 +1851,9 @@ function setupBuilder(node, cfg) {
 
         // the language of the interface (the prompt text stays English)
         const own = el("div", "nd-cb-seg nd-cbs-lang");
-        const common = el("div", "nd-cb-seg nd-cbs-lang");
         const langName = (id) => LANGS.find((l) => l.id === id)?.label || id;
         const paintLang = () => {
             for (const b of own.children) b.classList.toggle("on", b.dataset.lang === ui.lang);
-            for (const b of common.children) b.classList.toggle("on", b.dataset.lang === commonLang());
             own.firstChild.textContent = tr("Same as all nodes ({lang})", { lang: langName(commonLang()) });
         };
         const ownBtn = (id) => {
@@ -1865,14 +1863,10 @@ function setupBuilder(node, cfg) {
             return b;
         };
         own.append(ownBtn("auto"), ...LANGS.map((l) => ownBtn(l.id)));
-        for (const l of LANGS) {
-            const b = btn("nd-cb-segbtn", l.label, null, true);
-            b.dataset.lang = l.id;
-            b.onclick = () => setCommonLang(l.id);
-            common.append(b);
-        }
         paintLang();
-        section("Language", note("This node"), own, note("All nodes"), common,
+        window.addEventListener(LANG_EVENT, () => { if (own.isConnected) paintLang(); });
+        section("Language", note("This node"), own,
+            note("The language for all nodes is set in the ComfyUI settings: Neural Dreamer > Language."),
             note("Only the interface language changes. The prompt text stays in English: image models understand English best. The names of the pins stay in English too."));
 
         // the toolbar checkboxes live here now (the same elements, so their handlers stay)

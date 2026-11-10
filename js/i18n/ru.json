@@ -27,7 +27,6 @@
 "All": "Все",
 "All base models": "Все базовые модели",
 "All folders": "Все папки",
-"All nodes": "Все ноды",
 "All random": "Всё случайно",
 "All random is on (toolbar). Click the values to choose what random may pick.": "«Всё случайно» включено (панель сверху). Нажимайте на значения, чтобы выбрать, из чего случайный выбор может брать.",
 "All random: about a third of the characters get 1–3 tattoos.": "Всё случайно: примерно у трети персонажей будет 1–3 тату.",
@@ -322,8 +321,6 @@
 "The shape of the picture. Used when no Resolution is wired in.": "Форма картинки. Используется, если не подключено разрешение.",
 "The size of everything in the node. The node grows when its content no longer fits.": "Размер всего в ноде. Нода увеличивается, когда содержимое перестаёт помещаться.",
 "The text in the picture under this panel. Empty: it names the view (FRONT VIEW, SIDE VIEW...).": "Текст на картинке под этой панелью. Пусто — название вида (FRONT VIEW, SIDE VIEW…).",
-"The value is computed: using the switch": "Значение вычисляется: берётся переключатель",
-"The value of this switch is computed and is not known before the run. The switch on the node is used.": "Значение этого переключателя вычисляется и неизвестно до запуска. Используется переключатель на ноде.",
 "There are no models in this folder": "В этой папке нет моделей",
 "There are no presets to export.": "Нет пресетов для экспорта.",
 "This LoRA does not look like a MiniMax H3 LoRA: most of its layers are not in the model.": "Похоже, это не LoRA для MiniMax H3: большинства её слоёв нет в модели.",
@@ -396,7 +393,10 @@
 "{n} random · run to pick": "случайных: {n} · запустите для выбора",
 "{n} random · seed {seed}": "случайных: {n} · сид {seed}",
 "{n} skipped": "пропущено: {n}",
-"{on} of {all} on": "Включено {on} из {all}"
+"{on} of {all} on": "Включено {on} из {all}",
+"The value of this switch cannot be read before the run (it is computed by the node that feeds it). The switch on the node is used.": "Значение этого переключателя нельзя прочитать до запуска (его считает нода, которая к нему подключена). Используется переключатель на ноде.",
+"The value cannot be read: using the switch": "Значение не прочитать: используется переключатель",
+"The language for all nodes is set in the ComfyUI settings: Neural Dreamer > Language.": "Язык для всех нод задаётся в настройках ComfyUI: Neural Dreamer > Language."
 },
 "character": {
 "at:general.race:angel:halo": {
