@@ -2,7 +2,7 @@
 
 Custom nodes for [ComfyUI](https://github.com/comfyanonymous/ComfyUI) by Neural Dreamer.
 
-![Version](https://img.shields.io/badge/version-1.4.2-2f7de1)
+![Version](https://img.shields.io/badge/version-1.4.3-2f7de1)
 [![License: MIT](https://img.shields.io/badge/license-MIT-2f7de1)](LICENSE)
 
 **English** · [Русский](README_RU.md)
@@ -80,24 +80,26 @@ Shows an image batch as thumbnails with a main preview. Select a variant with a 
 **Interface**
 
 - Thumbnail strip and main preview with a position badge (`2/4`). Variants are numbered from 1 in the interface; `selected_index` is the 0-based index, so variant 1 outputs `0`.
-- Main preview on top, under it the size of the shown image (`1024 × 1536 px`; while comparing, both sizes), then the thumbnails and the **Upscale** button. The button is available while a variant from the batch is shown.
+- Main preview on top, under it the size of the shown image (`1024 × 1536 px`; while comparing, both sizes), then the thumbnails and the **Upscale** button. The button is available while a variant from the batch is shown. Its label can be renamed in the settings (*Upscale button label*); this changes only the text on the button.
 - **Multi-Variant** toggle at the bottom left. Its label can be renamed in the settings (*Toggle label*); this changes only the text in the node, the output is still `multi_variant`.
 - **Compare** appears on the upscaled result and switches a before/after slider between the image sent to upscale and the result.
-- The gear button opens the settings: file names, saving, the Upscale button and the live preview.
+- The gear button opens the settings: labels, file names, saving, the Upscale button, Free VRAM and the live preview.
 - **Live preview** (off by default, in the settings): while the variants or the Upscale pass are generated, the main preview shows the sampler frames, with a `LIVE 12/30` badge (sampler steps). The eye button at the bottom left of the preview hides or shows them in this node. It always shows the image being generated right now (with several samplers, the one running; with a batch, its first image); the thumbnails keep the last results until the new ones arrive. With an [ND Live Preview Bridge](#nd-live-preview-bridge) in front of the samplers the frames come from the bridge and ComfyUI's own sampler preview is turned off for that run, also while the eye hides the live preview. Without a bridge the node shows ComfyUI's own previews: they must be on (Settings → Comfy → Execution → Live preview method).
 - The mouse wheel over the node zooms the canvas, and dragging with the middle button pans it. If the thumbnails do not fit, scroll the strip with Shift+wheel or a horizontal trackpad swipe.
 - **Preview with Metadata** (settings, off by default): puts the prompt and workflow into the preview images, as in the saved files. A preview dragged out of the node or opened in a new tab then carries them. Images can be dragged out of the node, for example into an ND Load Images block.
-- **Interface for other panels**: the node exposes its state (variants, selection, toggle label, Upscale, live frames) so that other interfaces, such as the Variant Preview widget of ND UI Builder, can show it and drive it. Nothing changes in the node itself.
+- **Interface for other panels**: the node exposes its state (variants, selection, toggle label, Upscale button and its label, live frames) so that other interfaces, such as the Variant Preview widget of ND UI Builder, can show it and drive it. Nothing changes in the node itself.
 
 **Saving**
 
 | Setting | Description |
 |---|---|
 | Toggle label | Text next to the toggle, `Multi-Variant` by default. Only for the node interface |
+| Upscale button label | Text on the Upscale button, `Upscale` by default. Only for the node interface |
 | File name | Common start of the file names, `ND_Image` by default. Subfolders such as `shots/hero` are supported |
 | Variant name | Added after the file name for the variants: `ND_Image_variant`. Empty saves them under the file name alone |
 | Upscaled name | Added after the file name for the upscaled result: `ND_Image_upscaled` |
 | Upscale button | Shows the Upscale button (on by default). When it is off, every incoming batch is saved |
+| Free VRAM on image receive | Unloads the models from VRAM each time the node receives images: after the variants of a Run and after the upscaled result (on by default). The execution cache is kept |
 | Save variants | Saves the incoming batch to the `output` folder on every normal Run. Always on while the Upscale button is off |
 | Live preview | Shows the sampler's frames in the node while it runs (off by default). Only for the node interface |
 
@@ -406,6 +408,7 @@ The selectors do not upscale. The Upscale button only queues a run with `upscale
 
 - **Run** queues the workflow with `upscale = false`. The wire into the `image` field of the selector's Pack is removed from the prompt, so the upscale branch is not evaluated.
 - **Upscale** queues the workflow with `upscale = true` and the index selected at the moment of the click. Seeds set to randomize or increment on nodes upstream of the selector keep their values from the last Run, so the generation is taken from cache. The result wired to `image` is saved and shown in the node.
+- With *Free VRAM on image receive* on (the default), the models are unloaded from VRAM after the variants of a Run arrive and after the upscaled result is saved; the execution cache is kept.
 - The selector's output reaches other nodes through an internal helper node (ND Variant Values) that holds the values shown in the selector when the run is queued. Nothing downstream depends on the selector itself, so its output and input can be routed through the same subgraph or a Pack/Unpack round trip without a circular connection error.
 - Gate the upscale branch with the `upscale` field (for example through a switch node).
 

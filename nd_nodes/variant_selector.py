@@ -3,7 +3,9 @@ Neural Dreamer Nodes — Variant Selector
 Two nodes for picking a variant from a batch and launching an upscale with a dedicated button.
 """
 
+import gc
 import json
+import logging
 import os
 import random
 
@@ -97,6 +99,57 @@ def _save_output_images(images, prefix, prompt=None, extra_pnginfo=None):
         4,
         _build_metadata(prompt, extra_pnginfo),
     )
+
+
+def _free_vram(reason=""):
+    """Unloads every model ComfyUI's model management holds and empties the CUDA cache.
+
+    Two steps:
+      1. right now (the images are already decoded, so nothing upstream still needs them);
+      2. the 'unload_models' flag on the prompt queue, which ComfyUI's worker applies
+         after the whole prompt has finished (the same as POST /free with
+         unload_models=true). 'free_memory' is NOT set: it would also reset the
+         execution cache and force the next Run to recompute everything.
+    Models loaded outside comfy.model_management (own loaders, subprocesses) are not
+    touched."""
+    try:
+        import comfy.model_management as mm
+    except Exception as e:  # noqa: BLE001
+        logging.warning("[ND] Free VRAM: comfy.model_management unavailable (%s)", e)
+        return False
+    ok = True
+    try:
+        mm.unload_all_models()
+    except Exception as e:  # noqa: BLE001
+        ok = False
+        logging.warning("[ND] Free VRAM: unload_all_models failed: %s", e)
+    try:
+        gc.collect()
+        mm.soft_empty_cache(True)
+    except Exception as e:  # noqa: BLE001
+        logging.warning("[ND] Free VRAM: soft_empty_cache failed: %s", e)
+    try:
+        import torch
+
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+            torch.cuda.ipc_collect()
+    except Exception:  # noqa: BLE001
+        pass
+    deferred = False
+    try:
+        from server import PromptServer
+
+        queue = getattr(getattr(PromptServer, "instance", None), "prompt_queue", None)
+        if queue is not None and hasattr(queue, "set_flag"):
+            queue.set_flag("unload_models", True)
+            deferred = True
+    except Exception as e:  # noqa: BLE001
+        logging.warning("[ND] Free VRAM: could not set the unload_models flag: %s", e)
+    logging.info("[ND] VRAM freed%s (models unloaded now%s)",
+                 f" - {reason}" if reason else "",
+                 ", again after the prompt finishes" if deferred else "")
+    return ok
 
 
 class NDVariantPreviewSelector:
@@ -238,6 +291,10 @@ class NDUpscaleResultSink:
                 "filename_prefix": ("STRING", {"default": DEFAULT_PREFIX}),
                 "suffix": ("STRING", {"default": DEFAULT_UPSCALED}),
             },
+            "optional": {
+                # set by the frontend from the selector's "Free VRAM on image receive" option
+                "free_vram": ("BOOLEAN", {"default": False}),
+            },
             "hidden": {
                 "prompt": "PROMPT",
                 "extra_pnginfo": "EXTRA_PNGINFO",
@@ -245,9 +302,41 @@ class NDUpscaleResultSink:
         }
 
     def run(self, image, target_id, filename_prefix=DEFAULT_PREFIX, suffix=DEFAULT_UPSCALED,
-            prompt=None, extra_pnginfo=None):
+            free_vram=False, prompt=None, extra_pnginfo=None):
         saved = _save_output_images(image[:1], _file_name(filename_prefix, suffix), prompt, extra_pnginfo)
+        if free_vram:
+            _free_vram(f"upscaled image received by node {target_id}")
         return {"ui": {"nd_final": saved[:1], "nd_target": [str(target_id)]}}
+
+
+class NDFreeVRAM:
+    """
+    Internal node. On a normal Run the frontend adds it after each ND Variant Preview
+    Selector that has "Free VRAM on image receive" on, wired to the selector's output:
+    it runs once the selector has received the variants (all sampling and VAE decode
+    before it is done) and unloads the models. Only this node is added, the selector's
+    own inputs are not changed, so its cache and everything upstream stay as they are.
+    """
+
+    CATEGORY = "Neural Dreamer/internal"
+    DEV_ONLY = True  # hidden from the node search; added to the prompt by the frontend
+    DESCRIPTION = "Internal helper added automatically by the Variant Preview Selector. Do not place it manually."
+    RETURN_TYPES = ()
+    FUNCTION = "run"
+    OUTPUT_NODE = True
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "after": (PARAMS,),
+                "target_id": ("STRING", {"default": ""}),
+            }
+        }
+
+    def run(self, after, target_id=""):
+        _free_vram(f"variants received by node {target_id}")
+        return {}
 
 
 class NDVariantValues:
@@ -290,6 +379,7 @@ NODE_CLASS_MAPPINGS = {
     "NDVariantSliderSelector": NDVariantSliderSelector,
     "NDUpscaleResultSink": NDUpscaleResultSink,
     "NDVariantValues": NDVariantValues,
+    "NDFreeVRAM": NDFreeVRAM,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
@@ -297,4 +387,5 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "NDVariantSliderSelector": "ND Variant Slider Selector",
     "NDUpscaleResultSink": "ND Upscale Result (internal)",
     "NDVariantValues": "ND Variant Values (internal)",
+    "NDFreeVRAM": "ND Free VRAM (internal)",
 }

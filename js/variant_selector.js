@@ -6,6 +6,7 @@ import { el, dirty, toast, hideWidget, isSelected, chain, bindCanvasNavigation, 
 const PREVIEW = "NDVariantPreviewSelector";
 const SLIDER = "NDVariantSliderSelector";
 const SINK = "NDUpscaleResultSink";
+const FREE = "NDFreeVRAM";
 const VALUES = "NDVariantValues";
 const PACK = "NDPack";
 const BRIDGE = "NDLivePreviewBridge";
@@ -22,10 +23,15 @@ const DEFAULT_NAME = "ND_Image";
 const DEFAULT_VARIANT = "variant";
 const DEFAULT_UPSCALED = "upscaled";
 const DEFAULT_TOGGLE = "Multi-Variant";
+const DEFAULT_UPSCALE_LABEL = "Upscale";
 const OLD_DEFAULT_NAME = "ND_variant"; // default file name before the variant / upscaled names
 
 let origQueuePrompt = null;
 let lastSnapshot = null; // prompt of the last normal Run
+let pendingUpscale = false;
+// true once the server reports the NDFreeVRAM node (it only exists after ComfyUI was
+// restarted with this version): without it the prompt would fail validation
+let freeNodeOnServer = false;
 
 /* ------------------------------------------------------------------ helpers */
 
@@ -271,11 +277,25 @@ function installQueueHook() {
     if (origQueuePrompt) return;
     origQueuePrompt = api.queuePrompt.bind(api);
     api.queuePrompt = async function (number, data, ...rest) {
+        const opts = rest[0];
+        const isUpscale = Boolean((opts && typeof opts === "object" && opts.__ndUpscale) || pendingUpscale);
+        if (isUpscale) {
+            pendingUpscale = false;
+            if (opts && typeof opts === "object" && "__ndUpscale" in opts) {
+                const cleanOpts = { ...opts };
+                delete cleanOpts.__ndUpscale;
+                const nextRest = rest.slice();
+                nextRest[0] = Object.keys(cleanOpts).length ? cleanOpts : undefined;
+                return origQueuePrompt(number, data, ...nextRest);
+            }
+            return origQueuePrompt(number, data, ...rest);
+        }
         try {
             if (data?.output) {
                 stripFeedback(data.output);
                 applyLiveValues(data.output);
                 rerouteSelectorOutputs(data.output);
+                addFreeVramNodes(data.output); // after the reroute: these are the only links to a selector
                 recordLiveRoutes(data.output);
                 // a selector with Live preview fed by a bridge: ComfyUI's own sampler preview is off for this run
                 if (markLive(data.output)) rest[0] = { ...(rest[0] || {}), previewMethod: "none" };
@@ -286,6 +306,26 @@ function installQueueHook() {
         }
         return origQueuePrompt(number, data, ...rest);
     };
+}
+
+const freeVramOn = (node) => node?.properties?.nd_free_vram !== false;
+
+// Normal Run: after each preview selector with "Free VRAM on image receive" on, an
+// internal NDFreeVRAM node is added, wired to the selector's output. It runs on the
+// server once the selector has received the variants and unloads the models there.
+// The selector's own inputs are not touched, so nothing upstream is re-run.
+function addFreeVramNodes(output) {
+    if (!freeNodeOnServer) return;
+    for (const [id, n] of Object.entries(Object.assign({}, output))) {
+        if (n?.class_type !== PREVIEW || !n.inputs) continue;
+        const gnode = findNodeByApiId(id);
+        if (gnode && !freeVramOn(gnode)) continue;
+        output[`nd_free_${String(id).replace(/[^\w]/g, "_")}`] = {
+            class_type: FREE,
+            inputs: { after: [id, 0], target_id: String(id) },
+            _meta: { title: "ND Free VRAM" },
+        };
+    }
 }
 
 async function runUpscale(node) {
@@ -314,14 +354,25 @@ async function runUpscale(node) {
                     target_id: String(targetId),
                     filename_prefix: output[targetId].inputs.filename_prefix || DEFAULT_NAME,
                     suffix: output[targetId].inputs.upscaled_suffix ?? DEFAULT_UPSCALED,
+                    // the sink frees VRAM on the server once the upscaled image arrives
+                    free_vram: freeVramOn(node),
                 },
                 _meta: { title: "ND Upscale Result" },
             };
         }
         recordLiveRoutes(output);
         const mute = markLive(output);
-        // Sent straight to the API, bypassing app.queuePrompt: seeds do not advance.
-        await origQueuePrompt(0, { output, workflow: p.workflow }, mute ? { previewMethod: "none" } : undefined);
+        // Sent through api.queuePrompt (bypassing app.queuePrompt so seeds do not advance,
+        // while keeping other extensions' api.queuePrompt wrappers such as ND Load Images' splitIntoParts).
+        // No NDFreeVRAM node on Upscale: the selector runs early in that prompt (before the
+        // upscale branch), so the sink frees VRAM instead, after the upscaled image.
+        const opts = mute ? { previewMethod: "none", __ndUpscale: true } : { __ndUpscale: true };
+        pendingUpscale = true;
+        try {
+            await api.queuePrompt(0, { output, workflow: p.workflow }, opts);
+        } finally {
+            pendingUpscale = false;
+        }
     } catch (e) {
         console.error("[ND Variant]", e);
         toast("error", "ND Upscale", e?.message || String(e));
@@ -697,16 +748,18 @@ function setupPreview(node) {
         return { row, input };
     };
     const fToggle = textRow("Toggle label", DEFAULT_TOGGLE, "Name shown next to the toggle. Only the label in the node changes; the output is still multi_variant.");
+    const fUpLabel = textRow("Upscale button label", DEFAULT_UPSCALE_LABEL, "Text shown on the Upscale button. Only the label in the node changes.");
     const fName = textRow("File name", DEFAULT_NAME, "Common start of the saved file names. A subfolder like folder/name works.");
     const fVariant = textRow("Variant name", DEFAULT_VARIANT, "Added after the file name for the variants: ND_Image_variant. Leave empty to save them under the file name alone.");
     const fUpName = textRow("Upscaled name", DEFAULT_UPSCALED, "Added after the file name for the upscaled result: ND_Image_upscaled.");
     const cUpOn = checkRow("Upscale button", "Show the Upscale button. Without it every batch of variants is saved.");
+    const cFreeVram = checkRow("Free VRAM on image receive", "Unload the models from VRAM each time this node receives images: after the variants of a Run and after the upscaled image. Done on the server; the execution cache is kept. Needs a ComfyUI restart after installing.");
     const cSave = checkRow("Save variants", "Save each batch of variants to the output folder.");
     const cMeta = checkRow("Preview with Metadata", "Put the prompt and workflow into the preview images, like the saved files have. Then a preview dragged out of the node or opened in a new tab can be loaded back in ComfyUI. Applies to the next Run. Previews are shown unconverted.");
     const nameHint = el("div", "nd-vs-hint");
     const cLive = checkRow("Live preview", "Show the sampler's preview frames in the node while the variants (and the Upscale pass) are generated. ComfyUI's live previews must be on. For a batch, ComfyUI previews its first image only.");
     const liveHint = el("div", "nd-vs-hint nd-vs-warn", LIVE_OFF_HINT);
-    pop.append(fToggle.row, fName.row, fVariant.row, fUpName.row, cUpOn.row, cSave.row, cMeta.row, nameHint, cLive.row, liveHint);
+    pop.append(fToggle.row, fUpLabel.row, fName.row, fVariant.row, fUpName.row, cUpOn.row, cFreeVram.row, cSave.row, cMeta.row, nameHint, cLive.row, liveHint);
 
     root.append(main, info, thumbs, upBtn, bottom, pop);
 
@@ -979,7 +1032,9 @@ function setupPreview(node) {
     // the options shown, and an example of the names the files get
     function syncSettings() {
         const on = upscaleOn();
+        fUpLabel.row.style.display = on ? "" : "none";
         fUpName.row.style.display = on ? "" : "none";
+        cFreeVram.input.checked = freeVramOn(node);
         cUpOn.input.checked = on;
         // without the Upscale button every batch is saved
         cSave.input.checked = !on || !!wSave?.value;
@@ -1021,6 +1076,26 @@ function setupPreview(node) {
         fToggle.input.value = DEFAULT_TOGGLE;
         node.properties.nd_toggle_label = DEFAULT_TOGGLE;
         applyToggleLabel();
+    });
+    const upscaleLabel = () => String(node.properties?.nd_upscale_label ?? "").trim() || DEFAULT_UPSCALE_LABEL;
+    const applyUpscaleLabel = () => { upBtn.textContent = upscaleLabel(); };
+    fUpLabel.input.addEventListener("input", () => {
+        node.properties.nd_upscale_label = fUpLabel.input.value;
+        applyUpscaleLabel();
+        emit();
+        dirty();
+    });
+    fUpLabel.input.addEventListener("blur", () => {
+        if (fUpLabel.input.value.trim()) return;
+        fUpLabel.input.value = DEFAULT_UPSCALE_LABEL;
+        node.properties.nd_upscale_label = DEFAULT_UPSCALE_LABEL;
+        applyUpscaleLabel();
+        emit();
+    });
+    cFreeVram.input.addEventListener("change", () => {
+        node.properties.nd_free_vram = cFreeVram.input.checked;
+        syncSettings();
+        dirty();
     });
     bindText(fVariant, wVariant, null);
     bindText(fUpName, wUpName, null);
@@ -1076,7 +1151,7 @@ function setupPreview(node) {
             const showFinal = !!(st.viewFinal && st.final);
             return {
                 images: st.images.map(plain), sel: idx(), final: plain(st.final), source: plain(st.source), viewFinal: showFinal, compare: !!st.compare,
-                multi: !!tg.input.checked, label: toggleLabel(),
+                multi: !!tg.input.checked, label: toggleLabel(), upscaleLabel: upscaleLabel(),
                 upscaleOn: upscaleOn(), canUpscale: upscaleOn() && st.images.length > 0 && !showFinal, busy: !!node.__ndBusy,
                 live: { on: liveOn(), shown: liveShown(), active: !!lv.active && !!lv.url, url: lv.url, step: lv.step ? [...lv.step] : null, noFrames: !!lv.noFrames },
             };
@@ -1162,6 +1237,8 @@ function setupPreview(node) {
             tg.input.checked = !!wMV?.value;
             fToggle.input.value = toggleLabel();
             applyToggleLabel();
+            fUpLabel.input.value = upscaleLabel();
+            applyUpscaleLabel();
             fName.input.value = wPrefix?.value || DEFAULT_NAME;
             fVariant.input.value = wVariant?.value ?? DEFAULT_VARIANT;
             fUpName.input.value = wUpName?.value ?? DEFAULT_UPSCALED;
@@ -1440,6 +1517,7 @@ app.registerExtension({
     },
 
     async beforeRegisterNodeDef(nodeType, nodeData) {
+        if (nodeData.name === FREE) freeNodeOnServer = true;
         if (nodeData.name !== PREVIEW && nodeData.name !== SLIDER) return;
         const isPreview = nodeData.name === PREVIEW;
         const proto = nodeType.prototype;
